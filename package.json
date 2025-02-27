@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "prepare": "husky",
-    "format": "prettier --write ."
+    "format": "prettier --write . --log-level silent"
   },
   "dependencies": {
     "next": "15.1.7",
