@@ -1,5 +1,7 @@
 import Button from '~/components/common/button';
 import ChatBubble from '~/components/common/chatButton';
+import ModalOneBtn from '~/components/common/modalOneBtn';
+import ModalTwoBtn from '~/components/common/modalTwoBtn';
 
 export default function Home() {
   return (
@@ -22,6 +24,8 @@ export default function Home() {
       <Button text="BUTTON" variant={'red'} size={'lg'} />
       <Button text="BUTTON" size={'full'} />
       <Button text="BUTTON" size={'full'} className="rounded-full" />
+      <ModalOneBtn text={`채팅방이 개설되지 못했어요. \n 다음에 봬요ㅠ`} textTitle="참가자선택" textBtn="알겠어요" variant="btn"/>
+      <ModalTwoBtn text={`홍길동 님에게 \n 매칭을 신청하시겠습니까?`} textTitle="참가자선택" textLBtn="아니오" textRBtn="네" variant="btn"/>
     </div>
   );
 }
