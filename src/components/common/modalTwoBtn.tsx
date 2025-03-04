@@ -34,6 +34,11 @@ interface ModalTwoBtnProps
   textRBtn?: string;
 }
 
+interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement>{
+  textLBtn?:string;
+  textRBtn?:string; 
+}
+
 const ModalTwoBtn = ({
   variant,
   size,
@@ -57,9 +62,9 @@ const ModalTwoBtn = ({
           <IoCloseSharp onClick={btnCloseHandler} className="cursor-pointer" />
         </div>
         <p className="mb-10 text-center">{text}</p>
-        <div className="flex justify-between gap-5">
-          <Button text={textLBtn} size={'sm'} onClick={btnCloseHandler} />
-          <Button text={textRBtn} size={'sm'} onClick={btnCloseHandler} />
+        <div>
+          <Button size={'full'} onClick={btnCloseHandler}>{textLBtn}</Button>
+          <Button size={'full'} onClick={btnCloseHandler}>{textRBtn}</Button>
         </div>
       </div>
     )
