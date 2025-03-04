@@ -50,10 +50,18 @@ const ChatBubble = ({
         {message}
       </div>
       {variant === 'sender' && (
-        <div className="absolute bottom-0 right-0 w-2 h-2 bg-blue-500 transform translate-x-1/2 translate-y-1/2 rotate-45"></div>
+        <div
+          className="absolute bottom-0 right-0 w-0 h-0 translate-y-2
+    border-t-[15px] border-t-blue-500 
+    border-l-[15px] border-l-transparent"
+        ></div>
       )}
       {variant === 'receiver' && (
-        <div className="absolute bottom-0 left-0 w-2 h-2 bg-gray-200 transform -translate-x-1/2 translate-y-1/2 rotate-45"></div>
+        <div
+          className="absolute bottom-0 left-0 w-0 h-0 translate-y-2
+    border-t-[15px] border-t-gray-200 
+    border-r-[15px] border-r-transparent"
+        ></div>
       )}
     </div>
   );
