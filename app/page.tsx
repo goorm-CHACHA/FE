@@ -6,6 +6,7 @@ import {
   CardHeader,
 } from '~/components/common/card';
 import ChatBubble from '~/components/common/chat-bubble';
+import Profile from '~/components/common/profile';
 
 const Home = () => {
   return (
@@ -54,6 +55,7 @@ const Home = () => {
           </CardFooter>
         </Card>
       </div>
+      <Profile name="홍길동" info1='1년차' info2='프론트엔드 개발자'/>
     </div>
   );
 };
