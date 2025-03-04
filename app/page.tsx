@@ -24,7 +24,6 @@ export default function Home() {
       <Button text="BUTTON" variant={'red'} size={'lg'} />
       <Button text="BUTTON" size={'full'} />
       <Button text="BUTTON" size={'full'} className="rounded-full" />
-      
     </div>
   );
 }
