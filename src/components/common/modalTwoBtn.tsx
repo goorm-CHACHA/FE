@@ -34,9 +34,9 @@ interface ModalTwoBtnProps
   textRBtn?: string;
 }
 
-interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement>{
-  textLBtn?:string;
-  textRBtn?:string; 
+interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
+  textLBtn?: string;
+  textRBtn?: string;
 }
 
 const ModalTwoBtn = ({
@@ -63,8 +63,12 @@ const ModalTwoBtn = ({
         </div>
         <p className="mb-10 text-center">{text}</p>
         <div>
-          <Button size={'full'} onClick={btnCloseHandler}>{textLBtn}</Button>
-          <Button size={'full'} onClick={btnCloseHandler}>{textRBtn}</Button>
+          <Button size={'full'} onClick={btnCloseHandler}>
+            {textLBtn}
+          </Button>
+          <Button size={'full'} onClick={btnCloseHandler}>
+            {textRBtn}
+          </Button>
         </div>
       </div>
     )

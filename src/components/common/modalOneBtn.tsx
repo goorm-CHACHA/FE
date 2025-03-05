@@ -55,7 +55,9 @@ const ModalOneBtn = ({
           <IoCloseSharp onClick={btnCloseHandler} className="cursor-pointer" />
         </div>
         <p className="mb-10">{text}</p>
-        <Button size={'full'} onClick={btnCloseHandler}>{textBtn}</Button>
+        <Button size={'full'} onClick={btnCloseHandler}>
+          {textBtn}
+        </Button>
       </div>
     )
   );
