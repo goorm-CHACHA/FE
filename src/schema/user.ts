@@ -3,15 +3,35 @@ import { z } from 'zod';
 //schema
 const idSchema = z
   .string()
-  .min(1, '아이디를 입력해주세요')
+  .min(6, '아이디는 최소 6글자 이상이어야 합니다.')
+  .max(20, '아이디는 최대 20글자까지 가능합니다.')
   .regex(/^[a-z|A-Z|0-9]+$/, '아이디에는 영문과 숫자만 사용할 수 있습니다.');
 
 const passwordSchema = z
   .string()
-  .min(1, '비밀번호를 입력해주세요')
-  .min(6, '비밀번호는 6자 이상이어야 합니다.');
+  .min(6, '비밀번호는 최소 6글자 이상이어야 합니다.')
+  .max(20, '비밀번호는 최대 20글자까지 가능합니다.');
 
 const passwordConfirmSchema = z.string();
+
+const koreanNameSchema = z
+  .string()
+  .min(2, '이름은 최소 2글자 이상이어야 합니다.')
+  .max(20, '이름은 최대 20글자까지 가능합니다.')
+  .regex(/^[가-힣]+$/, '이름 형식이 올바르지 않습니다.');
+
+const englishNameSchema = z
+  .string()
+  .min(2, '이름은 최소 2글자 이상이어야 합니다.')
+  .max(30, '이름은 최대 30글자까지 가능합니다.')
+  .regex(/^[a-zA-Z]+$/, '이름 형식이 올바르지 않습니다.');
+
+const nameSchema = z.union([koreanNameSchema, englishNameSchema]);
+
+const emailSchema = z
+  .string()
+  .email({ message: '이메일 형식이 올바르지 않습니다.' })
+  .min(1, '이메일을 입력해주세요');
 
 export const loginSchema = z.object({
   id: idSchema,
@@ -34,6 +54,18 @@ export const signUpSchema = z
     }
   });
 
+export const findIdSchema = z.object({
+  name: nameSchema,
+  email: emailSchema,
+});
+
+export const findPasswordSchema = z.object({
+  id: idSchema,
+  email: emailSchema,
+});
+
 //payload
 export type loginPayload = z.infer<typeof loginSchema>;
 export type signUpPayload = z.infer<typeof signUpSchema>;
+export type findIdPayload = z.infer<typeof findIdSchema>;
+export type findPasswordPayload = z.infer<typeof findPasswordSchema>;

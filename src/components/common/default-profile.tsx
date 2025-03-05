@@ -1,29 +1,19 @@
-import { cva, type VariantProps } from 'class-variance-authority';
-import { cn } from '~/utils/cn';
 import Image from 'next/image';
 
 interface DefaultProfileProps extends React.HTMLAttributes<HTMLDivElement> {
   imgSrc?: string;
 }
 
-const DefaultProfile = ({
-  className,
-  imgSrc,
-  ...props
-}: DefaultProfileProps) => {
+const DefaultProfile = ({ imgSrc, ...props }: DefaultProfileProps) => {
   return (
     <div
-      className="bg-slate-400 w-16 h-16 rounded-full relative object-cover"
+      className="rounded-full overflow-hidden relative bg-slate-400 w-16 h-16"
       {...props}
     >
       {imgSrc ? (
-        <Image
-          src={imgSrc}
-          alt="프로필 이미지"
-          className="absolute top-0 left-0 w-full h-full object-fit rounded-full"
-        />
+        <Image src={imgSrc} alt="프로필 이미지" fill className="object-cover" />
       ) : (
-        <div className="w-full h-full flex rounded-full items-center justify-center bg-gray-300">
+        <div className="w-full h-full flex items-center justify-center bg-gray-300">
           <span className="text-white text-xs">No Image</span>
         </div>
       )}
