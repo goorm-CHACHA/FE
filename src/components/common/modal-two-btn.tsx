@@ -1,9 +1,12 @@
 'use client';
-import { cva, type VariantProps } from 'class-variance-authority';
-import { cn } from '~/utils/cn';
-import Button from './button';
-import { IoCloseSharp } from 'react-icons/io5';
+
 import { useState } from 'react';
+import { IoCloseSharp } from 'react-icons/io5';
+import { cva, type VariantProps } from 'class-variance-authority';
+
+import { cn } from '~/utils/cn';
+import Button from '~/components/common/button';
+
 const modalTwoBtnVariants = cva(
   'rounded-2xl p-3 break-words whitespace-pre-line fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white text-black m-auto height-2xl',
   {
@@ -34,11 +37,6 @@ interface ModalTwoBtnProps
   textRBtn?: string;
 }
 
-interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement>{
-  textLBtn?:string;
-  textRBtn?:string; 
-}
-
 const ModalTwoBtn = ({
   variant,
   size,
@@ -56,15 +54,22 @@ const ModalTwoBtn = ({
   };
   return (
     !isClicked && (
-      <div className={cn(modalTwoBtnVariants({ variant, size }))}>
+      <div
+        className={cn(modalTwoBtnVariants({ variant, size }), className)}
+        {...props}
+      >
         <div className="absolute top-2 left-0 flex justify-between w-full px-4">
           <p>{textTitle}</p>
           <IoCloseSharp onClick={btnCloseHandler} className="cursor-pointer" />
         </div>
         <p className="mb-10 text-center">{text}</p>
         <div>
-          <Button size={'full'} onClick={btnCloseHandler}>{textLBtn}</Button>
-          <Button size={'full'} onClick={btnCloseHandler}>{textRBtn}</Button>
+          <Button size={'full'} onClick={btnCloseHandler}>
+            {textLBtn}
+          </Button>
+          <Button size={'full'} onClick={btnCloseHandler}>
+            {textRBtn}
+          </Button>
         </div>
       </div>
     )

@@ -1,9 +1,11 @@
 'use client';
-import { cva, type VariantProps } from 'class-variance-authority';
-import { cn } from '~/utils/cn';
-import Button from './button';
-import { IoCloseSharp } from 'react-icons/io5';
 import { useState } from 'react';
+import { IoCloseSharp } from 'react-icons/io5';
+import { cva, type VariantProps } from 'class-variance-authority';
+
+import { cn } from '~/utils/cn';
+import Button from '~/components/common/button';
+
 const modalOneBtnVariants = cva(
   'rounded-2xl p-3 break-words  whitespace-pre-line fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white text-black m-auto height-2xl',
   {
@@ -49,13 +51,18 @@ const ModalOneBtn = ({
   };
   return (
     !isClicked && (
-      <div className={cn(modalOneBtnVariants({ variant, size }))}>
+      <div
+        className={cn(modalOneBtnVariants({ variant, size }), className)}
+        {...props}
+      >
         <div className="absolute top-2 left-0 flex justify-between w-full px-4">
           <p>{textTitle}</p>
           <IoCloseSharp onClick={btnCloseHandler} className="cursor-pointer" />
         </div>
         <p className="mb-10">{text}</p>
-        <Button size={'full'} onClick={btnCloseHandler}>{textBtn}</Button>
+        <Button size={'full'} onClick={btnCloseHandler}>
+          {textBtn}
+        </Button>
       </div>
     )
   );
