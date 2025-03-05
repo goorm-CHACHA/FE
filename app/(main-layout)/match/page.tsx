@@ -1,9 +1,9 @@
 'use client';
-
+import React from 'react';
 import { useRouter } from 'next/navigation';
 import Button from '~/components/common/button';
 
-const Page = () => {
+const MatchTypePage = () => {
   const router = useRouter();
 
   return (
@@ -11,21 +11,21 @@ const Page = () => {
       <Button
         size={'full'}
         onClick={() => {
-          router.push('/match');
+          router.push('/match/one-to-one');
         }}
       >
-        네트워킹 참여여부 YES
+        1:1 네트워킹
       </Button>
       <Button
         size={'full'}
         onClick={() => {
-          router.push('/landing');
+          router.push('/match/group');
         }}
       >
-        네트워킹 참여여부 NO
+        그룹 네트워킹
       </Button>
     </div>
   );
 };
 
-export default Page;
+export default MatchTypePage;
