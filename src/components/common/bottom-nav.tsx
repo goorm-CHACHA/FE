@@ -44,7 +44,7 @@ const BottomNavLink = ({ to, label }: BottomNavLinkProps) => {
 const BottomNavigation = () => {
   return (
     <nav className="fixed bottom-0 left-0 right-0 flex justify-around bg-white border-t border-gray-200">
-      <BottomNavLink to="/" label="홈" />
+      <BottomNavLink to="/home" label="홈" />
       <BottomNavLink to="/notifications" label="알림" />
       <BottomNavLink to="/mypage" label="마이페이지" />
     </nav>

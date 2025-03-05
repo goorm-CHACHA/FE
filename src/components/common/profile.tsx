@@ -1,8 +1,9 @@
 'use client';
-import Button from './button';
-import DefaultProfile from './default-profile';
-import { useEffect, useState } from 'react';
-import clsx from 'clsx';
+
+import { useState } from 'react';
+
+import Button from '~/components/common/button';
+import DefaultProfile from '~/components/common/default-profile';
 
 interface ProfileProps extends React.HTMLAttributes<HTMLDivElement> {
   name: string;
@@ -10,7 +11,7 @@ interface ProfileProps extends React.HTMLAttributes<HTMLDivElement> {
   info2: string;
 }
 
-const Profile = ({ className, name, info1, info2, ...props }: ProfileProps) => {
+const Profile = ({ name, info1, info2, ...props }: ProfileProps) => {
   const [isAppliedMatching, setIsAppliedMatching] = useState(false);
 
   const clickMatchingHandler = () => {
@@ -18,7 +19,10 @@ const Profile = ({ className, name, info1, info2, ...props }: ProfileProps) => {
   };
 
   return (
-    <div className="rounded-2xl p-4 max-w-[90%] sm:max-w-[50%] md:max-w-[40%]  break-words relative {...props} flex bg-white text-gray-700 gap-4 py-8 justify-between item-bottom">
+    <div
+      className="border rounded-2xl p-6 max-w-[90%] sm:max-w-[50%] md:max-w-[40%] break-words bg-white text-gray-700 flex gap-4 justify-between text-sm"
+      {...props}
+    >
       <div className="flex gap-4 items-center justify-between">
         <DefaultProfile />
         <div>
@@ -31,14 +35,16 @@ const Profile = ({ className, name, info1, info2, ...props }: ProfileProps) => {
       </div>
       {/* 매칭할 때 버튼 */}
       <div className="flex flex-col gap-4">
-        <span
-          className={`h-6 flex items-center text-xs border p-2 text-zinc-500 border-zinc-500 rounded-2xl ${isAppliedMatching ? 'opacity-100' : 'opacity-0'}`}
-        >
-          ✅ 매칭 완료
-        </span>
+        {
+          <span
+            className={`text-sm pb-3 ${isAppliedMatching ? 'opacity-100' : 'opacity-0'}`}
+          >
+            ✅ 매칭 완료
+          </span>
+        }
         <Button
           size="sm"
-          className={'h-10 w-full align-bottom'}
+          className={'h-10 w-full flex align-bottom'}
           variant={isAppliedMatching ? 'grey' : 'default'}
           onClick={clickMatchingHandler}
         >
