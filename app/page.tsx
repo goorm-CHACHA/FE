@@ -1,3 +1,4 @@
+import BottomNavigation from '~/components/common/bottom-nav';
 import Button from '~/components/common/button';
 import {
   Card,
@@ -56,6 +57,10 @@ const Home = () => {
         </Card>
       </div>
       <Profile name="홍길동" info1="1년차" info2="프론트엔드 개발자" />
+      <div>
+        <p>nav</p>
+        <BottomNavigation />
+      </div>
     </div>
   );
 };
