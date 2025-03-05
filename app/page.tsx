@@ -1,3 +1,4 @@
+import BottomNavigation from '~/components/common/bottom-nav';
 import Button from '~/components/common/button';
 import {
   Card,
@@ -53,6 +54,10 @@ const Home = () => {
             <Button size="full">참여하기</Button>
           </CardFooter>
         </Card>
+      </div>
+      <div>
+        <p>nav</p>
+        <BottomNavigation />
       </div>
     </div>
   );
