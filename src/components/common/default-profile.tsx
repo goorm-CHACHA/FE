@@ -1,23 +1,6 @@
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '~/utils/cn';
 import Image from 'next/image';
-// const DefaultProfileVariants = cva(
-//   'rounded-2xl p-4 max-w-[70%] break-words relative',
-//   {
-//     variants: {
-//       variant: {
-//         default: 'bg-slate-400 w-16 h-16 rounded-full relative object-cover',
-//       },
-//       size: {
-//         default: 'text-sm',
-//       },
-//     },
-//     defaultVariants: {
-//       variant: 'default',
-//       size: 'default',
-//     },
-//   },
-// );
 
 interface DefaultProfileProps extends React.HTMLAttributes<HTMLDivElement> {
   imgSrc?: string;
