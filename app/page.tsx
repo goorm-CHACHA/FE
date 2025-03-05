@@ -7,7 +7,7 @@ import {
   CardHeader,
 } from '~/components/common/card';
 import ChatBubble from '~/components/common/chat-bubble';
-import MultipleSelection from '~/components/common/multiple-selection';
+import Chips from '~/components/common/chips';
 import Profile from '~/components/common/profile';
 
 const Home = () => {
@@ -58,18 +58,18 @@ const Home = () => {
         </Card>
       </div>
       <Profile name="홍길동" info1="1년차" info2="프론트엔드 개발자" />
-      <div className='flex gap-2 flex-wrap'>
-        <MultipleSelection>개발자</MultipleSelection>
-        <MultipleSelection variant={'pink'}>디자이너</MultipleSelection>
-        <MultipleSelection variant={'indigo'}>기획자</MultipleSelection>
-        <MultipleSelection variant={'indigo'}>개발자</MultipleSelection>
-        <MultipleSelection variant={'pink'}>디자이너</MultipleSelection>
-        <MultipleSelection>개발자</MultipleSelection>
-        <MultipleSelection variant={'indigo'}>디자이너</MultipleSelection>
-        <MultipleSelection variant={'pink'}>개발자</MultipleSelection>
-        <MultipleSelection>기획자</MultipleSelection>
-        <MultipleSelection variant={'indigo'}>디자이너</MultipleSelection>
-        <MultipleSelection variant={'pink'}>기획자</MultipleSelection>
+      <div className="flex gap-2 flex-wrap">
+        <Chips>개발자</Chips>
+        <Chips variant={'pink'}>디자이너</Chips>
+        <Chips variant={'indigo'}>기획자</Chips>
+        <Chips variant={'indigo'}>개발자</Chips>
+        <Chips variant={'pink'}>디자이너</Chips>
+        <Chips>개발자</Chips>
+        <Chips variant={'indigo'}>디자이너</Chips>
+        <Chips variant={'pink'}>개발자</Chips>
+        <Chips>기획자</Chips>
+        <Chips variant={'indigo'}>디자이너</Chips>
+        <Chips variant={'pink'}>기획자</Chips>
       </div>
       <div>
         <p>nav</p>
