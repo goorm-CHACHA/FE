@@ -12,9 +12,9 @@ const multipleSelectionVariants = cva(
         pink: 'bg-pink-400 hover:bg-pink-400/85',
         indigo: 'bg-indigo-500 text-white hover:bg-indigo-500/85',
       },
-      changedColor:{
-          isClicked: 'opacity-50',
-          },
+      changedColor: {
+        isClicked: 'opacity-50',
+      },
     },
     defaultVariants: {
       variant: 'default',
@@ -35,15 +35,20 @@ const MultipleSelection = ({
   children,
   ...props
 }: multipleSelectionProps) => {
-    const [isClicked, setIsClicked] = useState(false);
-    const clickHandler  =  (e: React.MouseEvent<HTMLButtonElement>) => {
-        console.log(`is clicked : ${children}`);
-        setIsClicked(!isClicked); 
-    }
+  const [isClicked, setIsClicked] = useState(false);
+  const clickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    console.log(`is clicked : ${children}`);
+    setIsClicked(!isClicked);
+  };
   return (
     <button
-      className={cn(multipleSelectionVariants({ variant, changedColor: isClicked ? 'isClicked' : undefined }), className)}
-
+      className={cn(
+        multipleSelectionVariants({
+          variant,
+          changedColor: isClicked ? 'isClicked' : undefined,
+        }),
+        className,
+      )}
       {...props}
       onClick={clickHandler}
     >

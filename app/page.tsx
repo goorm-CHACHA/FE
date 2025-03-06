@@ -58,7 +58,7 @@ const Home = () => {
         </Card>
       </div>
       <Profile name="홍길동" info1="1년차" info2="프론트엔드 개발자" />
-      <div className='flex gap-2 flex-wrap'>
+      <div className="flex gap-2 flex-wrap">
         <MultipleSelection>개발자</MultipleSelection>
         <MultipleSelection variant={'pink'}>디자이너</MultipleSelection>
         <MultipleSelection variant={'indigo'}>기획자</MultipleSelection>
