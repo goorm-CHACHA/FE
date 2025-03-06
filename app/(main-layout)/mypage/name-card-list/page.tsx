@@ -4,19 +4,14 @@ import BottomNavigation from '~/components/common/bottom-nav';
 import Profile from '~/components/common/profile';
 
 const Page = () => {
-  // const DivToImage = () => {
-  //   const exportDivImageRef: any = useRef();
-  //   const [downloading, setDownloading] = useState<boolean>(false);
-  // }
   const downloadHandler = () => {
-    console.log('het koos gemaakt');
+    console.log('다운로드 클릭됨');
   };
   return (
-    <div>
-      <h1>저장한 명함 목록</h1>
-      <div className="flex flex-col items-center">
-        {/* ⬇️  바로 밑에 div는 map으로 내가 저장한 카드 프린트...*/}
-        <div className="flex flex-col justify-center align-middle gap-4">
+    <div className="flex flex-col items-center">
+      <div>
+        {/* ⬇️  바로 밑에 div는 map으로 내가 저장한 카드 프린트... 명함 누르면 모달 열려야 함 (모달 수정 작업 먼저 필요)*/}
+        <div className="flex gap-4 flex-col">
           <Profile
             name="김기획"
             info1="병아리 기획자"
@@ -37,13 +32,14 @@ const Page = () => {
           />
         </div>
       </div>
-      <div
-        className="flex justify-center items-center m-8 p-1 min-w-[250px] max-w-[400px] bg-white text-gray-700 cursor-pointer"
-        onClick={downloadHandler}
-      >
-        이미지 다운로드
+      <div className="flex flex-col items-center w-full">
+        <div
+          className="m-8 p-1 min-w-[250px] max-w-[400px] text-center bg-white text-gray-700 cursor-pointer"
+          onClick={downloadHandler}
+        >
+          이미지 다운로드
+        </div>
       </div>
-      <BottomNavigation />
     </div>
   );
 };

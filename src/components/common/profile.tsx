@@ -1,8 +1,9 @@
 'use client';
-import Button from './button';
-import DefaultProfile from './default-profile';
-import { useEffect, useState } from 'react';
-import clsx from 'clsx';
+
+import { useState } from 'react';
+
+import Button from '~/components/common/button';
+import DefaultProfile from '~/components/common/default-profile';
 
 interface ProfileProps extends React.HTMLAttributes<HTMLDivElement> {
   name: string;
@@ -25,8 +26,8 @@ const Profile = ({
   };
 
   return (
-    <div className="rounded-2xl p-4 min-w-[300px] max-w-[90%] m-auto sm:max-w-[50%] md:max-w-[40%]  break-words relative flex bg-white text-gray-700 gap-4 py-8 justify-between item-bottom">
-      <div className="flex gap-4 items-center justify-left">
+    <div className="rounded-2xl p-4 m-2 w-[350px] sm:w-[400px]  break-words relative {...props} flex bg-white text-gray-700 gap-4 py-8 justify-between item-bottom">
+      <div className="flex gap-4 items-center justify-between">
         <DefaultProfile />
         <div>
           <p className="font-semibold">{name}</p>

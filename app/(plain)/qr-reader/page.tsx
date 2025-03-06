@@ -60,7 +60,7 @@ const page = () => {
   return (
     <div id="qr-code" className="h-screen">
       {!qrError && (
-        <div className="w-full h-min-[full] relative ">
+        <div className="w-full h-full relative">
           <h1>QR리더기</h1>
           <video className="w-full h-full object-contain" ref={videoRef} />
           <p className="p-2 bg-black w-36 rounded-xl text-center absolute text-xs top-1/2 left-1/2 -translate-x-1/2">
