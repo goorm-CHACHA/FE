@@ -4,7 +4,6 @@ import BottomNavigation from '~/components/common/bottom-nav';
 import Profile from '~/components/common/profile';
 
 const Page = () => {
-
   const downloadHandler = () => {
     console.log('다운로드 클릭됨');
   };
