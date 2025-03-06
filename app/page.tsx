@@ -12,7 +12,7 @@ const Page = () => {
         size={'full'}
         variant={'red'}
         onClick={() => {
-          router.push('/pre-register');
+          router.push('/register');
         }}
       >
         사전등록하기
