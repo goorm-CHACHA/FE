@@ -1,9 +1,13 @@
+'use client';
+
+import React, { useState } from 'react';
 import RadixTabs from '~/components/common/radix-tabs';
+import TopNavigation from '~/components/common/top-nav';
 import GroupMatching from '~/components/match/group';
 import OneToOneMatching from '~/components/match/one-to-one';
 
 const Page = () => {
-  const tabLabels = ['1:1 매칭', '그룹 매칭'];
+  const [isQuickConnectOn, setIsQuickConnectOn] = useState(false);
 
   // 샘플 profiles 데이터
   const Profiles: {
@@ -33,20 +37,33 @@ const Page = () => {
     },
   ];
 
+  const tabLabels = ['1:1 매칭', '그룹 매칭'];
   const tabContents = [
     <OneToOneMatching key="one-to-one" profiles={Profiles} />,
-    <GroupMatching key="group" profiles={Profiles} />, // profiles 전달
+    <GroupMatching key="group" profiles={Profiles} />,
   ];
 
   return (
     <>
-      <div className="flex flex-col min-h-screen w-full items-center pt-5">
-        <div className="w-full md:max-w-md px-6">
-          <RadixTabs
-            tabLabels={tabLabels}
-            tabContents={tabContents}
-          ></RadixTabs>
+      <TopNavigation
+        onQuickConnectToggle={setIsQuickConnectOn}
+        className="relative z-50"
+      />
+      <div className="relative">
+        <div className="flex flex-col min-h-screen w-full items-center pt-5">
+          <div className="w-full md:max-w-md px-6">
+            <RadixTabs
+              tabLabels={tabLabels}
+              tabContents={tabContents}
+              disabled={!isQuickConnectOn}
+            />
+          </div>
         </div>
+        {!isQuickConnectOn && (
+          <div className="absolute inset-0 top-0 bg-gray-500 bg-opacity-75 backdrop-filter backdrop-blur-sm flex items-center justify-center">
+            <p className="text-white text-2xl font-bold">퀵커넥트를 켜주세요</p>
+          </div>
+        )}
       </div>
     </>
   );
