@@ -5,12 +5,7 @@ interface RadixTabsProps {
   tabContents: React.ReactNode[];
   disabled?: boolean;
 }
-
-const RadixTabs: React.FC<RadixTabsProps> = ({
-  tabLabels,
-  tabContents,
-  disabled,
-}) => {
+const RadixTabs = ({ tabLabels, tabContents, disabled }: RadixTabsProps) => {
   return (
     <Tabs.Root className="flex flex-col" defaultValue={tabLabels[0]}>
       <Tabs.List className="flex bg-zinc-200 rounded-lg" aria-label="탭 목록">
