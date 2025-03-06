@@ -7,9 +7,7 @@ interface TopNavigationProps {
   className?: string;
 }
 
-const TopNavigation: React.FC<TopNavigationProps> = ({
-  onQuickConnectToggle,
-}) => {
+const TopNavigation = ({ onQuickConnectToggle }: TopNavigationProps) => {
   return (
     <nav className="flex justify-start items-center bg-white border-b border-gray-200 px-4 py-4">
       <SwitchDemo onToggle={onQuickConnectToggle} />
