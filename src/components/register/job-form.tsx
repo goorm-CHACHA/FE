@@ -8,7 +8,7 @@ import {
   groupedJobOptions,
 } from '~/constants/job-options';
 import Button from '~/components/common/button';
-import { useRouter } from 'next/router';
+import useFormSubmit from '~/utils/use-form-submit';
 
 const GroupLabel = (group: GroupBase<GroupedJobOption>) => {
   return (
@@ -20,12 +20,7 @@ const GroupLabel = (group: GroupBase<GroupedJobOption>) => {
 
 export default function JobSelect() {
   const { control, handleSubmit } = useForm();
-  const router = useRouter();
-
-  const onSubmit = handleSubmit((data) => {
-    console.log(data);
-    router.push('/register/');
-  });
+  const onSubmit = handleSubmit(useFormSubmit('/register/interest'));
 
   return (
     <div className="h-full">

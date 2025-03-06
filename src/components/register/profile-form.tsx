@@ -6,21 +6,15 @@ import { useForm, FormProvider } from 'react-hook-form';
 import Input from '~/components/common/input';
 import Button from '~/components/common/button';
 import { signUpPayload, signUpSchema } from '~/schema/user';
-import { usePathname, useRouter } from 'next/navigation';
+import useFormSubmit from '~/utils/use-form-submit';
 
 const ProfileForm = () => {
-  const router = useRouter();
-  const pathname = usePathname().split('/')[1];
-
   const methods = useForm<signUpPayload>({
     resolver: zodResolver(signUpSchema),
     mode: 'onSubmit',
   });
 
-  const onSubmit = methods.handleSubmit((data) => {
-    console.log('폼 제출 데이터:', data);
-    router.push(`/${pathname}/job`);
-  });
+  const onSubmit = methods.handleSubmit(useFormSubmit('/register/job'));
 
   return (
     <div className="h-full">
