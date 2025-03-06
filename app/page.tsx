@@ -73,10 +73,6 @@ const Home = () => {
         <Chips variant={'pink'}>기획자</Chips>
       </div>
       <div>
-        <p>switch</p>
-        <SwitchDemo />
-      </div>
-      <div>
         <p>nav</p>
         <BottomNavigation />
       </div>
