@@ -9,6 +9,7 @@ import {
 import ChatBubble from '~/components/common/chat-bubble';
 import Chips from '~/components/common/chips';
 import Profile from '~/components/common/profile';
+import SwitchDemo from '~/components/common/switch';
 
 const Home = () => {
   return (
@@ -70,6 +71,10 @@ const Home = () => {
         <Chips>기획자</Chips>
         <Chips variant={'indigo'}>디자이너</Chips>
         <Chips variant={'pink'}>기획자</Chips>
+      </div>
+      <div>
+        <p>switch</p>
+        <SwitchDemo />
       </div>
       <div>
         <p>nav</p>
