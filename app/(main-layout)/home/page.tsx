@@ -61,7 +61,11 @@ const Page = () => {
         </div>
         {!isQuickConnectOn && (
           <div className="absolute inset-0 top-0 bg-gray-500 bg-opacity-75 backdrop-filter backdrop-blur-sm flex items-center justify-center">
-            <p className="text-white text-2xl font-bold">퀵커넥트를 켜주세요</p>
+            <p className="text-white text-2xl font-bold text-center">
+              스위치를 on하면
+              <br />
+              네트워킹에 참여할 수 있어요
+            </p>
           </div>
         )}
       </div>
