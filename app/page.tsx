@@ -57,7 +57,7 @@ const Home = () => {
           </CardFooter>
         </Card>
       </div>
-      <Profile name="홍길동" info1="1년차" info2="프론트엔드 개발자" />
+      <Profile id="1" name="홍길동" info1="1년차" info2="프론트엔드 개발자" />
       <div className="flex gap-2 flex-wrap">
         <Chips>개발자</Chips>
         <Chips variant={'pink'}>디자이너</Chips>
