@@ -12,8 +12,25 @@ const Page = () => {
     info1: string;
     info2: string;
   }[] = [
-    { id: '1', name: '홍길동', info1: 'Developer', info2: 'React' },
-    { id: '2', name: '김길동', info1: 'Designer', info2: 'Figma' },
+    { id: '1', name: '김중환', info1: '백엔드 개발자', info2: 'Java, Python' },
+    {
+      id: '2',
+      name: '황신혜',
+      info1: 'UX/UI 디자이너',
+      info2: 'Figma, Adobe XD',
+    },
+    {
+      id: '3',
+      name: '박지윤',
+      info1: '프론트엔드 개발자',
+      info2: 'Node.js, React',
+    },
+    {
+      id: '4',
+      name: '최현우',
+      info1: '프로덕트 매니지먼트',
+      info2: 'Notion, Jira',
+    },
   ];
 
   const tabContents = [
@@ -23,7 +40,7 @@ const Page = () => {
 
   return (
     <>
-      <div className="flex flex-col min-h-screen w-full items-center pt-52">
+      <div className="flex flex-col min-h-screen w-full items-center pt-5">
         <div className="w-full md:max-w-md px-6">
           <RadixTabs
             tabLabels={tabLabels}
