@@ -21,7 +21,8 @@ const InterestForm = () => {
     setValue,
     setError,
     clearErrors,
-    formState: { errors, isValid },
+    watch,
+    formState: { errors },
   } = useForm<{ interest: string[] }>({
     defaultValues: {
       interest: [],
@@ -30,6 +31,7 @@ const InterestForm = () => {
   });
 
   const onSubmit = handleSubmit(useFormSubmit('/'));
+  const selectedOptions = watch('interest');
 
   // 선택하지 않거나 3개 이상 선택할 경우 방지
   const handleValueChange = (newValue: string[]) => {
@@ -74,10 +76,10 @@ const InterestForm = () => {
                 return true;
               },
             }}
-            render={({ field }) => (
+            render={() => (
               <RadixToggleGroup
                 items={interestOptions}
-                value={field.value}
+                value={selectedOptions}
                 onChange={handleValueChange}
                 ariaLabel="interest option"
                 variant={'black'}
@@ -92,7 +94,10 @@ const InterestForm = () => {
           )}
         </div>
 
-        <Button className="py-3" disabled={!isValid}>
+        <Button
+          className="py-3"
+          disabled={selectedOptions.length < MIN_SELECTION}
+        >
           사전등록 완료!
         </Button>
       </form>

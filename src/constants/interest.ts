@@ -5,7 +5,7 @@ interface InterestOptions {
 
 export const interestOptions: InterestOptions[] = [
   { category: '소프트웨어 개발', value: '웹 개발' },
-  { category: '소프트웨어 개발', value: '개발' },
+  { category: '소프트웨어 개발', value: '앱 개발' },
   { category: '소프트웨어 개발', value: '시스템 아키텍처' },
   { category: '데이터 & AI', value: '데이터 분석' },
   { category: '데이터 & AI', value: '머신러닝' },
