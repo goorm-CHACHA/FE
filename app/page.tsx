@@ -6,7 +6,7 @@ import {
   CardFooter,
   CardHeader,
 } from '~/components/common/card';
-import ChatBubble from '~/components/common/chat-bubble';
+import ChatBubble from '~/components/chat/chat-bubble';
 import Chips from '~/components/common/chips';
 import Profile from '~/components/common/profile';
 import SwitchDemo from '~/components/common/switch';
