@@ -5,8 +5,8 @@ import RegisterTemplete from '~/components/register/register-templete';
 const RegisterInterest = () => {
   return (
     <RegisterTemplete
-      title="관심사를 입력하세요"
-      subtitle="네트워킹을 위해 관심사를 3개 이상 입력해주세요"
+      title="관심 분야를 선택하세요"
+      subtitle="관심분야를 선택하세요. (최대 3개)"
       form={<InterestForm />}
     />
   );
