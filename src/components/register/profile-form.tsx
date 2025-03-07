@@ -11,7 +11,7 @@ import useFormSubmit from '~/utils/use-form-submit';
 const ProfileForm = () => {
   const methods = useForm<signUpPayload>({
     resolver: zodResolver(signUpSchema),
-    mode: 'onSubmit',
+    mode: 'onBlur',
   });
 
   const onSubmit = methods.handleSubmit(useFormSubmit('/register/job'));
@@ -40,7 +40,9 @@ const ProfileForm = () => {
               type="password"
             />
           </div>
-          <Button className="py-3">다음으로</Button>
+          <Button className="py-3" disabled={!methods.formState.isValid}>
+            다음으로
+          </Button>
         </form>
       </FormProvider>
     </div>

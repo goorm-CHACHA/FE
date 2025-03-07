@@ -19,7 +19,11 @@ const GroupLabel = (group: GroupBase<GroupedJobOption>) => {
 };
 
 export default function JobSelect() {
-  const { control, handleSubmit } = useForm();
+  const {
+    control,
+    handleSubmit,
+    formState: { isValid },
+  } = useForm();
   const onSubmit = handleSubmit(useFormSubmit('/register/interest'));
 
   return (
@@ -73,7 +77,9 @@ export default function JobSelect() {
             )}
           />
         </div>
-        <Button className="py-3">다음으로</Button>
+        <Button className="py-3" disabled={!isValid}>
+          다음으로
+        </Button>
       </form>
     </div>
   );
