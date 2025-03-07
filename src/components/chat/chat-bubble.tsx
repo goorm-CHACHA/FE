@@ -2,7 +2,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '~/utils/cn';
 
 const chatBubbleVariants = cva(
-  'rounded-2xl p-3 max-w-[70%] break-words relative',
+  'rounded-2xl p-3 max-w-[70%] w-fit break-words whitespace-normal relative',
   {
     variants: {
       variant: {
@@ -39,6 +39,7 @@ const ChatBubble = ({
   return (
     <div
       className={cn(
+        'mb-4',
         'relative',
         variant === 'sender' ? 'flex justify-end' : 'flex justify-start',
       )}
