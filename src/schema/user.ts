@@ -40,7 +40,9 @@ export const loginSchema = z.object({
 
 export const signUpSchema = z
   .object({
+    name: nameSchema,
     id: idSchema,
+    email: emailSchema,
     password: passwordSchema,
     passwordConfirm: passwordConfirmSchema,
   })

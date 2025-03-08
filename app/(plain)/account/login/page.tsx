@@ -32,7 +32,7 @@ const Page = () => {
           </form>
         </FormProvider>
         <div className="flex justify-between text-xs mt-8 text-gray-600">
-          <Link href="/account/register">회원가입</Link>
+          <Link href="/register">회원가입</Link>
           <Link href="/account/find-id-pw">아이디﹒비밀번호 찾기</Link>
         </div>
       </div>
