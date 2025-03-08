@@ -21,6 +21,7 @@ const inputVariants = cva(
       inputSize: {
         default: '',
         md: 'w-[230px]',
+        full: 'w-full',
       },
     },
     defaultVariants: {
@@ -48,7 +49,7 @@ const Input = ({
     <div
       className={`
         flex
-        ${labelDirection === 'left' ? 'items-center justify-between' : 'flex-col'}`}
+        ${labelDirection === 'left' ? 'items-center justify-between' : 'flex-col w-full'}`}
     >
       {/* label: top */}
       {label && labelDirection === 'top' && (
