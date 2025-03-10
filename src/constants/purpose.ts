@@ -1,9 +1,9 @@
-export interface PerposeOption {
+export interface PurposeOption {
   category: string;
   value: string;
 }
 
-export const perposeOptions: PerposeOption[] = [
+export const purposeOptions: PurposeOption[] = [
   { category: '멘토링 & 커리어 성장', value: '업계 전문가 멘토 찾기' },
   { category: '멘토링 & 커리어 성장', value: '경력 상담' },
   {

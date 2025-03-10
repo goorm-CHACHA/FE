@@ -1,24 +1,23 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
-import {
-  FormDataType,
-  PartialFormDataType,
-  ProfileFormType,
-} from '~/types/form';
+import { PartialFormDataType, PartialQRCodeType } from '~/types/form';
 
 interface FormStoreType {
   formData: PartialFormDataType;
-  qrData: PartialFormDataType;
-  setQRData: (data: PartialFormDataType) => void;
+  qrData: PartialQRCodeType;
   setFormData: (data: PartialFormDataType) => void;
+  setQRData: (data: PartialQRCodeType) => void;
+  clearStore: () => void;
 }
 
 export const useFormStore = create<FormStoreType>()(
   persist(
     (set) => ({
-      formData: {} as FormDataType,
-      qrData: {} as ProfileFormType,
-      setQRData: (data) => set((state) => ({ ...state, qrData: data })),
+      formData: {},
+      qrData: {},
+      setQRData: (data) =>
+        set((state) => ({ qrData: { ...state.qrData, ...data } })),
+
       setFormData: (data) =>
         set((state) => {
           const transformedData: PartialFormDataType = {
@@ -31,6 +30,13 @@ export const useFormStore = create<FormStoreType>()(
           };
           return { formData: transformedData };
         }),
+
+      clearStore: () => {
+        set(() => ({
+          formData: {},
+          qrData: {},
+        }));
+      },
     }),
     {
       name: 'form-storage',

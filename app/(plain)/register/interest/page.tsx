@@ -6,7 +6,7 @@ const RegisterInterest = () => {
   return (
     <RegisterTemplete
       title="관심 분야를 선택하세요"
-      subtitle="관심분야를 선택하세요. (최대 3개)"
+      subtitle="관심분야를 선택하세요. (최대 2개)"
     >
       <InterestForm />
     </RegisterTemplete>

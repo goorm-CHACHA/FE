@@ -7,7 +7,7 @@ import { QRCodeSVG } from 'qrcode.react';
 
 const Page = () => {
   const router = useRouter();
-  const { qrData } = useFormStore();
+  const { qrData, clearStore } = useFormStore();
 
   return (
     <div className="flex flex-col gap-4 min-h-screen px-6 justify-center items-center">
@@ -32,6 +32,16 @@ const Page = () => {
         }}
       >
         네트워킹존 입장하기
+      </Button>
+      <Button
+        variant="red"
+        size="full"
+        onClick={() => {
+          sessionStorage.removeItem('form-storage');
+          clearStore();
+        }}
+      >
+        데이터 삭제하기
       </Button>
     </div>
   );

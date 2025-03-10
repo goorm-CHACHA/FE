@@ -10,7 +10,20 @@ function useFormSubmit(redirectUrl: string) {
 
   return (data: PartialFormDataType) => {
     if (path === '/register') {
-      setQRData(data);
+      setQRData({
+        id: data.id || '',
+        email: data.email || '',
+      });
+    }
+
+    if (path === '/register/job') {
+      const random = Math.floor(1 + Math.random() * 1000);
+      const NickName = `${data.job?.value}${random}`;
+      setQRData({
+        name: NickName,
+        job: data.job,
+        purpose: data.purpose,
+      });
     }
 
     setFormData(data);

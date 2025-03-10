@@ -9,6 +9,7 @@ import {
 } from '~/constants/job-options';
 import Button from '~/components/common/button';
 import useFormSubmit from '~/utils/use-form-submit';
+import { purposeOptions } from '~/constants/purpose';
 
 const GroupLabel = (group: GroupBase<GroupedJobOption>) => {
   return (
@@ -68,6 +69,29 @@ export default function JobSelect() {
                   instanceId="career-select"
                   options={careerOptions}
                   getOptionLabel={(e) => e.value}
+                  isClearable
+                />
+                {fieldState.error && (
+                  <p className="text-sm text-red-500 mt-2">
+                    {fieldState.error.message}
+                  </p>
+                )}
+              </div>
+            )}
+          />
+          <Controller
+            name="purpose"
+            control={control}
+            rules={{ required: '참여 목적을 선택해주세요.' }}
+            render={({ field, fieldState }) => (
+              <div>
+                <p className="mb-1 font-medium text-sm">참여 목적</p>
+                <Select
+                  {...field}
+                  instanceId="purpose"
+                  getOptionValue={(e) => e.value}
+                  getOptionLabel={(e) => e.value}
+                  options={purposeOptions}
                   isClearable
                 />
                 {fieldState.error && (
