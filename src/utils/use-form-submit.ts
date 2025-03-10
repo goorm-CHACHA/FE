@@ -1,15 +1,20 @@
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useFormStore } from '~/stores/use-form-store';
-import { PrevFormDataType } from '~/types/form';
+import { PartialFormDataType } from '~/types/form';
 
 function useFormSubmit(redirectUrl: string) {
   const router = useRouter();
-  const { formData, setFormData } = useFormStore();
+  const path = usePathname();
 
-  return (data: PrevFormDataType) => {
+  const { setFormData, setQRData } = useFormStore();
+
+  return (data: PartialFormDataType) => {
+    if (path === '/register') {
+      setQRData(data);
+    }
+
     setFormData(data);
     router.push(redirectUrl);
-    console.log(formData);
   };
 }
 

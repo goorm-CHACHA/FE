@@ -1,12 +1,14 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm, FormProvider } from 'react-hook-form';
+import { useForm, FormProvider, Controller } from 'react-hook-form';
+import Select from 'react-select';
 
 import Input from '~/components/common/input';
 import Button from '~/components/common/button';
 import { signUpPayload, signUpSchema } from '~/schema/user';
 import useFormSubmit from '~/utils/use-form-submit';
+import { perposeOptions } from '~/constants/perpose';
 
 const ProfileForm = () => {
   const methods = useForm<signUpPayload>({
@@ -14,7 +16,9 @@ const ProfileForm = () => {
     mode: 'onBlur',
   });
 
-  const onSubmit = methods.handleSubmit(useFormSubmit('/register/job'));
+  const { control, handleSubmit } = methods;
+
+  const onSubmit = handleSubmit(useFormSubmit('/register/job'));
 
   return (
     <div className="h-full">
@@ -38,11 +42,33 @@ const ProfileForm = () => {
               label="비밀번호"
               type="password"
             />
-            <Input
+            {/* <Input
               name="passwordConfirm"
               placeholder="비밀번호 확인"
               label="비밀번호 확인"
               type="password"
+            /> */}
+            <Controller
+              name="perpose"
+              control={control}
+              render={({ field, fieldState }) => (
+                <div>
+                  <p className="mb-1 font-medium text-sm">참여 목적</p>
+                  <Select
+                    {...field}
+                    instanceId="perpose"
+                    getOptionValue={(e) => e.value}
+                    getOptionLabel={(e) => e.value}
+                    options={perposeOptions}
+                    isClearable
+                  />
+                  {fieldState.error && (
+                    <p className="text-sm text-red-500 mt-2">
+                      {fieldState.error.message}
+                    </p>
+                  )}
+                </div>
+              )}
             />
           </div>
           <Button className="py-3" disabled={!methods.formState.isValid}>

@@ -1,28 +1,19 @@
 export interface ProfileFormType {
-  name?: string;
-  id?: string;
-  password?: string;
-  email?: string;
+  name: string;
+  id: string;
+  password: string;
+  email: string;
+  purpose: { category: string; value: string };
 }
 
 export interface JobFormType {
-  job?: { category: string; value: string; label: string };
-  career?: { value: string; label: string };
-}
-
-export interface JobFormTransformedType {
-  job?: { category: string; value: string };
-  career?: string;
+  job: { category: string; value: string };
+  career: { value: string } | string;
 }
 
 export interface InterestFormType {
-  interest?: string[];
+  interest: string[];
 }
 
-// interface는 union 정의 불가
-export type PrevFormDataType = ProfileFormType | JobFormType | InterestFormType;
-
-// interface는 & 사용 불가
-export type FormDataType = ProfileFormType &
-  JobFormTransformedType &
-  InterestFormType;
+export type FormDataType = ProfileFormType & JobFormType & InterestFormType;
+export type PartialFormDataType = Partial<FormDataType>;

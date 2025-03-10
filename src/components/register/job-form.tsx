@@ -45,6 +45,7 @@ export default function JobSelect() {
                   instanceId="job-select"
                   options={groupedJobOptions}
                   formatGroupLabel={GroupLabel}
+                  getOptionLabel={(e) => e.value}
                   isClearable
                 />
                 {fieldState.error && (
@@ -66,6 +67,7 @@ export default function JobSelect() {
                   {...field}
                   instanceId="career-select"
                   options={careerOptions}
+                  getOptionLabel={(e) => e.value}
                   isClearable
                 />
                 {fieldState.error && (

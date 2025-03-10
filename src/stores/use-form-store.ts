@@ -1,29 +1,34 @@
 import { create } from 'zustand';
-import { PrevFormDataType, FormDataType } from '~/types/form';
+import {
+  FormDataType,
+  PartialFormDataType,
+  ProfileFormType,
+} from '~/types/form';
 
 interface FormStoreType {
-  formData: FormDataType;
-  setFormData: (data: PrevFormDataType) => void;
+  formData: PartialFormDataType;
+  qrData: PartialFormDataType;
+  setQRData: (data: PartialFormDataType) => void;
+  setFormData: (data: PartialFormDataType) => void;
 }
 
 export const useFormStore = create<FormStoreType>((set) => ({
   formData: {} as FormDataType,
+  qrData: {} as ProfileFormType,
+  setQRData: (data) => set((state) => ({ ...state, qrData: data })),
   setFormData: (data) =>
     set((state) => {
-      // job , career 데이터 형식 변환
-      const transformedData: Partial<FormDataType> = {
+      console.log('Received career:', data.career); // 값 확인
+      const transformedData: PartialFormDataType = {
         ...state.formData,
         ...data,
-        job:
-          'job' in data
-            ? {
-                category: data.job?.category ?? '',
-                value: data.job?.value ?? '',
-              }
-            : undefined,
-        career: 'career' in data ? (data.career?.value ?? '') : undefined,
+        career:
+          data.career !== undefined && typeof data.career === 'object'
+            ? data.career.value
+            : state.formData.career,
       };
 
+      console.log('Transformed career:', transformedData.career); // 변환된 값 확인
       return { formData: transformedData };
     }),
 }));
