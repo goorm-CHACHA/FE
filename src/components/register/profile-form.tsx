@@ -25,15 +25,12 @@ const ProfileForm = () => {
         >
           <div className="flex flex-col gap-5">
             <Input name="name" placeholder="이름" label="이름" />
-            <div className="flex items-end justify-between gap-5">
-              <Input
-                name="id"
-                placeholder="아이디"
-                label="아이디"
-                inputSize="full"
-              />
-              <Button className="h-[42px]">중복 확인</Button>
-            </div>
+            <Input
+              name="id"
+              placeholder="아이디"
+              label="아이디"
+              button={<Button className="h-[42px]">중복 확인</Button>}
+            />
             <Input name="email" placeholder="이메일" label="이메일" />
             <Input
               name="password"
