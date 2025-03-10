@@ -3,11 +3,11 @@ import classNames from 'classnames';
 import './style.css';
 import * as Accordion from '@radix-ui/react-accordion';
 
-interface AccordionDemoProps {
+interface AccordionProps {
   className?: string;
   children?: React.ReactNode;
 }
-const AccordionDemo = ({ className, children }: AccordionDemoProps) => (
+const Accordions = ({ className, children }: AccordionProps) => (
   <Accordion.Root
     className={`w-[300px] rounded-md bg-mauve6 shadow-[0_2px_10px] shadow-black/5 ${className}`}
     type="single"
@@ -90,6 +90,6 @@ const AccordionContent = React.forwardRef<
 ));
 AccordionContent.displayName = 'AccordionContent';
 
-export { AccordionDemo, AccordionContent, AccordionItem, AccordionTrigger };
+export { Accordions, AccordionContent, AccordionItem, AccordionTrigger };
 
 //  5:37 + 1:42 = 6:39 + 40 => 7:22시간 공부 (6:31분에)
