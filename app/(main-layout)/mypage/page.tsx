@@ -33,15 +33,20 @@ const Page = () => {
   const currentUserId = 'hong123';
   const currentUserData = mockUserData.find(
     (user) => user.id === currentUserId,
-  ) as UserData |  undefined ;
+  ) as UserData | undefined;
 
   const signOutHandler = () => {
     console.log('hello ');
   };
 
-  const [userData, setUserData] = useState<UserData | null>(currentUserData || null);
+  const [userData, setUserData] = useState<UserData | null>(
+    currentUserData || null,
+  );
 
-  const handleUserDataChange = (key: keyof UserData, value: string | string[]) => {
+  const handleUserDataChange = (
+    key: keyof UserData,
+    value: string | string[],
+  ) => {
     setUserData((prevData) => {
       if (prevData) {
         return {
@@ -52,7 +57,7 @@ const Page = () => {
       return prevData;
     });
   };
-  
+
   useEffect(() => {
     // 입력값이 바뀌고 있는가? 수시로 값을 받는 거 말고 나중에 성능 최적화할 것.
     console.log(userData);

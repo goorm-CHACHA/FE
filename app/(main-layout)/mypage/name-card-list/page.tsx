@@ -1,6 +1,5 @@
 'use client';
-import React, { useRef, useState } from 'react';
-import BottomNavigation from '~/components/common/bottom-nav';
+import React from 'react';
 import Profile from '~/components/common/profile';
 
 const Page = () => {
