@@ -26,7 +26,9 @@ const Profile = ({
   };
 
   return (
-    <div className="rounded-2xl p-4 m-2 w-[350px] sm:w-[400px]  break-words relative {...props} flex bg-white text-gray-700 gap-4 py-8 justify-between item-bottom">
+    <div
+      className={`rounded-2xl p-4 m-2 w-[350px] sm:w-[400px]  break-words relative {...props} flex bg-white text-gray-700 gap-4 py-8 justify-between item-bottom ${className}`}
+    >
       <div className="flex gap-4 items-center justify-between">
         <DefaultProfile />
         <div>
