@@ -2,7 +2,7 @@
 import QrScanner from 'qr-scanner';
 import React, { useEffect, useRef, useState } from 'react';
 
-const page = () => {
+const QrReader = () => {
   // qr 스캔이 불가능한 상태 true
   const [qrError, setQrError] = useState(false);
 
@@ -49,13 +49,16 @@ const page = () => {
             QrOptions,
           );
           // 카메라 사용 허가되었는지 확인
-          qrScanner.start().catch((e) => setQrError(true));
+          qrScanner.start().catch((e) => {
+            console.error('QR Scanner Error:', e);
+            setQrError(true);
+          });
 
           return () => qrScanner.destroy();
         }
       }
     });
-  }, []);
+  });
 
   return (
     <div id="qr-code" className="h-screen">
@@ -81,4 +84,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default QrReader;
