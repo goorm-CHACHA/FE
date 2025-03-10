@@ -1,71 +1,39 @@
-'use client';
-import { useState } from 'react';
-import { IoCloseSharp } from 'react-icons/io5';
-import { cva, type VariantProps } from 'class-variance-authority';
+import { Dialog } from 'radix-ui';
+import Button from './button';
 
-import { cn } from '~/utils/cn';
-import Button from '~/components/common/button';
-
-const modalOneBtnVariants = cva(
-  'rounded-2xl p-3 break-words  whitespace-pre-line fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white text-black m-auto height-2xl',
-  {
-    variants: {
-      variant: {
-        system: 'bg-gray-200 text-black mr-auto rounded-bl-md',
-        btn: 'bg-white text-black mx-auto width-2xl height-2xl',
-      },
-      size: {
-        default: 'text-sm pt-16 px-8 pb-6 sm:pt-16 sm:px-16',
-        small: 'text-xs p-2',
-        large: 'text-base p-4',
-      },
-    },
-    defaultVariants: {
-      variant: 'btn',
-      size: 'default',
-    },
-  },
-);
-
-interface ModalOneBtnProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof modalOneBtnVariants> {
-  textTitle?: string;
+interface ModalOneBtnProps {
   text?: string;
   textBtn?: string;
 }
 
-const ModalOneBtn = ({
-  variant,
-  size,
-  className,
-  text,
-  textTitle,
-  textBtn,
-  ...props
-}: ModalOneBtnProps) => {
-  const [isClicked, setIsClicked] = useState(false);
-  const btnCloseHandler = () => {
-    setIsClicked(true);
+const ModalOneBtnR = ({ text, textBtn }: ModalOneBtnProps) => {
+  const clickHandler = () => {
+    console.log('btn클릭됨')
     // page 이동
   };
+
   return (
-    !isClicked && (
-      <div
-        className={cn(modalOneBtnVariants({ variant, size }), className)}
-        {...props}
-      >
-        <div className="absolute top-2 left-0 flex justify-between w-full px-4">
-          <p>{textTitle}</p>
-          <IoCloseSharp onClick={btnCloseHandler} className="cursor-pointer" />
-        </div>
-        <p className="mb-10">{text}</p>
-        <Button size={'full'} onClick={btnCloseHandler}>
-          {textBtn}
-        </Button>
-      </div>
-    )
+    <Dialog.Root>
+      <Dialog.Trigger asChild>
+        <button>모달 1버튼</button>
+      </Dialog.Trigger>
+      <Dialog.Portal>
+        <Dialog.Overlay className="fixed inset-0 bg-blackA6 data-[state=open]:animate-overlayShow" />
+        <Dialog.Content className="fixed left-1/2 top-1/2 max-h-[85vh] w-[90vw] max-w-[500px] text-slate-700 -translate-x-1/2 -translate-y-1/2 rounded-md bg-gray1 p-[25px] shadow-[var(--shadow-6)] focus:outline-none data-[state=open]:animate-contentShow">
+          <Dialog.Title />
+          <Dialog.Description />
+          <div className="relative w-full text-center">
+            <p className="mb-10">{text}</p>
+            <Dialog.Close asChild>
+              <Button size={'full'} onClick={clickHandler}>
+                {textBtn}
+              </Button>
+            </Dialog.Close>
+          </div>
+        </Dialog.Content>
+      </Dialog.Portal>
+    </Dialog.Root>
   );
 };
 
-export default ModalOneBtn;
+export default ModalOneBtnR;
