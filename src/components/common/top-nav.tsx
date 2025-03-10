@@ -6,15 +6,19 @@ interface TopNavigationProps {
   onQuickConnectToggle?: (isOn: boolean) => void;
   title?: string;
   showQR?: boolean;
+  className?: string;
 }
 
 const TopNavigation = ({
   onQuickConnectToggle,
   title,
   showQR = true,
+  className,
 }: TopNavigationProps) => {
   return (
-    <nav className="flex justify-between items-center bg-white border-b border-gray-200 px-4 py-4">
+    <nav
+      className={`flex justify-between items-center bg-white border-b border-gray-200 px-4 py-4 ${className}`}
+    >
       <div className="w-1/3">
         {onQuickConnectToggle && <SwitchDemo onToggle={onQuickConnectToggle} />}
       </div>
