@@ -6,13 +6,12 @@ import Button from '~/components/common/button';
 import DefaultProfile from '~/components/common/default-profile';
 
 interface ProfileProps extends React.HTMLAttributes<HTMLDivElement> {
-  id: string;
   name: string;
   info1: string;
   info2: string;
 }
 
-const Profile = ({ id, name, info1, info2, ...props }: ProfileProps) => {
+const Profile = ({ name, info1, info2, ...props }: ProfileProps) => {
   const [isAppliedMatching, setIsAppliedMatching] = useState(false);
 
   const clickMatchingHandler = () => {

@@ -51,6 +51,10 @@ const ChatPage = () => {
   const [selectedChat, setSelectedChat] = useState<Chat | null>(tempChats[0]);
   const [messages, setMessages] = useState(tempMessages);
 
+  console.log(chats);
+  console.log(setChats);
+  console.log(setSelectedChat);
+
   const handleSendMessage = (message: string) => {
     const newMessage = {
       id: messages.length + 1,
