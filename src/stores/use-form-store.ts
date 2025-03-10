@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { persist, createJSONStorage } from 'zustand/middleware';
 import {
   FormDataType,
   PartialFormDataType,
@@ -12,23 +13,28 @@ interface FormStoreType {
   setFormData: (data: PartialFormDataType) => void;
 }
 
-export const useFormStore = create<FormStoreType>((set) => ({
-  formData: {} as FormDataType,
-  qrData: {} as ProfileFormType,
-  setQRData: (data) => set((state) => ({ ...state, qrData: data })),
-  setFormData: (data) =>
-    set((state) => {
-      console.log('Received career:', data.career); // 값 확인
-      const transformedData: PartialFormDataType = {
-        ...state.formData,
-        ...data,
-        career:
-          data.career !== undefined && typeof data.career === 'object'
-            ? data.career.value
-            : state.formData.career,
-      };
-
-      console.log('Transformed career:', transformedData.career); // 변환된 값 확인
-      return { formData: transformedData };
+export const useFormStore = create<FormStoreType>()(
+  persist(
+    (set) => ({
+      formData: {} as FormDataType,
+      qrData: {} as ProfileFormType,
+      setQRData: (data) => set((state) => ({ ...state, qrData: data })),
+      setFormData: (data) =>
+        set((state) => {
+          const transformedData: PartialFormDataType = {
+            ...state.formData,
+            ...data,
+            career:
+              data.career !== undefined && typeof data.career === 'object'
+                ? data.career.value
+                : state.formData.career,
+          };
+          return { formData: transformedData };
+        }),
     }),
-}));
+    {
+      name: 'form-storage',
+      storage: createJSONStorage(() => sessionStorage),
+    },
+  ),
+);
