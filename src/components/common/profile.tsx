@@ -9,18 +9,25 @@ interface ProfileProps extends React.HTMLAttributes<HTMLDivElement> {
   name: string;
   info1: string;
   info2: string;
+  hideMatching?: boolean;
 }
 
-const Profile = ({ name, info1, info2, ...props }: ProfileProps) => {
+const Profile = ({
+  className,
+  name,
+  info1,
+  info2,
+  hideMatching,
+  ...props
+}: ProfileProps) => {
   const [isAppliedMatching, setIsAppliedMatching] = useState(false);
-
   const clickMatchingHandler = () => {
     setIsAppliedMatching((prev) => !prev);
   };
 
   return (
     <div
-      className="border rounded-2xl p-6 max-w-[90%] sm:max-w-[50%] md:max-w-[40%] break-words bg-white text-gray-700 flex gap-4 justify-between text-sm"
+      className={`rounded-2xl p-4 m-2 w-[350px] sm:w-[400px]  break-words relative {...props} flex bg-white text-gray-700 gap-4 py-8 justify-between item-bottom ${className}`}
       {...props}
     >
       <div className="flex gap-4 items-center justify-between">
@@ -34,23 +41,23 @@ const Profile = ({ name, info1, info2, ...props }: ProfileProps) => {
         </div>
       </div>
       {/* 매칭할 때 버튼 */}
-      <div className="flex flex-col gap-4">
-        {
+      {!hideMatching && (
+        <div className="flex flex-col gap-4">
           <span
-            className={`text-sm pb-3 ${isAppliedMatching ? 'opacity-100' : 'opacity-0'}`}
+            className={`h-6 flex items-center text-xs border p-2 text-zinc-500 border-zinc-500 rounded-2xl ${isAppliedMatching ? 'opacity-100' : 'opacity-0'}`}
           >
             ✅ 매칭 완료
           </span>
-        }
-        <Button
-          size="sm"
-          className={'h-10 w-full flex align-bottom'}
-          variant={isAppliedMatching ? 'grey' : 'default'}
-          onClick={clickMatchingHandler}
-        >
-          {isAppliedMatching === true ? `신청 완료` : `매칭 신청`}
-        </Button>
-      </div>
+          <Button
+            size="sm"
+            className={'h-10 w-full align-bottom'}
+            variant={isAppliedMatching ? 'grey' : 'default'}
+            onClick={clickMatchingHandler}
+          >
+            {isAppliedMatching === true ? `신청 완료` : `매칭 신청`}
+          </Button>
+        </div>
+      )}
     </div>
   );
 };
