@@ -6,7 +6,6 @@ import Button from '~/components/common/button';
 import DefaultProfile from '~/components/common/default-profile';
 
 interface ProfileProps extends React.HTMLAttributes<HTMLDivElement> {
-  id: string;
   name: string;
   info1: string;
   info2: string;

@@ -15,6 +15,7 @@ interface ChatWindowProps {
 }
 
 const ChatWindow = ({ messages, receiverId, status }: ChatWindowProps) => {
+  console.log(receiverId);
   return (
     <div className="flex-1 overflow-y-auto p-4">
       {status === 'accepted' ? (
