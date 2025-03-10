@@ -5,13 +5,13 @@ import Button from './button';
 interface ModalTwoBtnProps {
   text?: string;
   textLBtn?: string;
-  textRBtn?: string; 
+  textRBtn?: string;
 }
 
 const ModalTwoBtnR = ({ text, textLBtn, textRBtn }: ModalTwoBtnProps) => {
   const clickHandler = () => {
-      console.log('btn클릭됨')
-      // page 이동
+    console.log('btn클릭됨');
+    // page 이동
   };
   return (
     <Dialog.Root>
@@ -26,14 +26,14 @@ const ModalTwoBtnR = ({ text, textLBtn, textRBtn }: ModalTwoBtnProps) => {
           <div className="relative w-full text-center">
             <p className="mb-10">{text}</p>
             <Dialog.Close asChild>
-            <div className="flex gap-2">
-              <Button size={'full'} onClick={clickHandler}>
-                {textLBtn}
-              </Button>
-              <Button size={'full'} onClick={clickHandler}>
-                {textRBtn}
-              </Button>
-            </div>
+              <div className="flex gap-2">
+                <Button size={'full'} onClick={clickHandler}>
+                  {textLBtn}
+                </Button>
+                <Button size={'full'} onClick={clickHandler}>
+                  {textRBtn}
+                </Button>
+              </div>
             </Dialog.Close>
           </div>
         </Dialog.Content>

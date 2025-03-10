@@ -8,7 +8,7 @@ interface ModalOneBtnProps {
 
 const ModalOneBtnR = ({ text, textBtn }: ModalOneBtnProps) => {
   const clickHandler = () => {
-    console.log('btn클릭됨')
+    console.log('btn클릭됨');
     // page 이동
   };
 
