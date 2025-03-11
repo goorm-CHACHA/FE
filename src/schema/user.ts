@@ -12,7 +12,7 @@ const passwordSchema = z
   .min(6, '비밀번호는 최소 6글자 이상이어야 합니다.')
   .max(20, '비밀번호는 최대 20글자까지 가능합니다.');
 
-const passwordConfirmSchema = z.string();
+// const passwordConfirmSchema = z.string();
 
 const koreanNameSchema = z
   .string()
@@ -38,23 +38,21 @@ export const loginSchema = z.object({
   password: passwordSchema,
 });
 
-export const signUpSchema = z
-  .object({
-    name: nameSchema,
-    id: idSchema,
-    email: emailSchema,
-    password: passwordSchema,
-    passwordConfirm: passwordConfirmSchema,
-  })
-  .superRefine(({ password, passwordConfirm }, ctx) => {
-    if (password !== passwordConfirm) {
-      ctx.addIssue({
-        code: 'custom',
-        message: '비밀번호가 맞지 않습니다.',
-        path: ['passwordConfirm'],
-      });
-    }
-  });
+export const signUpSchema = z.object({
+  name: nameSchema,
+  id: idSchema,
+  email: emailSchema,
+  password: passwordSchema,
+});
+// .superRefine(({ password, passwordConfirm }, ctx) => {
+//   if (password !== passwordConfirm) {
+//     ctx.addIssue({
+//       code: 'custom',
+//       message: '비밀번호가 맞지 않습니다.',
+//       path: ['passwordConfirm'],
+//     });
+//   }
+// });
 
 export const findIdSchema = z.object({
   name: nameSchema,

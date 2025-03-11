@@ -8,7 +8,7 @@ import useFormSubmit from '~/utils/use-form-submit';
 
 const InterestForm = () => {
   const MIN_SELECTION = 1; // 최소 선택 개수
-  const MAX_SELECTION = 3; // 최대 선택 개수
+  const MAX_SELECTION = 2; // 최대 선택 개수
 
   const MESSAGE = {
     MIN_ERROR: `최소 ${MIN_SELECTION}개 이상 선택해야 합니다.`,
@@ -33,7 +33,7 @@ const InterestForm = () => {
   const onSubmit = handleSubmit(useFormSubmit('/'));
   const selectedOptions = watch('interest');
 
-  // 선택하지 않거나 3개 이상 선택할 경우 방지
+  // 선택하지 않거나 n개 이상 선택할 경우 방지
   const handleValueChange = (newValue: string[]) => {
     clearErrors('interest');
 
