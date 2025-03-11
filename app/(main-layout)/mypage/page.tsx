@@ -2,11 +2,11 @@
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import {
-  AccordionDemo,
+  Accordions,
   AccordionItem,
   AccordionTrigger,
   AccordionContent,
-} from '~/components/common/accordion-demo/accordion-demo';
+} from '~/components/common/accordion/accordion';
 import DefaultProfile from '~/components/common/default-profile';
 import ModalOneBtn from '~/components/common/modal-one-btn';
 import ModalTwoBtn from '~/components/common/modal-two-btn';
@@ -68,7 +68,7 @@ const Page = () => {
   }
   return (
     <div className="flex flex-col justify-center items-center gap-4 mt-2">
-      <AccordionDemo>
+      <Accordions>
         <AccordionItem value="item-1">
           <AccordionTrigger>
             <DefaultProfile />
@@ -101,7 +101,7 @@ const Page = () => {
             </div>
           </AccordionContent>
         </AccordionItem>
-      </AccordionDemo>
+      </Accordions>
       <div className="h-20 bg-white w-[300px] rounded-md items-center flex justify-center text-violet10">
         <Link href="/mypage/name-card-list">저장한 명함 목록</Link>
       </div>
