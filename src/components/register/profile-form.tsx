@@ -14,7 +14,9 @@ const ProfileForm = () => {
     mode: 'onBlur',
   });
 
-  const onSubmit = methods.handleSubmit(useFormSubmit('/register/job'));
+  const { handleSubmit } = methods;
+
+  const onSubmit = handleSubmit(useFormSubmit('/register/job'));
 
   return (
     <div className="h-full">
@@ -25,15 +27,12 @@ const ProfileForm = () => {
         >
           <div className="flex flex-col gap-5">
             <Input name="name" placeholder="이름" label="이름" />
-            <div className="flex items-end justify-between gap-5">
-              <Input
-                name="id"
-                placeholder="아이디"
-                label="아이디"
-                inputSize="full"
-              />
-              <Button className="h-[42px]">중복 확인</Button>
-            </div>
+            <Input
+              name="id"
+              placeholder="아이디"
+              label="아이디"
+              button={<Button className="h-[42px]">중복 확인</Button>}
+            />
             <Input name="email" placeholder="이메일" label="이메일" />
             <Input
               name="password"
@@ -41,12 +40,12 @@ const ProfileForm = () => {
               label="비밀번호"
               type="password"
             />
-            <Input
+            {/* <Input
               name="passwordConfirm"
               placeholder="비밀번호 확인"
               label="비밀번호 확인"
               type="password"
-            />
+            /> */}
           </div>
           <Button className="py-3" disabled={!methods.formState.isValid}>
             다음으로
