@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 import { formatDistanceToNow } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import type { Locale } from 'date-fns';
+import { Card, CardBody, CardFooter, CardHeader } from '../common/card';
 interface NotifyProps {
   messageData: {
     message: string;
@@ -56,8 +57,8 @@ const NotifyCard = ({ messageData }: NotifyProps) => {
   };
 
   return (
-    <div className="flex flex-col justify-center w-full mb-4 bg-mauve12 p-2 max-h-58 rounded-2xl max-w-screen-sm">
-      <div className="flex flex-col px-2 py-2 gap-4 w-full max-w-screen-sm">
+    <div>
+      <div>
         {notificationsToShow()}
       </div>
     </div>
@@ -81,51 +82,45 @@ const RequestCard = ({
   onAccept,
 }: CardProps) => {
   return (
-    <div>
-      <TopContainer>
-        <TimeLeft />
-        <Arrow />
-      </TopContainer>
-      <MiddleContainer>
-        <DefaultProfile />
-        <MsgContainer>
-          <MainMsg message={message} />
-          <SubMsg subMessage={subMessage} />
-        </MsgContainer>
-      </MiddleContainer>
-      <BottomContainer>
+    <Card>
+      <CardHeader className="flex justify-between items-center mb-3">
+        <TimeLeft/>
+        <Arrow/>
+      </CardHeader>
+      <CardBody className={`flex justify-left items-center gap-4 mb-4`}>
+      <DefaultProfile />
+       <MsgContainer>
+         <MainMsg message={message} />
+         <SubMsg subMessage={subMessage} />
+       </MsgContainer>
+      </CardBody>
+      <CardFooter className="flex justify-between items-center align-top">
         <TimeAgo timestamp={timeStamp || Date.now()} />
         <Button onClick={onAccept}>수락</Button>
-      </BottomContainer>
-    </div>
-  );
+      </CardFooter>
+    </Card>
+  )
 };
 const NormalCard = ({ message, subMessage, timeStamp }: CardProps) => {
   return (
-    <div>
-      <TopContainer>
+    <Card>
+      <CardHeader className="flex justify-between items-center mb-3">
         <PushAlarm />
-      </TopContainer>
-      <MiddleContainer>
+      </CardHeader>
+      <CardBody className={`flex justify-left items-center gap-4 mb-4`}>
         <MsgContainer>
           <MainMsg message={message} />
           <SubMsg subMessage={subMessage} />
         </MsgContainer>
-      </MiddleContainer>
-      <BottomContainer>
+      </CardBody>
+      <CardFooter className="flex justify-between items-center align-top">
         <TimeAgo timestamp={timeStamp || Date.now()} />
-      </BottomContainer>
-    </div>
+      </CardFooter>
+    </Card>
   );
 };
 // COMPONENTS
 // ▼ ******* 📦 container
-// 🔸 카드 상단 컨테이너
-const TopContainer = ({ children }: ContainerProps) => {
-  return (
-    <div className="flex justify-between items-center mb-3">{children}</div>
-  );
-};
 // 🔸 Msg 컨테이너 - 안에 message, subMessage 선택 취하
 interface ContainerProps {
   children: React.ReactNode;
@@ -135,24 +130,6 @@ interface ContainerProps {
 const MsgContainer = ({ children }: ContainerProps) => {
   return (
     <div className="flex flex-col justify-center gap-2 break-words">
-      {children}
-    </div>
-  );
-};
-
-// 몸통  컨테이너
-const MiddleContainer = ({ children, className }: ContainerProps) => {
-  return (
-    <div className={`flex justify-left items-center gap-4 mb-4 ${className} `}>
-      {children}
-    </div>
-  );
-};
-
-// 🔸 하단 컨테이너
-const BottomContainer = ({ children }: ContainerProps) => {
-  return (
-    <div className="flex justify-between items-center align-top">
       {children}
     </div>
   );
