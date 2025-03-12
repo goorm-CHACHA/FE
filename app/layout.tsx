@@ -1,5 +1,6 @@
 import '~/styles/globals.css';
 import type { Metadata, Viewport } from 'next';
+import Script from 'next/script';
 
 const APP_NAME = 'Fast Network';
 const APP_DEFAULT_TITLE = 'Fast Network';
@@ -53,7 +54,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="min-h-screen">{children}</body>
+      <body className="min-h-screen">
+        {children}
+        <Script src="/service-worker.js" />
+      </body>
     </html>
   );
 }
