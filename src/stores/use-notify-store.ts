@@ -14,6 +14,7 @@ interface NotificationData {
   requester: { id: string; name?: string } | null;
   receiver: { id: string; name?: string } | null;
   chatRoomId?: number;
+  chatType?: '1to1' |  'group'
 }
 
 interface MessageData {
@@ -21,6 +22,7 @@ interface MessageData {
   subMessage: string;
   status?: MessageType;
   requester?: { id: string; name?: string } | null;
+  chatType?: '1to1' |  'group'
 }
 
 interface NotifyStore {
@@ -31,17 +33,25 @@ interface NotifyStore {
     requester?: { id: string; name?: string } | null,
     receiver?: { id: string; name?: string } | null,
     chatRoomId?: number,
+    chatType?: '1to1' | 'group', 
   ) => void;
   getMessage: () => Record<string, MessageData>;
 }
 
 const useNotifyStore = create<NotifyStore>((set, get) => ({
   notifyMap: {},
-  setNotifyStatus: (id, status, requester = null, receiver = null) => {
+  setNotifyStatus: (
+    id, 
+    status, 
+    requester = null, 
+    receiver = null,
+    chatRoomId,
+    chatType
+  ) => {
     set((state) => ({
       notifyMap: {
         ...state.notifyMap,
-        [id]: { status, requester, receiver },
+        [id]: { status, requester, receiver, chatRoomId, chatType },
       },
     }));
   },
@@ -59,6 +69,7 @@ const useNotifyStore = create<NotifyStore>((set, get) => ({
               message: '네트워킹이 종료되었어요!',
               subMessage: '만족스러운 네트워킹이 되었나요?',
               status: notification.status,
+              chatType: notification.chatType,
             };
             break;
           case 'success':
@@ -66,6 +77,7 @@ const useNotifyStore = create<NotifyStore>((set, get) => ({
               message: '네트워킹이 성사되었습니다!',
               subMessage: '축하드립니다!',
               status: notification.status,
+              chatType: notification.chatType,
             };
             break;
           case 'waiting':
@@ -73,6 +85,7 @@ const useNotifyStore = create<NotifyStore>((set, get) => ({
               message: '상대방이 네트워킹을 고민 중입니다..',
               subMessage: '성사되면 알려드릴게요',
               status: notification.status,
+              chatType: notification.chatType,
             };
             break;
           case 'request':
@@ -81,6 +94,7 @@ const useNotifyStore = create<NotifyStore>((set, get) => ({
               subMessage: '3분 안에 수락하지 않으면 자동 취소됩니다.',
               status: notification.status,
               requester: notification.requester,
+              chatType: notification.chatType,
             };
             break;
           case 'cancelled':
@@ -88,6 +102,7 @@ const useNotifyStore = create<NotifyStore>((set, get) => ({
               message: `${receiverName} 님과의 네트워킹을 취소했습니다.`,
               subMessage: '새로운 네트워킹을 시도해보세요',
               status: notification.status,
+              chatType: notification.chatType,
             };
             break;
           case 'rejected':
@@ -95,6 +110,7 @@ const useNotifyStore = create<NotifyStore>((set, get) => ({
               message: `${requesterName}님이 네트워킹을 거절하였습니다.`,
               subMessage: '담엔 아닐 거예요...;;',
               status: notification.status,
+              chatType: notification.chatType,
             };
             break;
           default:
