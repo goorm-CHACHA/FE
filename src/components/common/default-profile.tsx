@@ -7,7 +7,7 @@ interface DefaultProfileProps extends React.HTMLAttributes<HTMLDivElement> {
 const DefaultProfile = ({ imgSrc, ...props }: DefaultProfileProps) => {
   return (
     <div
-      className="rounded-full overflow-hidden relative bg-slate-400 w-16 h-16"
+      className="rounded-full overflow-hidden relative bg-slate-400 min-w-16 min-h-16 aspect-square"
       {...props}
     >
       {imgSrc ? (
