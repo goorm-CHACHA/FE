@@ -58,9 +58,7 @@ const NotifyCard = ({ messageData }: NotifyProps) => {
 
   return (
     <div>
-      <div>
-        {notificationsToShow()}
-      </div>
+      <div>{notificationsToShow()}</div>
     </div>
   );
 };
@@ -84,22 +82,22 @@ const RequestCard = ({
   return (
     <Card>
       <CardHeader className="flex justify-between items-center mb-3">
-        <TimeLeft/>
-        <Arrow/>
+        <TimeLeft />
+        <Arrow />
       </CardHeader>
       <CardBody className={`flex justify-left items-center gap-4 mb-4`}>
-      <DefaultProfile />
-       <MsgContainer>
-         <MainMsg message={message} />
-         <SubMsg subMessage={subMessage} />
-       </MsgContainer>
+        <DefaultProfile />
+        <MsgContainer>
+          <MainMsg message={message} />
+          <SubMsg subMessage={subMessage} />
+        </MsgContainer>
       </CardBody>
       <CardFooter className="flex justify-between items-center align-top">
         <TimeAgo timestamp={timeStamp || Date.now()} />
         <Button onClick={onAccept}>수락</Button>
       </CardFooter>
     </Card>
-  )
+  );
 };
 const NormalCard = ({ message, subMessage, timeStamp }: CardProps) => {
   return (
