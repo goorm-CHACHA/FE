@@ -14,7 +14,7 @@ interface NotificationData {
   requester: { id: string; name?: string } | null;
   receiver: { id: string; name?: string } | null;
   chatRoomId?: number;
-  chatType?: '1to1' |  'group'
+  chatType?: '1to1' | 'group';
 }
 
 interface MessageData {
@@ -22,7 +22,7 @@ interface MessageData {
   subMessage: string;
   status?: MessageType;
   requester?: { id: string; name?: string } | null;
-  chatType?: '1to1' |  'group'
+  chatType?: '1to1' | 'group';
 }
 
 interface NotifyStore {
@@ -33,7 +33,7 @@ interface NotifyStore {
     requester?: { id: string; name?: string } | null,
     receiver?: { id: string; name?: string } | null,
     chatRoomId?: number,
-    chatType?: '1to1' | 'group', 
+    chatType?: '1to1' | 'group',
   ) => void;
   getMessage: () => Record<string, MessageData>;
 }
@@ -41,12 +41,12 @@ interface NotifyStore {
 const useNotifyStore = create<NotifyStore>((set, get) => ({
   notifyMap: {},
   setNotifyStatus: (
-    id, 
-    status, 
-    requester = null, 
+    id,
+    status,
+    requester = null,
     receiver = null,
     chatRoomId,
-    chatType
+    chatType,
   ) => {
     set((state) => ({
       notifyMap: {
