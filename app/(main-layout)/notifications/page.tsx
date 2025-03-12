@@ -17,7 +17,7 @@ interface Notification {
 const notifications: Notification = { id: 1, type: '1:1' };
 
 const Page = ({ onQuickConnectToggle }: NotifyProps) => {
-  const { getMessage, setNotifyStatus } = useNotifyStore(); 
+  const { getMessage, setNotifyStatus } = useNotifyStore();
   useEffect(() => {
     // 이미 사용자별 필터링이 되어있다고 가정하고, 간단한 키 값('1', '2', '3')을 사용합니다.
     setNotifyStatus(
@@ -25,7 +25,7 @@ const Page = ({ onQuickConnectToggle }: NotifyProps) => {
       'request',
       { id: 'user1', name: '홍길동' },
       { id: 'user2', name: '김철수' },
-      22, 
+      22,
     );
     setNotifyStatus(
       '2',
@@ -39,7 +39,7 @@ const Page = ({ onQuickConnectToggle }: NotifyProps) => {
       'rejected',
       { id: 'user3', name: '김지영' },
       { id: 'user2', name: '김철수' },
-      45, 
+      45,
     );
   }, [setNotifyStatus]);
   // const tabLabels = ['1:1 매칭', '그룹 매칭'];
@@ -47,8 +47,8 @@ const Page = ({ onQuickConnectToggle }: NotifyProps) => {
     if (onQuickConnectToggle) onQuickConnectToggle(isOn);
     //id값 가져와서.. 퀵 커넥트.. 연동...
   };
-  
-  const messages = getMessage(); 
+
+  const messages = getMessage();
 
   const notificationsToShow = useMemo(() => {
     return Object.entries(messages).map(([id, messageData]) => {
@@ -71,9 +71,7 @@ const Page = ({ onQuickConnectToggle }: NotifyProps) => {
             <SwitchDemo onToggle={handleQuickConnectToggle} />
           </div>
         </div>
-        <div className="flex flex-col gap-4">
-          {notificationsToShow}
-        </div>
+        <div className="flex flex-col gap-4">{notificationsToShow}</div>
       </div>
     </div>
   );
