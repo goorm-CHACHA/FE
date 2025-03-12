@@ -1,4 +1,4 @@
-'use client'; 
+'use client';
 import React from 'react';
 import { GrFormNext } from 'react-icons/gr';
 import DefaultProfile from '../common/default-profile';
@@ -7,7 +7,7 @@ import { MessageType } from '../../stores/use-notify-store';
 import { useRouter } from 'next/navigation';
 import { formatDistanceToNow } from 'date-fns';
 import { ko } from 'date-fns/locale';
-import type { Locale } from 'date-fns'
+import type { Locale } from 'date-fns';
 interface NotifyProps {
   messageData: {
     message: string;
@@ -15,7 +15,7 @@ interface NotifyProps {
     status?: MessageType;
     requester?: { id: string; name?: string } | null;
     chatRoomId?: number;
-    timeStamp?: number; 
+    timeStamp?: number;
   };
 }
 
@@ -27,36 +27,36 @@ const NotifyCard = ({ messageData }: NotifyProps) => {
   const handleAccept = () => {
     // 채팅룸 ID가 존재하면 해당 채팅룸 페이지로 이동
     if (chatRoomId) {
-      router.push(`/chatroom/${chatRoomId}`);
+      router.push(`/chat/${chatRoomId}`);
     } else {
       // 채팅룸 ID가 없으면 기본 채팅룸 페이지로 이동하거나 에러 처리 가능
-      router.push('/chatroom');
+      router.push('/chat');
     }
   };
 
   const notificationsToShow = () => {
-    if(status === 'request'){
-      return(
+    if (status === 'request') {
+      return (
         <RequestCard
           message={message}
           subMessage={subMessage}
           timeStamp={timeStamp}
           onAccept={handleAccept}
         />
-      )
-    }else {
+      );
+    } else {
       return (
         <NormalCard
-        message={message}
-        subMessage={subMessage}
-        timeStamp={timeStamp}
-      />
-      )
+          message={message}
+          subMessage={subMessage}
+          timeStamp={timeStamp}
+        />
+      );
     }
-  }
+  };
 
   return (
-    <div className="flex flex-col justify-center w-full bg-mauve12 p-2 max-h-58 rounded-2xl max-w-screen-sm">
+    <div className="flex flex-col justify-center w-full mb-4 bg-mauve12 p-2 max-h-58 rounded-2xl max-w-screen-sm">
       <div className="flex flex-col px-2 py-2 gap-4 w-full max-w-screen-sm">
         {notificationsToShow()}
       </div>
@@ -66,9 +66,7 @@ const NotifyCard = ({ messageData }: NotifyProps) => {
 
 export default NotifyCard;
 
-
-
-//  💳 CARDS  
+//  💳 CARDS
 interface CardProps {
   message: string;
   subMessage: string;
@@ -76,138 +74,142 @@ interface CardProps {
   onAccept?: () => void; // "수락" 버튼 클릭 핸들러
 }
 
-const RequestCard = ({ message, subMessage, timeStamp, onAccept }: CardProps) => {
-  return (
-      <div>
-        <TopContainer>
-          <TimeLeft />
-          <Arrow />
-        </TopContainer>
-        <MiddleContainer>
-          <DefaultProfile />
-          <MsgContainer>
-            <MainMsg message={message} />
-            <SubMsg subMessage={subMessage} />
-          </MsgContainer>
-        </MiddleContainer>
-        <BottomContainer>
-          <TimeAgo timestamp={timeStamp || Date.now()} />
-          <Button onClick={onAccept}>수락</Button>
-        </BottomContainer>
-      </div>
-  );
-};
-const NormalCard = ({message, subMessage, timeStamp}: CardProps) =>  {
+const RequestCard = ({
+  message,
+  subMessage,
+  timeStamp,
+  onAccept,
+}: CardProps) => {
   return (
     <div>
       <TopContainer>
-        <PushAlarm/>
+        <TimeLeft />
+        <Arrow />
       </TopContainer>
       <MiddleContainer>
+        <DefaultProfile />
         <MsgContainer>
-          <MainMsg  message={message}/>
-          <SubMsg subMessage={subMessage}/>
+          <MainMsg message={message} />
+          <SubMsg subMessage={subMessage} />
         </MsgContainer>
       </MiddleContainer>
       <BottomContainer>
-        <TimeAgo timestamp={timeStamp || Date.now()}/>
+        <TimeAgo timestamp={timeStamp || Date.now()} />
+        <Button onClick={onAccept}>수락</Button>
       </BottomContainer>
     </div>
-  )
-} 
-// COMPONENTS 
-// ▼ ******* 📦 container 
-// 🔸 카드 상단 컨테이너 
-const TopContainer = ({ children }: ContainerProps ) => {
-  return(
-    <div className="flex justify-between items-center mb-3">
-      {children}
+  );
+};
+const NormalCard = ({ message, subMessage, timeStamp }: CardProps) => {
+  return (
+    <div>
+      <TopContainer>
+        <PushAlarm />
+      </TopContainer>
+      <MiddleContainer>
+        <MsgContainer>
+          <MainMsg message={message} />
+          <SubMsg subMessage={subMessage} />
+        </MsgContainer>
+      </MiddleContainer>
+      <BottomContainer>
+        <TimeAgo timestamp={timeStamp || Date.now()} />
+      </BottomContainer>
     </div>
-  )
+  );
+};
+// COMPONENTS
+// ▼ ******* 📦 container
+// 🔸 카드 상단 컨테이너
+const TopContainer = ({ children }: ContainerProps) => {
+  return (
+    <div className="flex justify-between items-center mb-3">{children}</div>
+  );
+};
+// 🔸 Msg 컨테이너 - 안에 message, subMessage 선택 취하
+interface ContainerProps {
+  children: React.ReactNode;
+  className?: string;
 }
-// 🔸 Msg 컨테이너 - 안에 message, subMessage 선택 취하 
-interface ContainerProps { children: React.ReactNode; className?: string; }
 
 const MsgContainer = ({ children }: ContainerProps) => {
   return (
-  <div className="flex flex-col justify-center gap-2 break-words">
-    {children}
-  </div>)
-}
+    <div className="flex flex-col justify-center gap-2 break-words">
+      {children}
+    </div>
+  );
+};
 
-// 몸통  컨테이너 
-const MiddleContainer = ({children, className}: ContainerProps) => {
+// 몸통  컨테이너
+const MiddleContainer = ({ children, className }: ContainerProps) => {
   return (
     <div className={`flex justify-left items-center gap-4 mb-4 ${className} `}>
       {children}
-    </div>    
-  )
-}
+    </div>
+  );
+};
 
 // 🔸 하단 컨테이너
-const BottomContainer = ( {children}: ContainerProps ) => {
+const BottomContainer = ({ children }: ContainerProps) => {
   return (
     <div className="flex justify-between items-center align-top">
       {children}
     </div>
-  ) 
-}
-// ⏏️ container 📦 ******** 
+  );
+};
+// ⏏️ container 📦 ********
 
-// ✼✼ 화살표 이모티콘 
+// ✼✼ 화살표 이모티콘
 const Arrow = () => {
   return (
     <div>
-      <GrFormNext/>
+      <GrFormNext />
     </div>
-  )
-}
+  );
+};
 
-// ✼✼매칭요청 뱃지 시간 3분 가정하고 시간 흘러감.. 
+// ✼✼매칭요청 뱃지 시간 3분 가정하고 시간 흘러감..
 const TimeLeft = () => {
   return (
     <p className="inline-block bg-slate-900 text-sm px-4 py-2 rounded-3xl">
       매칭요청
-      <span className="inline-block ml-2 text-red-600">
-        2:59
-      </span>
+      <span className="inline-block ml-2 text-red-600">2:59</span>
     </p>
-  )
-}
+  );
+};
 
-// ✼✼푸시알림 뱃지 
+// ✼✼푸시알림 뱃지
 const PushAlarm = () => {
   return (
     <p className="inline-block bg-slate-900 px-4 py-2 text-sm rounded-3xl">
       푸시알람
     </p>
-  )
-}
+  );
+};
 
-// ✼✼ Main Message , Sub Message 
-const MainMsg = ({message}: {message: string}) => {
-  return <p className="font-semibold line-clamp-2">{message}</p>
-}
+// ✼✼ Main Message , Sub Message
+const MainMsg = ({ message }: { message: string }) => {
+  return <p className="font-semibold line-clamp-2">{message}</p>;
+};
 
-const SubMsg = ({subMessage}: {subMessage: string}) => {
-  return   <span className="text-gray-500 line-clamp-2">{subMessage}</span>
-}
+const SubMsg = ({ subMessage }: { subMessage: string }) => {
+  return <span className="text-gray-500 line-clamp-2">{subMessage}</span>;
+};
 
-// ✼✼알림 시간. 
+// ✼✼알림 시간.
 interface TimeAgoProps {
-  timestamp?: number; 
+  timestamp?: number;
 }
 
-const TimeAgo = ({timestamp = Date.now() }: TimeAgoProps) => {
+const TimeAgo = ({ timestamp = Date.now() }: TimeAgoProps) => {
   const timeAgo = formatDistanceToNow(new Date(timestamp), {
-    addSuffix: true,  
-    locale: ko as unknown as Locale, 
+    addSuffix: true,
+    locale: ko as unknown as Locale,
   });
-  return <span>{timeAgo}</span>
-} 
+  return <span>{timeAgo}</span>;
+};
 
-
-// ************ 일단 만들어본... 매칭 쪽으로? 
+// ************ 일단 만들어본... 매칭 쪽으로?
 
 // const Title =  () => {
 //   return <p className="text-lg font-bold">관심사</p>
