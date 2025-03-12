@@ -2,21 +2,21 @@ import React from 'react';
 import { GrFormNext } from 'react-icons/gr';
 import DefaultProfile from '../common/default-profile';
 import Button from '../common/button';
-import { MessageType } from '../../stores/use-notify-store'; 
+import { MessageType } from '../../stores/use-notify-store';
 import { useRouter } from 'next/navigation';
 
 interface NotifyConnectProps {
   messageData: {
     message: string;
     subMessage: string;
-    status?: MessageType; 
+    status?: MessageType;
     requester?: { id: string; name?: string } | null;
-    chatRoomId?: number; 
+    chatRoomId?: number;
   };
 }
 
-const NotifyConnect = ({messageData}: NotifyConnectProps) => {
-  const { message, subMessage, chatRoomId } = messageData; 
+const NotifyConnect = ({ messageData }: NotifyConnectProps) => {
+  const { message, subMessage, chatRoomId } = messageData;
 
   const router = useRouter();
 

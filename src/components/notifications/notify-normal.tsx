@@ -2,18 +2,17 @@
 import React from 'react';
 import { MessageType } from '~/stores/use-notify-store';
 
-
 interface NotifyNormalProps {
   messageData: {
     message: string;
     subMessage: string;
-    status?: MessageType // 필요시 NotifyStatus 타입으로 변경 가능
+    status?: MessageType; // 필요시 NotifyStatus 타입으로 변경 가능
   };
 }
 
-const NotifyNormal = ({messageData}: NotifyNormalProps) => {
+const NotifyNormal = ({ messageData }: NotifyNormalProps) => {
   // const { message, subMessage, status } = useNotifyStore();
-  const { message, subMessage, status } = messageData; 
+  const { message, subMessage, status } = messageData;
 
   return (
     <div className="flex flex-col justify-center bg-mauve12 p-2 rounded-2xl">
@@ -23,7 +22,7 @@ const NotifyNormal = ({messageData}: NotifyNormalProps) => {
       </div>
       <div className="py-2 px-4">
         <p className="text-sm text-gray-500">
-          { status ? status + '상태 1분..' : '에ㅓㄹ..'}
+          {status ? status + '상태 1분..' : '에ㅓㄹ..'}
         </p>
       </div>
     </div>
