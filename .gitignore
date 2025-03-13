@@ -1,6 +1,7 @@
 .next 
 node_modules 
 .env*
+NEXT_PUBLIC_API_URL='http://3.37.80.119:8080/' 
 /build
 .DS_*
 public/sw.js*
