@@ -1,24 +1,22 @@
-import { cn } from "~/utils/cn";
-import DefaultProfile from "./default-profile";
-import { cva, VariantProps } from "class-variance-authority";
-import { UserData } from "~/types/user.types";
-
+import { cn } from '~/utils/cn';
+import DefaultProfile from './default-profile';
+import { cva, VariantProps } from 'class-variance-authority';
+import { UserData } from '~/types/user.types';
 
 const profileImportantVariants = cva('flex gap-2', {
-    variants: {
-      layout: {
-        // 세로 배치: 이미지가 위, 텍스트가 아래
-        vertical: 'flex-col items-center',
-        // 가로 배치: 이미지와 텍스트가 한 줄
-        horizontal: 'items-center',
-      },
+  variants: {
+    layout: {
+      // 세로 배치: 이미지가 위, 텍스트가 아래
+      vertical: 'flex-col items-center',
+      // 가로 배치: 이미지와 텍스트가 한 줄
+      horizontal: 'items-center',
     },
-    defaultVariants: {
-      layout: 'vertical',
-    },
-  });
+  },
+  defaultVariants: {
+    layout: 'vertical',
+  },
+});
 
-  
 interface ProfileImportantProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof profileImportantVariants> {
@@ -32,7 +30,7 @@ const ProfileImportant = ({
   children,
   className,
   ...props
-}: ProfileImportantProps) =>{
+}: ProfileImportantProps) => {
   return (
     <div
       className={cn(profileImportantVariants({ layout }), className)}
@@ -43,10 +41,12 @@ const ProfileImportant = ({
 
       {/* 텍스트 영역 */}
       <div className="flex flex-col gap-1">
-        <h3 className={cn(
-          "font-bold text-lg", 
-          layout === "vertical" ? "text-center" : "text-left"
-        )}>
+        <h3
+          className={cn(
+            'font-bold text-lg',
+            layout === 'vertical' ? 'text-center' : 'text-left',
+          )}
+        >
           {userData.name}
         </h3>
         <div className="flex items-center gap-2">
@@ -57,13 +57,11 @@ const ProfileImportant = ({
 
         {/* children 영역에 태그나 추가 정보 등을 넣을 수 있음 */}
         {children && (
-          <div className="flex flex-wrap gap-2 pt-1">
-            {children}
-          </div>
+          <div className="flex flex-wrap gap-2 pt-1">{children}</div>
         )}
       </div>
     </div>
   );
 };
 
-export default ProfileImportant; 
+export default ProfileImportant;
