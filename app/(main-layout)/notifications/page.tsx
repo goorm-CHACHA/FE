@@ -169,11 +169,11 @@ const Page = ({ onQuickConnectToggle }: NotifyProps) => {
   }, [messages, handleQuickConnectToggle]);
 
   // RadixTabs에 전달할 탭 라벨과 콘텐츠 배열
-  const tabLabels = ['1:1 매칭', '그룹 매칭'];
+  const tabLabels = ['1:1', '그룹'];
   const tabContents = [oneToOneNotifications, groupNotifications];
 
   return (
-    <div className="flex flex-col min-h-screen min-w-screen items-center pt-5 mx-4 my-4">
+    <div className="flex flex-col min-h-screen w-screen justify-start min-w-screen items-center pt-5 mx-4 my-4 overflow-x-hidden">
       <div className="w-full md:max-w-md">
         <NotifyBar tabLabels={tabLabels} tabContents={tabContents} />
       </div>

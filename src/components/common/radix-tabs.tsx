@@ -31,7 +31,7 @@ const RadixTabs = ({ tabLabels, tabContents, disabled }: RadixTabsProps) => {
 
   return (
     <Tabs.Root
-      className="flex flex-col"
+      className="flex flex-col w-screen"
       defaultValue={tabLabels[0]}
       onValueChange={updateIndicator}
     >
