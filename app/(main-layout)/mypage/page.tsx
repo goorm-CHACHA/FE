@@ -56,7 +56,7 @@ const Page = () => {
       <Accordions>
         <AccordionItem value="item-1">
           <AccordionTrigger>
-            <div className='flex justify-center items-center gap-6'>
+            <div className="flex justify-center items-center gap-6">
               <DefaultProfile />
               <p>내 정보 수정</p>
             </div>
@@ -108,10 +108,9 @@ const Page = () => {
 
 export default Page;
 
-
-      // <ModalOneBtn text="매칭이 신청되었어요!" textBtn="확인" />
-      // <ModalTwoBtn
-      //   text="매칭이 신청되었어요! 요청 수락되면 알림으로 알려드릴까요?"
-      //   textLBtn="확인"
-      //   textRBtn="취소"
-      // />
+// <ModalOneBtn text="매칭이 신청되었어요!" textBtn="확인" />
+// <ModalTwoBtn
+//   text="매칭이 신청되었어요! 요청 수락되면 알림으로 알려드릴까요?"
+//   textLBtn="확인"
+//   textRBtn="취소"
+// />
