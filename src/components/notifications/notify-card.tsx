@@ -80,8 +80,8 @@ const RequestCard = ({
   onAccept,
 }: CardProps) => {
   return (
-    <Card>
-      <CardHeader className="flex justify-between items-center mb-3">
+    <Card className="w-full max-w-sm  shadow-md rounded-lg">
+      <CardHeader className="flex justify-between items-center mb-3 ">
         <TimeLeft />
         <Arrow />
       </CardHeader>

@@ -39,7 +39,7 @@ const NotificationsPage = () => {
   const tabContents = [oneToOneNotifications, groupNotifications];
 
   return (
-    <div className="flex flex-col min-h-screen w-screen justify-start min-w-screen items-center overflow-x-hidden">
+    <div className="flex flex-col md:max-w-md min-h-screen w-screen justify-start m-auto min-w-screen items-center overflow-x-hidden">
       <TopNavigation
         title="알림"
         showQR={false}

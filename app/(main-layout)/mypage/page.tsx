@@ -8,26 +8,11 @@ import {
   AccordionContent,
 } from '~/components/common/accordion/accordion';
 import DefaultProfile from '~/components/common/default-profile';
-import ModalOneBtn from '~/components/common/modal-one-btn';
-import ModalTwoBtn from '~/components/common/modal-two-btn';
 import InfoOptional from '~/components/mypage/info-optional';
 import InfoRequired from '~/components/mypage/info-required';
 import { mockUserData } from '~/components/mypage/mock-user-data';
 import ModifyCard from '~/components/mypage/modify-card';
-
-interface UserData {
-  profileImage: string;
-  name: string;
-  position: string;
-  joinedAt: string;
-  interest: string[];
-  email: string;
-  id: string;
-  password: string;
-  introduce: string;
-  contact: string;
-  purpose: string[];
-}
+import { UserData } from '~/types/user.types';
 
 const Page = () => {
   const currentUserId = 'hong123';
@@ -67,12 +52,14 @@ const Page = () => {
     return <div> 사용자 정보 없습니다.</div>;
   }
   return (
-    <div className="flex flex-col justify-center items-center gap-4 mt-2">
+    <div className="w-full m-auto md:max-w-md flex flex-col justify-center items-center gap-4 mt-2">
       <Accordions>
         <AccordionItem value="item-1">
           <AccordionTrigger>
-            <DefaultProfile />
-            <p>내 정보 수정</p>
+            <div className="flex justify-center items-center gap-6">
+              <DefaultProfile />
+              <p>내 정보 수정</p>
+            </div>
           </AccordionTrigger>
           <AccordionContent>
             <div className="flex flex-col justify-center items-center gap-2">
@@ -102,27 +89,28 @@ const Page = () => {
           </AccordionContent>
         </AccordionItem>
       </Accordions>
-      <div className="h-20 bg-white w-[300px] rounded-md items-center flex justify-center text-violet10">
+      <div className="h-20 bg-[#222222] w-full rounded-md items-center flex justify-center text-white">
         <Link href="/mypage/name-card-list">저장한 명함 목록</Link>
       </div>
-      <div className="h-20 bg-white w-[300px] rounded-md items-center flex justify-center text-violet10">
+      <div className="h-20 bg-[#222222] w-full rounded-md items-center flex justify-center text-white">
         <Link href="/qr-reader">QR</Link>
       </div>
       <div
-        className="h-20 bg-white w-[300px] rounded-md items-center flex justify-center text-violet10"
+        className="h-20 bg-[#222222] w-full rounded-md items-center flex justify-center text-white"
         onClick={signOutHandler}
       >
         {' '}
         로그아웃
       </div>
-      <ModalOneBtn text="매칭이 신청되었어요!" textBtn="확인" />
-      <ModalTwoBtn
-        text="매칭이 신청되었어요! 요청 수락되면 알림으로 알려드릴까요?"
-        textLBtn="확인"
-        textRBtn="취소"
-      />
     </div>
   );
 };
 
 export default Page;
+
+// <ModalOneBtn text="매칭이 신청되었어요!" textBtn="확인" />
+// <ModalTwoBtn
+//   text="매칭이 신청되었어요! 요청 수락되면 알림으로 알려드릴까요?"
+//   textLBtn="확인"
+//   textRBtn="취소"
+// />
