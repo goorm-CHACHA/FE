@@ -18,8 +18,18 @@ const ModifyCard = ({ userData }: ModifyCardProps) => {
   return (
     <div>
       <ProfileImportant userData={userData} layout="vertical" />
-        <BadgesAligned items={userData.interest} title="관심사" vertical={false} className='px-2 py-4' />
-        <BadgesAligned items={userData.purpose} title="참여 목적" vertical={false} className='px-2 py-4' />
+      <BadgesAligned
+        items={userData.interest}
+        title="관심사"
+        vertical={false}
+        className="px-2 py-4"
+      />
+      <BadgesAligned
+        items={userData.purpose}
+        title="참여 목적"
+        vertical={false}
+        className="px-2 py-4"
+      />
       <div className="mt-2">
         <NameCardPreview userData={userData} />
       </div>
@@ -28,4 +38,3 @@ const ModifyCard = ({ userData }: ModifyCardProps) => {
 };
 
 export default ModifyCard;
-
