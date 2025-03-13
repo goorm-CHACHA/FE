@@ -9,7 +9,7 @@ const profileImportantVariants = cva('flex gap-2', {
       // 세로 배치: 이미지가 위, 텍스트가 아래
       vertical: 'flex-col items-center',
       // 가로 배치: 이미지와 텍스트가 한 줄
-      horizontal: 'items-center',
+      horizontal: 'items-center gap-2',
     },
   },
   defaultVariants: {
