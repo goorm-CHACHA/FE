@@ -7,11 +7,11 @@ const defaultProfileVariants = cva(
   {
     variants: {
       size: {
-        default: 'w-16 h-16', // 매칭 카드, 온라인 명함 저장 될 카드..... 
+        default: 'w-16 h-16', // 매칭 카드, 온라인 명함 저장 될 카드.....
         notification: 'h-10 w-10',
         profile: 'w-16 h-16',
         profileChat: 'h-[72px] w-[72px]',
-        chatImg:'h-8 w-8',
+        chatImg: 'h-8 w-8',
       },
     },
     defaultVariants: {
@@ -20,22 +20,22 @@ const defaultProfileVariants = cva(
   },
 );
 
-interface DefaultProfileProps extends React.HTMLAttributes<HTMLDivElement>,
-VariantProps<typeof defaultProfileVariants>{
+interface DefaultProfileProps
+  extends React.HTMLAttributes<HTMLDivElement>,
+    VariantProps<typeof defaultProfileVariants> {
   imgSrc?: string;
 }
 
-const DefaultProfile = ({ 
-  imgSrc,
-  size,
-  className
- }: DefaultProfileProps) => {
+const DefaultProfile = ({ imgSrc, size, className }: DefaultProfileProps) => {
   return (
-    <div
-      className={cn(defaultProfileVariants({ size }), className)}
-    >
+    <div className={cn(defaultProfileVariants({ size }), className)}>
       {imgSrc ? (
-        <Image src={imgSrc} alt="프로필 이미지" fill className="object-contain" />
+        <Image
+          src={imgSrc}
+          alt="프로필 이미지"
+          fill
+          className="object-contain"
+        />
       ) : (
         <div className="w-full h-full flex items-center justify-center bg-gray-300">
           <span className="text-white text-xs">No Image</span>
