@@ -10,24 +10,12 @@ import {
 import DefaultProfile from '~/components/common/default-profile';
 import ModalOneBtn from '~/components/common/modal-one-btn';
 import ModalTwoBtn from '~/components/common/modal-two-btn';
+import MatchCard from '~/components/match/match-card';
 import InfoOptional from '~/components/mypage/info-optional';
 import InfoRequired from '~/components/mypage/info-required';
 import { mockUserData } from '~/components/mypage/mock-user-data';
 import ModifyCard from '~/components/mypage/modify-card';
-
-interface UserData {
-  profileImage: string;
-  name: string;
-  position: string;
-  joinedAt: string;
-  interest: string[];
-  email: string;
-  id: string;
-  password: string;
-  introduce: string;
-  contact: string;
-  purpose: string[];
-}
+import { UserData } from '~/types/user.types';
 
 const Page = () => {
   const currentUserId = 'hong123';
@@ -67,7 +55,7 @@ const Page = () => {
     return <div> 사용자 정보 없습니다.</div>;
   }
   return (
-    <div className="flex flex-col justify-center items-center gap-4 mt-2">
+    <div className="w-[375px] h-[812px] md:w-[768px] md:h-[1024px] flex flex-col justify-center items-center gap-4 mt-2">
       <Accordions>
         <AccordionItem value="item-1">
           <AccordionTrigger>
@@ -115,6 +103,7 @@ const Page = () => {
         {' '}
         로그아웃
       </div>
+      <MatchCard userData={userData} />
       <ModalOneBtn text="매칭이 신청되었어요!" textBtn="확인" />
       <ModalTwoBtn
         text="매칭이 신청되었어요! 요청 수락되면 알림으로 알려드릴까요?"

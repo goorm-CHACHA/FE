@@ -1,34 +1,26 @@
 'use client';
 import React from 'react';
-import Profile from '~/components/common/profile';
+import MatchCard from '~/components/match/match-card';
+import { mockUserData } from '~/components/mypage/mock-user-data';
 
 const Page = () => {
   const downloadHandler = () => {
     console.log('다운로드 클릭됨');
   };
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col m-auto items-center justify-center w-full md:max-w-md px-6">
       <div>
         {/* ⬇️  바로 밑에 div는 map으로 내가 저장한 카드 프린트... 명함 누르면 모달 열려야 함 (모달 수정 작업 먼저 필요)*/}
-        <div className="flex gap-4 flex-col">
-          <Profile
-            name="김기획"
-            info1="병아리 기획자"
-            info2="웹/앱 기획"
-            hideMatching={true}
-          />
-          <Profile
-            name="이개발"
-            info1="시니어 개발자"
-            info2="SI 솔루션"
-            hideMatching={true}
-          />
-          <Profile
-            name="박디쟌"
-            info1="3년차"
-            info2="스타트업"
-            hideMatching={true}
-          />
+        <div className="flex gap-2 flex-col">
+          {mockUserData.map((user) => (
+            <MatchCard
+              key={user.id}
+              userData={user}
+              inMyPage={true}
+              bgOnChipInterest={false}
+              bgOnChipPurpose={true}
+            />
+          ))}
         </div>
       </div>
       <div className="flex flex-col items-center w-full">
