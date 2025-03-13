@@ -12,7 +12,7 @@ const GroupNotifications = ({
   handleQuickConnectToggle,
 }: GroupNotificationsProps) => {
   return (
-    <div>
+    <div className='w-full max-w-sm  shadow-md rounded-lg'>
       <ConnectOnBanner handleQuickConnectToggle={handleQuickConnectToggle} />
       {Object.entries(messages)
         .filter(([, messageData]) => messageData.chatType === 'group')
