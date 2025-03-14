@@ -1,14 +1,12 @@
 'use client';
 
-import React, { useState } from 'react';
 import RadixTabs from '~/components/common/radix-tabs';
-import TopNavigation from '~/components/common/top-nav';
 import GroupMatching from '~/components/match/group';
 import OneToOneMatching from '~/components/match/one-to-one';
+import { useNetworkStore } from '~/stores/use-network-store';
 
 const Page = () => {
-  const [isQuickConnectOn, setIsQuickConnectOn] = useState(false);
-
+  const { isConnect } = useNetworkStore();
   // 샘플 profiles 데이터
   const Profiles = [
     { id: '1', name: '김중환', info1: '백엔드 개발자', info2: 'Java, Python' },
@@ -39,21 +37,16 @@ const Page = () => {
   ];
 
   return (
-    <div className="relative w-full min-h-screen flex flex-col items-center pt-7">
-      <TopNavigation
-        onQuickConnectToggle={setIsQuickConnectOn}
-        className="fixed top-0 w-full max-w-3xl z-50"
-      />
-
-      <div className="w-full max-w-3xl min-h-screen flex flex-col items-center pt-[57px] pb-[92px]">
+    <div className="relative w-full min-h-screen flex flex-col items-center pt-[60px]">
+      <div className="w-full max-w-3xl min-h-screen flex flex-col items-center pb-[92px]">
         <RadixTabs
           tabLabels={tabLabels}
           tabContents={tabContents}
-          disabled={!isQuickConnectOn}
+          disabled={!isConnect}
         />
       </div>
 
-      {!isQuickConnectOn && (
+      {!isConnect && (
         <div className="absolute inset-0 top-0 w-full max-w-3xl h-full bg-black bg-opacity-75 backdrop-filter backdrop-blur-sm flex items-center justify-center pb-[92px]">
           <p className="text-white text-lg font-semibold text-center">
             스위치를 on하면

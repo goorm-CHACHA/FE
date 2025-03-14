@@ -54,7 +54,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="w-screen">
+      <body className="w-screen bg-bg-color">
         <div className="min-h-screen w-full max-w-3xl mx-auto bg-bg-color">
           {children}
           <Script src="/service-worker.js" />
