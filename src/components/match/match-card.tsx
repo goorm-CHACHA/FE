@@ -5,15 +5,17 @@ import { Card, CardBody } from '../common/card';
 import BadgesAligned from '../common/badges-aligned';
 import Button from '../common/button';
 import { IoIosBookmark } from 'react-icons/io';
+import StatusForGroup from './status-for-group';
 
 interface MatchCardProps {
   userData: UserData;
   inMyPage?: boolean;
   bgOnChipInterest?: boolean;
   bgOnChipPurpose?: boolean;
+  group?: boolean; 
 }
 
-const MatchCard = ({ userData, inMyPage }: MatchCardProps) => {
+const MatchCard = ({ userData, inMyPage, group = false }: MatchCardProps) => {
   // Data for the profile card
 
   return (
@@ -50,6 +52,7 @@ const MatchCard = ({ userData, inMyPage }: MatchCardProps) => {
             )}
           </div>
         </div>
+        {group && <StatusForGroup variants="available" /> }
       </CardBody>
     </Card>
   );
