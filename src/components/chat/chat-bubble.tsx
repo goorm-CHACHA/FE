@@ -1,19 +1,22 @@
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '~/utils/cn';
+import DefaultProfile from '~/components/common/default-profile';
 
 const chatBubbleVariants = cva(
-  'rounded-2xl p-3 max-w-[70%] w-fit break-words whitespace-normal relative',
+  'break-words whitespace-normal relative max-w-[220px] w-fit min-h-[43px]',
   {
     variants: {
       variant: {
-        sender: 'bg-blue-500 text-white ml-auto rounded-br-md',
-        receiver: 'bg-gray-200 text-black mr-auto rounded-bl-md',
-        system: 'bg-yellow-100 text-black mx-auto italic',
+        sender:
+          'bg-[#3A3A3A] ml-auto rounded-tl-[8px] rounded-br-[8px] rounded-bl-[8px] px-4 py-2.5 text-white',
+        receiver:
+          'bg-[#555555] mr-auto rounded-tr-[8px] rounded-br-[8px] rounded-bl-[8px] px-4 py-2.5 text-white',
+        system: 'bg-yellow-100 text-black mx-auto italic rounded-lg',
       },
       size: {
-        default: 'text-sm',
-        small: 'text-xs p-2',
-        large: 'text-base p-4',
+        default: 'text-sm px-4 py-2 gap-1',
+        small: 'text-xs px-3 py-1',
+        large: 'text-base px-5 py-3',
       },
     },
     defaultVariants: {
@@ -27,6 +30,8 @@ interface ChatBubbleProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof chatBubbleVariants> {
   message: string;
+  showProfile?: boolean;
+  imgSrc?: string;
 }
 
 const ChatBubble = ({
@@ -34,36 +39,26 @@ const ChatBubble = ({
   size,
   className,
   message,
+  showProfile = false,
+  imgSrc,
   ...props
 }: ChatBubbleProps) => {
   return (
     <div
       className={cn(
-        'mb-4',
-        'relative',
-        variant === 'sender' ? 'flex justify-end' : 'flex justify-start',
+        'mb-2 flex gap-2 items-start', // 상단 정렬
+        variant === 'sender' ? 'justify-end' : 'justify-start',
       )}
     >
+      {variant === 'receiver' && showProfile && imgSrc && (
+        <DefaultProfile size="xs" imgSrc={imgSrc} />
+      )}
       <div
         className={cn(chatBubbleVariants({ variant, size }), className)}
         {...props}
       >
         {message}
       </div>
-      {variant === 'sender' && (
-        <div
-          className="absolute bottom-0 right-0 w-0 h-0 translate-y-2
-    border-t-[15px] border-t-blue-500 
-    border-l-[15px] border-l-transparent"
-        ></div>
-      )}
-      {variant === 'receiver' && (
-        <div
-          className="absolute bottom-0 left-0 w-0 h-0 translate-y-2
-    border-t-[15px] border-t-gray-200 
-    border-r-[15px] border-r-transparent"
-        ></div>
-      )}
     </div>
   );
 };
