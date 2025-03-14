@@ -23,7 +23,7 @@ const Page = () => {
 
   return (
     <div className="flex flex-col min-h-screen w-full justify-center items-center">
-      <div className="w-full md:max-w-md px-6">
+      <div className="w-full max-w-3xl px-6">
         <FormProvider {...methods}>
           <form onSubmit={onSubmit} className="flex flex-col gap-4">
             <Input name="id" placeholder="아이디" />

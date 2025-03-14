@@ -6,7 +6,7 @@ const OneToOneMatching = ({
   profiles: React.ComponentProps<typeof Profile>[];
 }) => {
   return (
-    <div>
+    <div className="flex flex-col items-center">
       <h2>1:1 매칭</h2>
       {profiles.map((profile) => (
         <Profile key={profile.id} {...profile} />

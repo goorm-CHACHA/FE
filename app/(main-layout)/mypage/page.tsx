@@ -52,7 +52,7 @@ const Page = () => {
     return <div> 사용자 정보 없습니다.</div>;
   }
   return (
-    <div className="w-full m-auto md:max-w-md flex flex-col justify-center items-center gap-4 mt-2">
+    <div className="w-full m-auto max-w-3xl flex flex-col justify-center items-center gap-4 mt-2">
       <Accordions>
         <AccordionItem value="item-1">
           <AccordionTrigger>

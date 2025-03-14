@@ -6,7 +6,7 @@ const GroupMatching = ({
   profiles: React.ComponentProps<typeof Profile>[];
 }) => {
   return (
-    <div>
+    <div className="flex flex-col items-center">
       <h2>그룹 매칭</h2>
       {profiles.map((profile) => (
         <Profile key={profile.id} {...profile} />
