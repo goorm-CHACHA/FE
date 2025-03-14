@@ -27,7 +27,14 @@ interface InputProps
   button?: ReactNode;
 }
 
-const Input = ({ name, label, button, inputSize, ...props }: InputProps) => {
+const Input = ({
+  name,
+  label,
+  button,
+  inputSize,
+  className,
+  ...props
+}: InputProps) => {
   const {
     register,
     formState: { errors },
@@ -54,6 +61,7 @@ const Input = ({ name, label, button, inputSize, ...props }: InputProps) => {
           className={cn(
             inputVariants({ inputSize }),
             'flex-1',
+            className, // 전달받은 className을 병합
             errors[name] && 'border-red-500',
           )}
           aria-invalid={!!errors[name]}
