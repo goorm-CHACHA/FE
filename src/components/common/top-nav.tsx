@@ -27,7 +27,7 @@ const TopNavigation = ({
       </div>
       <div className="w-1/3 flex justify-end">
         {showQR && (
-          <Link href="/qr" className="text-grey-500 font-medium">
+          <Link href="/qr" className="text-gray-500 font-medium">
             큐알
           </Link>
         )}
