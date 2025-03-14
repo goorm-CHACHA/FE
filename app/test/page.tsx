@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import PushNotification from '~/components/push-notification';
 import Modal, { ButtonProps } from '~/components/common/modal';
@@ -30,6 +32,7 @@ const page = () => {
           <NotificationButton />
           <Modal
             title="모달 테스트"
+            subText="테스트입니다."
             buttons={buttons}
             triggerButtonLabel="모달창입니다."
           />

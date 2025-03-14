@@ -4,7 +4,6 @@ import Button from './button';
 
 interface BaseButtonProps {
   label: string;
-  onClick?: () => void;
   variant?: 'primary' | 'secondary' | 'gray-700' | 'red' | 'black/50';
 }
 
@@ -15,6 +14,7 @@ interface TriggerButtonProps extends BaseButtonProps {
 
 interface ActionButtonProps extends BaseButtonProps {
   actionType?: 'action';
+  onClick?: () => void;
 }
 
 export type ButtonProps = TriggerButtonProps | ActionButtonProps;
