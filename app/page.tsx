@@ -16,7 +16,7 @@ const Page = () => {
       ) : (
         <Button
           size={'full'}
-          variant={'red'}
+          variant={'secondary'}
           onClick={() => {
             router.push('/register');
           }}

@@ -18,12 +18,7 @@ const NotificationButton = () => {
   }
 
   return (
-    <Button
-      onClick={handleRequestPermission}
-      variant={`${isPermissionGranted ? 'grey' : 'default'}`}
-      disabled={isPermissionGranted}
-      size={'lg'}
-    >
+    <Button onClick={handleRequestPermission} disabled={isPermissionGranted}>
       {isPermissionGranted ? '알림 권한 허용됨' : '푸시 알림 권한 요청'}
     </Button>
   );
