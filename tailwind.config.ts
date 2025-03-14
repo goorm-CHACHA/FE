@@ -8,6 +8,7 @@ export default {
   theme: {
     extend: {
       colors: {
+        'bg-color': '#1A1A1A',
         background: 'var(--background)',
         foreground: 'var(--foreground)',
         white: '#FFFFFF',
@@ -61,6 +62,10 @@ export default {
             '800': '#373734',
             '900': '#20201D',
           },
+          '600': '#6A6A6A',
+          '700': '#555555',
+          '800': '#3A3A3A',
+          '900': '#1A1A1A',
         },
         green: {
           '50': '#F0FAF6',

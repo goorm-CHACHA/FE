@@ -20,7 +20,7 @@ const itemsVariants = cva(
     variants: {
       variant: {
         black:
-          'data-[state=on]:bg-black data-[state=on]:text-white bg-white text-black border border-black',
+          'data-[state=on]:bg-green-500 data-[state=on]:text-white bg-neutral-600 text-white border border-black',
       },
     },
     defaultVariants: {

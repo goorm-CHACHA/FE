@@ -28,10 +28,10 @@ const Page = () => {
           <form onSubmit={onSubmit} className="flex flex-col gap-4">
             <Input name="id" placeholder="아이디" />
             <Input name="password" placeholder="비밀번호" type="password" />
-            <Button className="py-3">로그인</Button>
+            <Button>로그인</Button>
           </form>
         </FormProvider>
-        <div className="flex justify-between text-xs mt-8 text-gray-600">
+        <div className="flex justify-between text-xs mt-8 text-neutral-400">
           <Link href="/register">회원가입</Link>
           <Link href="/account/find-id-pw">아이디﹒비밀번호 찾기</Link>
         </div>

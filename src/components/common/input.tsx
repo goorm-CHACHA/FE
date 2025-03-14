@@ -4,7 +4,7 @@ import { cva, VariantProps } from 'class-variance-authority';
 import { cn } from '~/utils/cn';
 
 const inputVariants = cva(
-  'border border-zinc-300 py-2 pl-3 outline-zinc-400 outline-1 rounded-md',
+  'border-none py-2 pl-3 outline-none outline-1 rounded-md bg-neutral-700 text-neutral-400',
   {
     variants: {
       inputSize: {
@@ -38,7 +38,10 @@ const Input = ({ name, label, button, inputSize, ...props }: InputProps) => {
   return (
     <div className="flex flex-col w-full">
       {label && (
-        <label htmlFor={name} className="mb-1 font-medium text-sm">
+        <label
+          htmlFor={name}
+          className="mb-1 font-medium text-sm text-neutral-400"
+        >
           {label}
         </label>
       )}
