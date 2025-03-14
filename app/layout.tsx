@@ -54,9 +54,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="min-h-screen">
-        {children}
-        <Script src="/service-worker.js" />
+      <body>
+        <div className="min-h-screen md:max-w-md mx-auto bg-bg-color">
+          {children}
+          <Script src="/service-worker.js" />
+        </div>
       </body>
     </html>
   );

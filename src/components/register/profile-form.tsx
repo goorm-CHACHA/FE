@@ -31,7 +31,11 @@ const ProfileForm = () => {
               name="id"
               placeholder="아이디"
               label="아이디"
-              button={<Button className="h-[42px]">중복 확인</Button>}
+              button={
+                <Button className="h-[42px]" size="md">
+                  중복 확인
+                </Button>
+              }
             />
             <Input name="email" placeholder="이메일" label="이메일" />
             <Input

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 
 interface TopNavigationProps {
   title?: string;
@@ -34,48 +35,18 @@ const TopNavigation = ({
 
   return (
     <div className={`flex justify-start items-start ${className}`}>
-      <div className="flex justify-between items-center flex-grow-0 flex-shrink-0 w-[375px] h-[55px] px-5 py-3.5 bg-[#1f1f1f]">
+      <div className="flex justify-between items-center flex-grow-0 flex-shrink-0 w-full max-w-[768px] h-[55px] px-5 py-3.5 bg-[#1f1f1f]">
         <div className="flex justify-between items-center flex-grow">
           <div className="flex justify-start items-center flex-grow-0 flex-shrink-0 relative gap-2">
             {/* 채팅방에서는 나가기 버튼을 왼쪽에 배치 */}
             {isChatRoom && (
               <div className="flex justify-start items-center flex-grow-0 flex-shrink-0 relative gap-2">
-                <svg
-                  width="24"
-                  height="25"
-                  viewBox="0 0 24 25"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-6 h-6 relative"
-                  preserveAspectRatio="none"
-                >
-                  <g clipPath="url(#clip0_1751_1384)">
-                    <path
-                      d="M15 4.5H5V18.5C5 19.6046 5.89543 20.5 7 20.5H15"
-                      stroke="white"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <path
-                      d="M16 15.5L19 12.5M19 12.5L16 9.5M19 12.5H9"
-                      stroke="white"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </g>
-                  <defs>
-                    <clipPath id="clip0_1751_1384">
-                      <rect
-                        width="24"
-                        height="24"
-                        fill="white"
-                        transform="translate(0 0.5)"
-                      />
-                    </clipPath>
-                  </defs>
-                </svg>
+                <Image
+                  src="/assets/svgs/ExitIcon.svg"
+                  alt="Exit Icon"
+                  width={24}
+                  height={24}
+                />
               </div>
             )}
 
@@ -96,63 +67,12 @@ const TopNavigation = ({
           <div className="flex justify-end items-center flex-grow-0 flex-shrink-0 gap-2.5">
             {isChatRoom ? (
               <div className="flex justify-end items-center flex-grow-0 flex-shrink-0 relative gap-2">
-                <svg
-                  width="24"
-                  height="25"
-                  viewBox="0 0 24 25"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-6 h-6 relative"
-                  preserveAspectRatio="none"
-                >
-                  <g clipPath="url(#clip0_1751_1404)">
-                    <path
-                      d="M20 12.5H4"
-                      stroke="white"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <path
-                      d="M16 4.49976H18C19.1046 4.49976 20 5.39519 20 6.49976V8.49976"
-                      stroke="white"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <path
-                      d="M8 20.4998L6 20.4998C4.89543 20.4998 4 19.6043 4 18.4998L4 16.4998"
-                      stroke="white"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <path
-                      d="M20 16.4998V18.4998C20 19.6043 19.1046 20.4998 18 20.4998H16"
-                      stroke="white"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <path
-                      d="M4 8.49976L4 6.49976C4 5.39519 4.89543 4.49976 6 4.49976L8 4.49976"
-                      stroke="white"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </g>
-                  <defs>
-                    <clipPath id="clip0_1751_1404">
-                      <rect
-                        width="24"
-                        height="24"
-                        fill="white"
-                        transform="translate(0 0.5)"
-                      />
-                    </clipPath>
-                  </defs>
-                </svg>
+                <Image
+                  src="/assets/svgs/Scanner.svg"
+                  alt="Scanner Icon"
+                  width={24}
+                  height={24}
+                />
               </div>
             ) : (
               <div className="flex justify-end items-center flex-grow-0 flex-shrink-0 gap-2">

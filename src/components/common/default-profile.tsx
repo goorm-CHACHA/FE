@@ -27,14 +27,16 @@ interface DefaultProfileProps
   imgSrc?: string;
 }
 
-const DefaultProfile = ({ imgSrc, ...props }: DefaultProfileProps) => {
+const DefaultProfile = ({ imgSrc, size, className }: DefaultProfileProps) => {
   return (
-    <div
-      className="rounded-full overflow-hidden relative bg-slate-400 w-16 h-16"
-      {...props}
-    >
+    <div className={cn(defaultProfileVariants({ size }), className)}>
       {imgSrc ? (
-        <Image src={imgSrc} alt="프로필 이미지" fill className="object-cover" />
+        <Image
+          src={imgSrc}
+          alt="프로필 이미지"
+          fill
+          className="object-contain"
+        />
       ) : (
         <div className="w-full h-full flex items-center justify-center bg-gray-300">
           <span className="text-white text-xs">No Image</span>

@@ -1,32 +1,11 @@
 import React from 'react';
-import DefaultProfile from '../common/default-profile';
 import NameCardPreview from './name-card-preview';
-
-interface UserData {
-  profileImage: string;
-  name: string;
-  position: string;
-  joinedAt: string;
-  interest: string[];
-  email: string;
-  id: string;
-  password: string;
-  introduce: string;
-  contact: string;
-  purpose: string[];
-}
+import { UserData } from '~/types/user.types';
+import ProfileImportant from '../common/profile-important';
+import BadgesAligned from '../common/badges-aligned';
 
 interface ModifyCardProps {
   userData: UserData;
-  // userData: {
-  //   name: string;
-  //   position: string;
-  //   joinedAt: string;
-  //   interest: string[];
-  //   purpose: string[];
-  //   [key: string]: string | string[];
-  // }
-  // onUserDataChange: (key: string, value: string) => void;
 }
 
 const ModifyCard = ({ userData }: ModifyCardProps) => {
@@ -38,46 +17,19 @@ const ModifyCard = ({ userData }: ModifyCardProps) => {
 
   return (
     <div>
-      <div className="flex flex-col items-center gap-2">
-        <DefaultProfile />
-        <h3 className="font-bold text-lg">{userData.name}</h3>
-        <div className="flex items-center gap-2">
-          <p>{userData.position}</p>
-          <p className="w-[0.4] h-4 bg-black"></p>
-          <p>{userData.joinedAt}</p>
-        </div>
-        {/* 매칭 요청 시간.. 어떤 컴포넌트..? */}
-        <div className="bg-gray-500 flex gap-2 w-fit px-2 py-1 justify-center text-sm rounded-lg">
-          <p className="text-white">매칭 요청</p>
-          <p className="text-red-500">2:59</p>
-        </div>
-      </div>
-      <div className="bg-slate-700 px-2 py-3 rounded-xl flex flex-col gap-2 mt-2">
-        <p className="text-sm text-white">관심사</p>
-        <div className="flex flex-wrap gap-2">
-          {userData.interest?.map((item: string, index: number) => (
-            <p
-              key={index}
-              className="text-xs w-fit px-2 py-1 rounded-md text-white bg-slate-400"
-            >
-              {item}
-            </p>
-          ))}
-        </div>
-      </div>
-      <div className="bg-slate-700 px-2 py-3 rounded-xl flex flex-col gap-2 mt-2">
-        <p className="text-sm text-white">참여목적</p>
-        <div className="flex flex-wrap gap-2">
-          {userData.purpose?.map((item: string, index: number) => (
-            <p
-              key={index}
-              className="text-xs w-fit px-2 py-1 rounded-md text-white bg-slate-400"
-            >
-              {item}
-            </p>
-          ))}
-        </div>
-      </div>
+      <ProfileImportant userData={userData} layout="vertical" />
+      <BadgesAligned
+        items={userData.interest}
+        title="관심사"
+        vertical={false}
+        className="px-2 py-4"
+      />
+      <BadgesAligned
+        items={userData.purpose}
+        title="참여 목적"
+        vertical={false}
+        className="px-2 py-4"
+      />
       <div className="mt-2">
         <NameCardPreview userData={userData} />
       </div>

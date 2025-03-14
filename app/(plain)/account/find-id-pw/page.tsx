@@ -11,13 +11,10 @@ const Page = () => {
   ];
   return (
     <>
-      <div className="flex flex-col min-h-screen w-full items-center pt-52">
-        <div className="w-full md:max-w-md px-6">
-          <RadixTabs
-            tabLabels={tabLabels}
-            tabContents={tabContents}
-          ></RadixTabs>
-          <div className="text-right text-xs px-6 text-gray-600">
+      <div className="flex flex-col min-h-screen items-center pt-52">
+        <div className="px-6">
+          <RadixTabs tabLabels={tabLabels} tabContents={tabContents} />
+          <div className="text-right text-xs px-6 text-neutral-400">
             <Link href="/account/login">로그인 페이지로 가기</Link>
           </div>
         </div>

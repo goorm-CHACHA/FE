@@ -4,7 +4,7 @@ import { cva, VariantProps } from 'class-variance-authority';
 import { cn } from '~/utils/cn'; // cn 함수 임포트
 
 const inputVariants = cva(
-  'border border-zinc-300 py-2 pl-3 outline-zinc-400 outline-1 rounded-md',
+  'border-none py-2 pl-3 outline-none outline-1 rounded-md bg-neutral-700 text-neutral-400',
   {
     variants: {
       inputSize: {
@@ -45,7 +45,10 @@ const Input = ({
   return (
     <div className="flex flex-col w-full">
       {label && (
-        <label htmlFor={name} className="mb-1 font-medium text-sm">
+        <label
+          htmlFor={name}
+          className="mb-1 font-medium text-sm text-neutral-400"
+        >
           {label}
         </label>
       )}
@@ -57,7 +60,7 @@ const Input = ({
           {...props}
           className={cn(
             inputVariants({ inputSize }),
-            'flex-1', // 기본 크기 설정
+            'flex-1',
             className, // 전달받은 className을 병합
             errors[name] && 'border-red-500',
           )}

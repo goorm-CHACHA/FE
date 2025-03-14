@@ -51,7 +51,7 @@ const Profile = ({
           <Button
             size="sm"
             className={'h-10 w-full align-bottom'}
-            variant={isAppliedMatching ? 'grey' : 'default'}
+            variant={isAppliedMatching ? 'black/50' : 'primary'}
             onClick={clickMatchingHandler}
           >
             {isAppliedMatching === true ? `신청 완료` : `매칭 신청`}
