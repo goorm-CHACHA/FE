@@ -1,8 +1,8 @@
-import useNotifyStore from '~/stores/use-notify-store';
+import { useNetworkStore } from '~/stores/use-network-store';
 import ToggleSwitch from './switch';
 
 const ConnectOnBanner = () => {
-  const { isSubscribed, toggleSubscription } = useNotifyStore();
+  const { isSubscribed, toggleSubscription } = useNetworkStore();
   return (
     <div className="w-full bg-mauve11 px-5 py-3 rounded-xl mb-8 relative flex">
       <div>
