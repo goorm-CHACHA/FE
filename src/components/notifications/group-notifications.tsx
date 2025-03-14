@@ -7,13 +7,10 @@ interface GroupNotificationsProps {
   handleQuickConnectToggle: (isOn: boolean) => void;
 }
 
-const GroupNotifications = ({
-  messages,
-  handleQuickConnectToggle,
-}: GroupNotificationsProps) => {
+const GroupNotifications = ({ messages }: GroupNotificationsProps) => {
   return (
     <div className="w-full max-w-3xl shadow-md rounded-lg mx-auto">
-      <ConnectOnBanner handleQuickConnectToggle={handleQuickConnectToggle} />
+      <ConnectOnBanner />
       {Object.entries(messages)
         .filter(([, messageData]) => messageData.chatType === 'group')
         .map(([id, messageData]) => (
