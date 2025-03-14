@@ -5,12 +5,12 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 const bottomNavLinkVariants = cva(
-  'flex items-center justify-center p-4 text-sm font-medium',
+  'flex items-center justify-center px-4 text-sm font-medium',
   {
     variants: {
       variant: {
         default: 'text-gray-500',
-        active: 'text-blue-500 border-t-2 border-blue-500',
+        active: 'text-green-500 border-t-2 border-green-500',
       },
     },
     defaultVariants: {
@@ -43,7 +43,7 @@ const BottomNavLink = ({ to, label }: BottomNavLinkProps) => {
 
 const BottomNavigation = () => {
   return (
-    <nav className="fixed bottom-0 left-0 right-0 flex justify-around bg-white border-t border-gray-200">
+    <nav className="fixed bottom-0 max-w-3xl flex justify-around bg-black h-[92px] w-screen rounded-t-xl">
       <BottomNavLink to="/home" label="홈" />
       <BottomNavLink to="/notifications" label="알림" />
       <BottomNavLink to="/mypage" label="마이페이지" />
