@@ -7,6 +7,7 @@ const defaultProfileVariants = cva(
   {
     variants: {
       size: {
+        xs: 'w-6 h-6',
         default: 'w-16 h-16', // 매칭 카드, 온라인 명함 저장 될 카드.....
         notification: 'h-10 w-10',
         profile: 'w-16 h-16',
