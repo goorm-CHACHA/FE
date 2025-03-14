@@ -1,7 +1,7 @@
 import { useFormContext } from 'react-hook-form';
 import { InputHTMLAttributes, ReactNode } from 'react';
 import { cva, VariantProps } from 'class-variance-authority';
-import { cn } from '~/utils/cn';
+import { cn } from '~/utils/cn'; // cn 함수 임포트
 
 const inputVariants = cva(
   'border border-zinc-300 py-2 pl-3 outline-zinc-400 outline-1 rounded-md',
@@ -27,7 +27,14 @@ interface InputProps
   button?: ReactNode;
 }
 
-const Input = ({ name, label, button, inputSize, ...props }: InputProps) => {
+const Input = ({
+  name,
+  label,
+  button,
+  inputSize,
+  className,
+  ...props
+}: InputProps) => {
   const {
     register,
     formState: { errors },
@@ -50,7 +57,8 @@ const Input = ({ name, label, button, inputSize, ...props }: InputProps) => {
           {...props}
           className={cn(
             inputVariants({ inputSize }),
-            'flex-1',
+            'flex-1', // 기본 크기 설정
+            className, // 전달받은 className을 병합
             errors[name] && 'border-red-500',
           )}
           aria-invalid={!!errors[name]}

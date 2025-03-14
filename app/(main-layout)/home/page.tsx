@@ -59,6 +59,8 @@ const Page = () => {
             />
           </div>
         </div>
+
+        {/* 스위치가 꺼져있을 때 나타나는 안내 메시지 */}
         {!isQuickConnectOn && (
           <div className="absolute inset-0 top-0 bg-gray-500 bg-opacity-75 backdrop-filter backdrop-blur-sm flex items-center justify-center">
             <p className="text-white text-2xl font-bold text-center">

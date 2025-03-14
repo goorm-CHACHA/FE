@@ -51,10 +51,6 @@ const ChatPage = () => {
   const [selectedChat, setSelectedChat] = useState<Chat | null>(tempChats[0]);
   const [messages, setMessages] = useState(tempMessages);
 
-  console.log(chats);
-  console.log(setChats);
-  console.log(setSelectedChat);
-
   const handleSendMessage = (message: string) => {
     const newMessage = {
       id: messages.length + 1,
@@ -70,7 +66,8 @@ const ChatPage = () => {
 
   return (
     <div className="flex h-screen flex-col">
-      <TopNavigation title="채팅방" showQR={false} />
+      {/* 채팅방 모드일 때 토글 숨기기 위해 isChatRoom={true} 전달 */}
+      <TopNavigation title="채팅방" isChatRoom={true} />
 
       <div className="flex-1 flex flex-col">
         {selectedChat && (
@@ -78,6 +75,7 @@ const ChatPage = () => {
             messages={messages}
             receiverId={selectedChat.id}
             status={selectedChat.status}
+            receiverProfileImg="/images/icons/chat/Profile.png" // ✅ 프로필 경로 전달
           />
         )}
         <MessageInput onSendMessage={handleSendMessage} />
