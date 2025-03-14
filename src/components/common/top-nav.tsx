@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 import ToggleSwitch from '~/components/common/switch';
 import { useNetworkStore } from '~/stores/use-network-store';
@@ -11,6 +12,7 @@ const TopNavigation = () => {
   const { isConnect, setIsConnect } = useNetworkStore();
   const pathname = usePathname();
   const { type, title } = getTopNavType(pathname);
+  const router = useRouter();
 
   return (
     <div>
@@ -23,6 +25,14 @@ const TopNavigation = () => {
               <ToggleSwitch toggle={isConnect} setToggle={setIsConnect} />
             </div>
             <div className="flex items-center gap-2">
+              <button onClick={() => router.push('/qr-reader')}>
+                <Image
+                  src="/assets/svgs/qr-code.svg"
+                  alt="qr code"
+                  width={32}
+                  height={32}
+                />
+              </button>
               <div className="w-6 h-6 border border-dashed border-[#02e473]" />
             </div>
           </>
