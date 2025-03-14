@@ -12,7 +12,7 @@ interface MatchCardProps {
   inMyPage?: boolean;
   bgOnChipInterest?: boolean;
   bgOnChipPurpose?: boolean;
-  group?: boolean; 
+  group?: boolean;
 }
 
 const MatchCard = ({ userData, inMyPage, group = false }: MatchCardProps) => {
@@ -52,7 +52,7 @@ const MatchCard = ({ userData, inMyPage, group = false }: MatchCardProps) => {
             )}
           </div>
         </div>
-        {group && <StatusForGroup variants="available" /> }
+        {group && <StatusForGroup variants="available" />}
       </CardBody>
     </Card>
   );
