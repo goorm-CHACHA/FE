@@ -17,7 +17,7 @@ const TopNavigation = () => {
       <div className="fixed z-10 top-0 flex justify-between items-center w-full max-w-[768px] h-[55px] px-5 py-3.5 bg-gray-neutral-900">
         {type === 'quick-network' && (
           <>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
               <div className="w-6 h-6 border border-dashed border-[#02e473]" />
               <p className="text-lg font-semibold text-white">퀵네트워크</p>
               <ToggleSwitch toggle={isConnect} setToggle={setIsConnect} />
