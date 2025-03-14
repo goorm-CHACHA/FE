@@ -1,34 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import InputField from './input-field';
-
-interface UserData {
-  profileImage: string;
-  name: string;
-  position: string;
-  joinedAt: string;
-  interest: string[];
-  email: string;
-  id: string;
-  password: string;
-  introduce: string;
-  contact: string;
-  purpose: string[];
-}
+import { UserData } from '~/types/user.types';
 
 interface InfoOptionalProps {
-  userData: {
-    profileImage: string;
-    name: string;
-    position: string;
-    joinedAt: string;
-    interest: string[];
-    email: string;
-    id: string;
-    password: string;
-    introduce: string;
-    contact: string;
-    purpose: string[];
-  };
+  userData: UserData;
   onUserDataChange: (key: keyof UserData, value: string | string[]) => void;
 }
 
