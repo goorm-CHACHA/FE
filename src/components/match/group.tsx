@@ -1,4 +1,5 @@
 import Profile from '../common/profile';
+import Filter from '~/components/match/filter';
 
 const GroupMatching = ({
   profiles,
@@ -7,7 +8,7 @@ const GroupMatching = ({
 }) => {
   return (
     <div className="flex flex-col items-center">
-      <h2>그룹 매칭</h2>
+      <Filter />
       {profiles.map((profile) => (
         <Profile key={profile.id} {...profile} />
       ))}
