@@ -1,21 +1,14 @@
 'use client';
 
-import React, { useState } from 'react';
 import RadixTabs from '~/components/common/radix-tabs';
-import TopNavigation from '~/components/common/top-nav';
 import GroupMatching from '~/components/match/group';
 import OneToOneMatching from '~/components/match/one-to-one';
+import { useNetworkStore } from '~/stores/use-network-store';
 
 const Page = () => {
-  const [isQuickConnectOn, setIsQuickConnectOn] = useState(false);
-
+  const { isConnect } = useNetworkStore();
   // 샘플 profiles 데이터
-  const Profiles: {
-    id: string;
-    name: string;
-    info1: string;
-    info2: string;
-  }[] = [
+  const Profiles = [
     { id: '1', name: '김중환', info1: '백엔드 개발자', info2: 'Java, Python' },
     {
       id: '2',
@@ -44,32 +37,25 @@ const Page = () => {
   ];
 
   return (
-    <>
-      <TopNavigation
-        onQuickConnectToggle={setIsQuickConnectOn}
-        className="relative z-50"
-      />
-      <div className="relative">
-        <div className="flex flex-col min-h-screen w-full items-center pt-5">
-          <div className="w-full md:max-w-md px-6">
-            <RadixTabs
-              tabLabels={tabLabels}
-              tabContents={tabContents}
-              disabled={!isQuickConnectOn}
-            />
-          </div>
-        </div>
-        {!isQuickConnectOn && (
-          <div className="absolute inset-0 top-0 bg-gray-500 bg-opacity-75 backdrop-filter backdrop-blur-sm flex items-center justify-center">
-            <p className="text-white text-2xl font-bold text-center">
-              스위치를 on하면
-              <br />
-              네트워킹에 참여할 수 있어요
-            </p>
-          </div>
-        )}
+    <div className="relative w-full min-h-screen flex flex-col items-center pt-[60px]">
+      <div className="w-full max-w-3xl min-h-screen flex flex-col items-center pb-[92px]">
+        <RadixTabs
+          tabLabels={tabLabels}
+          tabContents={tabContents}
+          disabled={!isConnect}
+        />
       </div>
-    </>
+
+      {!isConnect && (
+        <div className="absolute inset-0 top-0 w-full max-w-3xl h-full bg-black bg-opacity-75 backdrop-filter backdrop-blur-sm flex items-center justify-center pb-[92px]">
+          <p className="text-white text-lg font-semibold text-center">
+            스위치를 on하면
+            <br />
+            네트워킹에 참여할 수 있어요
+          </p>
+        </div>
+      )}
+    </div>
   );
 };
 

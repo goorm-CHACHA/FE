@@ -33,11 +33,11 @@ const RadixTabs = ({ tabLabels, tabContents, disabled }: RadixTabsProps) => {
 
   return (
     <Tabs.Root
-      className="flex flex-col w-screen"
+      className="flex flex-col w-full"
       defaultValue={tabLabels[0]}
       onValueChange={updateIndicator}
     >
-      <div className="relative">
+      <div className="relative ml-3">
         <Tabs.List
           ref={listRef}
           className="flex rounded-lg justify-start"
@@ -46,7 +46,7 @@ const RadixTabs = ({ tabLabels, tabContents, disabled }: RadixTabsProps) => {
           {tabLabels.map((label, index) => (
             <Tabs.Trigger
               key={`trigger-${index}`}
-              className="flex h-[45px] cursor-pointer select-none items-center justify-center px-5 text-sm text-zinc-700 outline-none data-[state=active]:text-green-700 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex h-[45px] cursor-pointer select-none items-center justify-center px-5 text-sm text-gray-700 outline-none data-[state=active]:text-green-500 disabled:opacity-50 disabled:cursor-not-allowed"
               value={label}
               disabled={disabled}
             >
@@ -56,14 +56,14 @@ const RadixTabs = ({ tabLabels, tabContents, disabled }: RadixTabsProps) => {
         </Tabs.List>
         {/* 인디케이터 영역 */}
         <div
-          className="absolute bottom-0 h-1 bg-green-700 transition-all duration-300"
+          className="absolute bottom-0 h-[2px] bg-green-500 transition-all duration-300 pl-4"
           style={{
             left: indicatorStyle.left,
             width: indicatorStyle.width,
           }}
         />
       </div>
-      <div className="h-[1px] w-full bg-zinc-700"></div>
+      <div className="h-[1px] w-full bg-zinc-700 mx-auto"></div>
       {tabLabels.map((label, index) => (
         <Tabs.Content
           key={`content-${index}`}

@@ -7,13 +7,10 @@ interface OneToOneNotificationsProps {
   handleQuickConnectToggle: (isOn: boolean) => void;
 }
 
-const OneToOneNotifications = ({
-  messages,
-  handleQuickConnectToggle,
-}: OneToOneNotificationsProps) => {
+const OneToOneNotifications = ({ messages }: OneToOneNotificationsProps) => {
   return (
-    <div className="w-full max-w-sm  shadow-md rounded-lg">
-      <ConnectOnBanner handleQuickConnectToggle={handleQuickConnectToggle} />
+    <div className="w-full max-w-3xl shadow-md rounded-lg mx-auto">
+      <ConnectOnBanner />
       {Object.entries(messages)
         .filter(([, messageData]) => messageData.chatType === '1to1')
         .map(([id, messageData]) => (
