@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import ChatWindow from '~/components/chat/chat-window';
 import MessageInput from '~/components/chat/message-input';
-import TopNavigation from '~/components/common/top-nav';
 
 interface Chat {
   id: number;
@@ -66,16 +65,13 @@ const ChatPage = () => {
 
   return (
     <div className="flex h-screen flex-col">
-      {/* 채팅방 모드일 때 토글 숨기기 위해 isChatRoom={true} 전달 */}
-      <TopNavigation title="채팅방" isChatRoom={true} />
-
       <div className="flex-1 flex flex-col">
         {selectedChat && (
           <ChatWindow
             messages={messages}
             receiverId={selectedChat.id}
             status={selectedChat.status}
-            receiverProfileImg="/images/icons/chat/Profile.png" // ✅ 프로필 경로 전달
+            receiverProfileImg="/images/icons/chat/Profile.png"
           />
         )}
         <MessageInput onSendMessage={handleSendMessage} />

@@ -1,6 +1,8 @@
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '~/utils/cn';
 
+// className=""
+
 const buttonVariants = cva(
   'flex justify-center items-center relative rounded-md text-body-md font-semibold disabled:bg-neutral-400 disabled:text-white',
   {
@@ -14,8 +16,9 @@ const buttonVariants = cva(
       },
       size: {
         default: 'w-full h-[40px]',
-        sm: 'w-[32px] text-[13px]',
-        md: 'w-[68px] text-[14px]',
+        sm: 'py-[6px] px-[10px] text-[13px]',
+        md: 'py-[10px] px-[16px] text-[14px]',
+        lg: 'py-[14px] px-[28px] text-[16px]',
         full: 'w-full h-[50px]',
       },
     },

@@ -1,39 +1,26 @@
 import * as React from 'react';
 import * as Switch from '@radix-ui/react-switch';
 
-interface SwitchDemoProps {
-  onToggle: (isOn: boolean) => void;
+interface ToggleSwitchProps {
+  toggle: boolean;
+  setToggle: (checked: boolean) => void;
 }
 
-const SwitchDemo = ({ onToggle }: SwitchDemoProps) => {
-  const [isOn, setIsOn] = React.useState(false);
-
-  const handleToggle = (checked: boolean) => {
-    setIsOn(checked);
-    onToggle(checked);
-  };
-
+const ToggleSwitch = ({ toggle, setToggle }: ToggleSwitchProps) => {
   return (
-    <div className="absolute top-0 left-0 p-4">
-      <div className="flex items-center">
-        <label
-          htmlFor="quick-connect"
-          className="pr-[15px] text-[15px] leading-none"
-        >
-          퀵 커넥트
-        </label>
-        <Switch.Root
-          id="quick-connect"
-          className="relative h-[25px] w-[42px] cursor-pointer rounded-full bg-blackA6 shadow-[0_2px_10px] shadow-blackA4 outline-none focus:shadow-[0_0_0_2px] focus:shadow-black data-[state=checked]:bg-black"
-          checked={isOn}
-          onCheckedChange={handleToggle}
-          style={{ WebkitTapHighlightColor: 'rgba(0, 0, 0, 0)' }}
-        >
-          <Switch.Thumb className="block size-[21px] translate-x-0.5 rounded-full bg-white shadow-[0_2px_2px] shadow-blackA4 transition-transform duration-100 will-change-transform data-[state=checked]:translate-x-[19px]" />
-        </Switch.Root>
-      </div>
+    <div
+      className={`flex items-center rounded-full w-[41px] cursor-pointer  ${toggle ? 'bg-orange-400' : 'bg-gray-warm-700'}`}
+    >
+      <Switch.Root
+        id="quick-connect"
+        className="relative w-full h-[22px] rounded-full"
+        checked={toggle}
+        onCheckedChange={(checked) => setToggle(checked)}
+      >
+        <Switch.Thumb className="absolute left-[2px] top-1/2 transform -translate-y-1/2 h-[18px] w-[18px] rounded-2xl bg-white transition-transform duration-200 data-[state=checked]:translate-x-[19px]" />
+      </Switch.Root>
     </div>
   );
 };
 
-export default SwitchDemo;
+export default ToggleSwitch;

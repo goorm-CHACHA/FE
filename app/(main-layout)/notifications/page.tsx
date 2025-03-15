@@ -2,7 +2,6 @@
 
 import { useCallback, useMemo } from 'react';
 
-import TopNavigation from '~/components/common/top-nav';
 import NotifyBar from '~/components/notifications/notify-bar';
 import OneToOneNotifications from '~/components/notifications/one-to-one-notifications';
 import GroupNotifications from '~/components/notifications/group-notifications';
@@ -39,13 +38,8 @@ const NotificationsPage = () => {
   const tabContents = [oneToOneNotifications, groupNotifications];
 
   return (
-    <div className="flex flex-col md:max-w-md min-h-screen w-screen justify-start m-auto min-w-screen items-center overflow-x-hidden">
-      <TopNavigation
-        title="알림"
-        showQR={false}
-        className="w-full !bg-transparent outline-none border-none text-left justify-left"
-      />
-      <div className="w-full md:max-w-md">
+    <div className="flex flex-col max-w-3xl min-h-screen w-full mx-auto items-center overflow-x-hidden">
+      <div className="w-full">
         <NotifyBar tabLabels={tabLabels} tabContents={tabContents} />
       </div>
     </div>

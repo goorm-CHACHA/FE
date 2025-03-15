@@ -25,7 +25,7 @@ export default {
           '800': '#01496F',
           '900': '#002B42',
         },
-        grey: {
+        gray: {
           cool: {
             '50': '#F9FAFA',
             '100': '#F1F2F4',

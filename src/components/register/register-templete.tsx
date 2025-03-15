@@ -11,7 +11,7 @@ const RegisterTemplete = ({ title, subtitle, children }: RegisterProps) => {
     <div className="flex flex-col w-full h-[684px]">
       <div className="h-[100px] text-left">
         <p className="font-bold text-xl text-white">{title}</p>
-        <p className="text-sm mt-2 whitespace-pre-line text-grey-neutral-400 leading-5">
+        <p className="text-sm mt-2 whitespace-pre-line text-gray-neutral-400 leading-5">
           {subtitle}
         </p>
       </div>

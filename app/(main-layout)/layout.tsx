@@ -1,3 +1,4 @@
+import TopNavigation from '~/components/common/top-nav';
 import BottomNavigation from '~/components/common/bottom-nav';
 
 export default function MainLayout({
@@ -6,7 +7,8 @@ export default function MainLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div>
+    <div className="bg-gray-neutral-900">
+      <TopNavigation />
       {children}
       <BottomNavigation />
     </div>
