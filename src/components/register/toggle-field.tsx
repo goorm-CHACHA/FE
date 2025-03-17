@@ -28,8 +28,13 @@ const ToggleField = <T extends FieldValues>({
   const { setError, setValue } = useFormContext();
 
   return (
-    <div>
-      <p className="mb-1 font-medium text-sm text-gray-200">{label}</p>
+    <div className="mb-8">
+      <div className="flex gap-3 content-center">
+        <div className="w-6 h-6 border border-dashed border-[#02e473]" />
+        <p className="mb-4 font-bold text-body-lg text-gray-neutral-50">
+          {label}
+        </p>
+      </div>
       <Controller
         name={name}
         control={control}
