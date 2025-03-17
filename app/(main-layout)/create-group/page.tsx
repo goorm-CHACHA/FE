@@ -27,6 +27,14 @@ const Page = () => {
 
   const { control, handleSubmit, watch } = methods;
   const selectedOptions = watch();
+  const isValid = Object.values(selectedOptions).every(
+    (valueArr) => valueArr.length > 0,
+  );
+  const onSubmit = handleSubmit((data) => {
+    if (data) {
+      console.log(data);
+    }
+  });
 
   return (
     <div className="pt-[60px] pb-[100px] px-5">
@@ -39,7 +47,7 @@ const Page = () => {
         </p>
       </div>
       <FormProvider {...methods}>
-        <form>
+        <form onSubmit={onSubmit}>
           <ToggleField
             label="직무/직책"
             name="job"
@@ -69,7 +77,7 @@ const Page = () => {
             <Button size={'full'} variant={'black/50'}>
               취소
             </Button>
-            <Button size={'full'} disabled={!selectedOptions}>
+            <Button size={'full'} disabled={!isValid}>
               만들기
             </Button>
           </div>
