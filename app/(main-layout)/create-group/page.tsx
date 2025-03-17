@@ -65,9 +65,13 @@ const Page = () => {
             options={purposeOptions}
           />
 
-          <div className="flex gap-4">
-            <Button>취소</Button>
-            <Button disabled={!selectedOptions}>만들기</Button>
+          <div className="flex gap-2">
+            <Button size={'full'} variant={'black/50'}>
+              취소
+            </Button>
+            <Button size={'full'} disabled={!selectedOptions}>
+              만들기
+            </Button>
           </div>
         </form>
       </FormProvider>
