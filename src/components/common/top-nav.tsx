@@ -40,7 +40,19 @@ const TopNavigation = () => {
 
         {type === 'default' && (
           <>
-            <p className="text-lg font-semibold text-white">{title}</p>
+            <div className="flex gap-2">
+              {pathname === '/create-group' && (
+                <button onClick={() => router.back()}>
+                  <Image
+                    src="/assets/svgs/BackArrow.svg"
+                    alt="뒤로가기"
+                    width={24}
+                    height={24}
+                  />
+                </button>
+              )}
+              <p className="text-lg font-semibold text-white">{title}</p>
+            </div>
             <div className="flex gap-4">
               <div className="w-6 h-6 border border-dashed border-[#02e473]" />
               <div className="w-6 h-6 border border-dashed border-[#02e473]" />
