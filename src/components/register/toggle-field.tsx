@@ -46,20 +46,32 @@ const ToggleField = <T extends FieldValues>({
         }}
         render={({ field: { value }, fieldState: { error } }) => {
           const handleValueChange = (newValue: T[typeof name]) => {
-            if (newValue.length < minSelection) {
-              setError(name, {
-                type: 'manual',
-                message: `최소 ${minSelection}개 이상 선택해야 합니다.`,
-              });
-            } else if (newValue.length > maxSelection) {
-              setError(name, {
-                type: 'manual',
-                message: `최대 ${maxSelection}개까지 선택 가능 합니다.`,
-              });
-              return;
+            let selectedValue: T[typeof name];
+
+            // 단일 선택
+            if (maxSelection === 1) {
+              const lastSelected = newValue.pop();
+              selectedValue = (
+                lastSelected ? [lastSelected] : []
+              ) as T[typeof name];
+            } else {
+              // 다중 선택
+              if (newValue.length < minSelection) {
+                setError(name, {
+                  type: 'manual',
+                  message: `최소 ${minSelection}개 이상 선택해야 합니다.`,
+                });
+              } else if (newValue.length > maxSelection) {
+                setError(name, {
+                  type: 'manual',
+                  message: `최대 ${maxSelection}개까지 선택 가능 합니다.`,
+                });
+                return;
+              }
+              selectedValue = newValue;
             }
 
-            setValue(name, newValue, { shouldValidate: true });
+            setValue(name, selectedValue, { shouldValidate: true });
           };
 
           return (
