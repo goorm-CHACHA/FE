@@ -2,16 +2,18 @@ import * as React from 'react';
 import { ToggleGroup } from 'radix-ui';
 import { cva, VariantProps } from 'class-variance-authority';
 import { cn } from '~/utils/cn';
+import { FieldValues, Path } from 'react-hook-form';
 
 interface ToggleItem {
   value: string;
 }
 
-interface RadixToggleGroupProps extends VariantProps<typeof itemsVariants> {
+interface RadixToggleGroupProps<T extends FieldValues>
+  extends VariantProps<typeof itemsVariants> {
   items: ToggleItem[];
   value: string[];
   ariaLabel: string;
-  onChange: (value: string[]) => void;
+  onChange: (newValue: T[Path<T>]) => void;
 }
 
 const itemsVariants = cva(
@@ -29,13 +31,13 @@ const itemsVariants = cva(
   },
 );
 
-const RadixToggleGroup = ({
+const RadixToggleGroup = <T extends FieldValues>({
   items,
   ariaLabel,
   variant,
   value,
   onChange,
-}: RadixToggleGroupProps) => (
+}: RadixToggleGroupProps<T>) => (
   <ToggleGroup.Root
     type="multiple"
     aria-label={ariaLabel}
