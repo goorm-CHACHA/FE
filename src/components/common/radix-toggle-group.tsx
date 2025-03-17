@@ -17,12 +17,14 @@ interface RadixToggleGroupProps<T extends FieldValues>
 }
 
 const itemsVariants = cva(
-  'py-1 h-[30px] px-4 flex items-center justify-center rounded-full whitespace-nowrap text-sm transition-colors focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50',
+  'py-1 px-4 flex items-center justify-center rounded-full whitespace-nowrap text-sm transition-colors focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50',
   {
     variants: {
       variant: {
         black:
           'data-[state=on]:bg-green-500 data-[state=on]:text-white bg-neutral-600 text-white border border-black',
+        primary:
+          'h-[40px] px-[18px] py-3 bg-gray-800/60 border border-gray-neutral-500/30 text-gray-neutral-400 data-[state=on]:bg-transparent data-[state=on]:border-green-500 data-[state=on]:text-green-500',
       },
     },
     defaultVariants: {

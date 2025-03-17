@@ -86,7 +86,7 @@ const ToggleField = <T extends FieldValues>({
                 value={value}
                 onChange={handleValueChange}
                 ariaLabel={`${label} 옵션`}
-                variant={'black'}
+                variant={'primary'}
               />
               {error && (
                 <p className="text-red-500 text-sm mt-2">{error.message}</p>
