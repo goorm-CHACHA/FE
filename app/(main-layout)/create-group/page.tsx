@@ -39,7 +39,7 @@ const Page = () => {
   return (
     <div className="pt-[60px] pb-[100px] px-5">
       <div className="flex flex-col gap-2 pt-5 pb-8">
-        <p className="text-heading-xs font-semibold">
+        <p className="text-heading-xs font-semibold text-white">
           이런 멤버를 만나고 싶어요
         </p>
         <p className="text-body-sm text-orange-500">
