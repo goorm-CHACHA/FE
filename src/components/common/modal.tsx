@@ -60,7 +60,7 @@ const Modal = ({
             <Dialog.Title className="text-white text-[15px] font-semibold text-center">
               {currentModal.title}
             </Dialog.Title>
-            <Dialog.Description className="text-[#b0b0b0] text-[13px] text-center whitespace-pre-line whitespace-pre-line">
+            <Dialog.Description className="text-[#b0b0b0] text-[13px] text-center whitespace-pre-line">
               {currentModal.subText}
             </Dialog.Description>
             <div className="relative w-full text-center mt-4 flex gap-1.5">
