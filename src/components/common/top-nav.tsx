@@ -62,15 +62,20 @@ const TopNavigation = () => {
 
         {type === 'chat-room' && (
           <>
-            <div className="flex items-center gap-2">
+            <button
+              className="flex items-center gap-2"
+              onClick={() => {
+                router.push('/home');
+              }}
+            >
+              <p className="text-lg font-semibold text-white">채팅방</p>
               <Image
                 src="/assets/svgs/ExitIcon.svg"
                 alt="Exit Icon"
                 width={24}
                 height={24}
               />
-              <p className="text-lg font-semibold text-white">채팅방</p>
-            </div>
+            </button>
             <Image
               src="/assets/svgs/Scanner.svg"
               alt="Scanner Icon"

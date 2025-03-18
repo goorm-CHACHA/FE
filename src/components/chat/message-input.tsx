@@ -4,6 +4,7 @@ import { useForm, FormProvider } from 'react-hook-form';
 import Input from '../common/input';
 import Button from '../common/button';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
 
 interface MessageFormData {
   message: string;
@@ -18,12 +19,24 @@ const MessageInput = ({ onSendMessage }: MessageInputProps) => {
     mode: 'onSubmit',
   });
 
+  const [isTyping, setIsTyping] = useState(false);
+
   const onSubmit = methods.handleSubmit((data) => {
     if (data.message.trim()) {
       onSendMessage(data.message);
       methods.reset(); // 입력 초기화
+      setIsTyping(false);
     }
   });
+
+  useEffect(() => {
+    const subscription = methods.watch((value, { name }) => {
+      if (name === 'message') {
+        setIsTyping(!!value.message);
+      }
+    });
+    return () => subscription.unsubscribe();
+  }, [methods]);
 
   return (
     <FormProvider {...methods}>
@@ -48,7 +61,11 @@ const MessageInput = ({ onSendMessage }: MessageInputProps) => {
           className="min-w-[48px] min-h-[48px] w-12 h-12 bg-transparent flex items-center justify-center rounded-full hover:bg-[#2C2C2C]/50"
         >
           <Image
-            src="/assets/svgs/Subtract.svg"
+            src={
+              isTyping
+                ? '/assets/svgs/Subtract-on.svg'
+                : '/assets/svgs/Subtract.svg'
+            }
             alt="Send Icon"
             width={24}
             height={24}

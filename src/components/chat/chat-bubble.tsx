@@ -8,9 +8,9 @@ const chatBubbleVariants = cva(
     variants: {
       variant: {
         sender:
-          'bg-[#3A3A3A] ml-auto rounded-tl-[8px] rounded-br-[8px] rounded-bl-[8px] px-4 py-2.5 text-white',
+          'bg-[#555555] ml-auto rounded-tl-[8px] rounded-br-[8px] rounded-bl-[8px] px-4 py-2.5 text-white',
         receiver:
-          'bg-[#555555] mr-auto rounded-tr-[8px] rounded-br-[8px] rounded-bl-[8px] px-4 py-2.5 text-white',
+          'bg-[#1f1f1f] mr-auto rounded-tr-[8px] rounded-br-[8px] rounded-bl-[8px] px-4 py-2.5 text-white',
         system: 'bg-yellow-100 text-black mx-auto italic rounded-lg',
       },
       size: {
@@ -46,7 +46,7 @@ const ChatBubble = ({
   return (
     <div
       className={cn(
-        'mb-2 flex gap-2 items-start', // 상단 정렬
+        'mb-2 flex gap-2 items-start',
         variant === 'sender' ? 'justify-end' : 'justify-start',
       )}
     >
