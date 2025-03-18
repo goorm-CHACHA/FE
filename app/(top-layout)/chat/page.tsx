@@ -28,16 +28,16 @@ const tempChats: Chat[] = [
 ];
 
 const tempMessages = [
-  { id: 1, senderId: 'USER1', content: '안녕하세요!', timestamp: '10:00' },
+  { id: 1, senderId: 'user', content: '안녕하세요!', timestamp: '10:00' },
   {
     id: 2,
-    senderId: 'USER2',
+    senderId: 'other',
     content: '네, 안녕하세요. 어떤 분야에서 일하시나요?',
     timestamp: '10:02',
   },
   {
     id: 3,
-    senderId: 'USER1',
+    senderId: 'user',
     content: '저는 프론트엔드 개발자입니다.',
     timestamp: '10:05',
   },
