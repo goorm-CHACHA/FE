@@ -1,38 +1,23 @@
 import { Dialog } from 'radix-ui';
 import { useState } from 'react';
-import Button from './button';
+import Button, { ButtonVariantProps } from './button';
 
-interface BaseButtonProps {
+interface ModalButtonProps extends ButtonVariantProps {
   label: string;
-  variant?: 'primary' | 'secondary' | 'gray-700' | 'red' | 'black/50';
-}
-
-interface TriggerButtonProps extends BaseButtonProps {
-  actionType: 'trigger';
-  nextModalContent: ModalContent;
-}
-
-interface ActionButtonProps extends BaseButtonProps {
-  actionType?: 'action';
+  actionType: 'trigger' | 'action';
   onClick?: () => void;
+  nextModalContent?: ModalContent;
 }
-
-export type ButtonProps = TriggerButtonProps | ActionButtonProps;
 
 interface ModalContent {
   title?: string;
   subText?: string;
-  buttons: ButtonProps[];
+  buttons: ModalButtonProps[];
 }
 
-interface ModalProps extends ModalContent {
+export interface ModalProps extends ModalContent {
   triggerButtonLabel: string;
-  triggerButtonVariant?:
-    | 'primary'
-    | 'secondary'
-    | 'gray-700'
-    | 'red'
-    | 'black/50';
+  triggerButtonVariant?: ButtonVariantProps['variant'];
 }
 
 const Modal = ({
@@ -85,7 +70,7 @@ const Modal = ({
                     <Button
                       key={index}
                       variant={btn.variant}
-                      onClick={() => handleModalContent(btn.nextModalContent)}
+                      onClick={() => handleModalContent(btn.nextModalContent!)}
                     >
                       {btn.label}
                     </Button>
