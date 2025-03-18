@@ -50,11 +50,11 @@ const ChatWindow = ({
       {/* 상단 고정 알림 */}
       <div className="fixed top-[55px] left-0 right-0 z-10">
         <TableApplicationCard
-          title="테이블을 신청해볼까요?"
-          description="테이블을 신청하면 네트워킹 존을 이용할 수 있어요."
+          variant="apply"
           onConfirm={handleConfirm}
           onCancel={handleCancel}
         />
+        <TableApplicationCard variant="assigned" tableNumber={5} />
       </div>
       {/* 알림 높이만큼 공간 확보 */}
       <div className="h-[85px]" /> {/* 프로필 + 채팅 메시지 스크롤 영역 */}
