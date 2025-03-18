@@ -19,7 +19,7 @@ const buttonVariants = cva(
         sm: 'py-[6px] px-[10px] text-[13px]',
         md: 'py-[10px] px-[16px] text-[14px]',
         lg: 'py-[14px] px-[28px] text-[16px]',
-        full: 'w-full h-[50px]',
+        full: 'w-full h-[50px] text-[16px]',
       },
     },
     defaultVariants: {
