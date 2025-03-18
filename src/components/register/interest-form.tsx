@@ -1,107 +1,52 @@
 'use client';
 
-import { Controller, useForm } from 'react-hook-form';
+import { useForm, FormProvider } from 'react-hook-form';
 import { interestOptions } from '~/constants/interest';
-import RadixToggleGroup from '../common/radix-toggle-group';
 import Button from '../common/button';
 import useFormSubmit from '~/utils/use-form-submit';
+import ToggleField from './toggle-field';
 
 const InterestForm = () => {
   const MIN_SELECTION = 1; // 최소 선택 개수
   const MAX_SELECTION = 2; // 최대 선택 개수
 
-  const MESSAGE = {
-    MIN_ERROR: `최소 ${MIN_SELECTION}개 이상 선택해야 합니다.`,
-    MAX_ERROR: `최대 ${MAX_SELECTION}개까지 선택 가능 합니다.`,
-  };
-
-  const {
-    control,
-    handleSubmit,
-    setValue,
-    setError,
-    clearErrors,
-    watch,
-    formState: { errors },
-  } = useForm<{ interest: string[] }>({
+  const methods = useForm<{
+    interest: string[];
+  }>({
     defaultValues: {
       interest: [],
     },
     mode: 'onChange',
   });
 
+  const { control, handleSubmit, watch } = methods;
+
   const onSubmit = handleSubmit(useFormSubmit('/'));
   const selectedOptions = watch('interest');
 
-  // 선택하지 않거나 n개 이상 선택할 경우 방지
-  const handleValueChange = (newValue: string[]) => {
-    clearErrors('interest');
-
-    if (newValue.length < MIN_SELECTION) {
-      setError('interest', {
-        type: 'manual',
-        message: `${MESSAGE.MIN_ERROR}`,
-      });
-    } else if (newValue.length > MAX_SELECTION) {
-      setError('interest', {
-        type: 'manual',
-        message: `${MESSAGE.MAX_ERROR}`,
-      });
-      return;
-    } else {
-      clearErrors('interest');
-    }
-
-    setValue('interest', newValue, { shouldValidate: true });
-  };
-
   return (
-    <div className="h-full">
-      <form
-        onSubmit={onSubmit}
-        className="flex flex-col justify-between h-full"
-      >
-        <div>
-          <Controller
+    <FormProvider {...methods}>
+      <div className="h-full">
+        <form
+          onSubmit={onSubmit}
+          className="flex flex-col justify-between h-full"
+        >
+          <ToggleField
             name="interest"
             control={control}
-            rules={{
-              validate: (value) => {
-                if (value.length < MIN_SELECTION) {
-                  return MESSAGE.MIN_ERROR;
-                }
-                if (value.length > MAX_SELECTION) {
-                  return MESSAGE.MAX_ERROR;
-                }
-                return true;
-              },
-            }}
-            render={() => (
-              <RadixToggleGroup
-                items={interestOptions}
-                value={selectedOptions}
-                onChange={handleValueChange}
-                ariaLabel="interest option"
-                variant={'black'}
-              />
-            )}
+            options={interestOptions}
+            minSelection={MIN_SELECTION}
+            maxSelection={MAX_SELECTION}
           />
-
-          {errors.interest && (
-            <p className="text-red-500 text-sm mt-2">
-              {errors.interest.message as string}
-            </p>
-          )}
-        </div>
-
-        <Button
-          className="py-3"
-          disabled={selectedOptions.length < MIN_SELECTION}
-        >
-          사전등록 완료!
-        </Button>
-      </form>
-    </div>
+          <Button
+            className="py-3"
+            disabled={selectedOptions.length < MIN_SELECTION}
+          >
+            사전등록 완료!
+          </Button>
+        </form>
+      </div>
+    </FormProvider>
   );
 };
 
