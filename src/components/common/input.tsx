@@ -1,8 +1,7 @@
 import { useFormContext } from 'react-hook-form';
 import { InputHTMLAttributes, ReactNode } from 'react';
 import { cva, VariantProps } from 'class-variance-authority';
-import { cn } from '~/utils/cn'; // cn 함수 임포트
-
+import { cn } from '~/utils/cn';
 const inputVariants = cva(
   'border-none py-2 pl-3 outline-none outline-1 rounded-md bg-neutral-700 text-neutral-400',
   {
