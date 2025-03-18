@@ -11,7 +11,6 @@ interface Chat {
   status: 'accepted' | 'pending';
 }
 
-// 임시 채팅 목록 데이터
 const tempChats: Chat[] = [
   { id: 1, name: '홍길동', lastMessage: '안녕하세요!', status: 'accepted' },
   {
@@ -28,54 +27,90 @@ const tempChats: Chat[] = [
   },
 ];
 
-// 임시 메시지 데이터
 const tempMessages = [
-  { id: 1, senderId: 'user', content: '안녕하세요!', timestamp: '10:00' },
+  { id: 1, senderId: 'USER1', content: '안녕하세요!', timestamp: '10:00' },
   {
     id: 2,
-    senderId: 'other',
+    senderId: 'USER2',
     content: '네, 안녕하세요. 어떤 분야에서 일하시나요?',
     timestamp: '10:02',
   },
   {
     id: 3,
-    senderId: 'user',
+    senderId: 'USER1',
     content: '저는 프론트엔드 개발자입니다.',
     timestamp: '10:05',
   },
 ];
 
 const ChatPage = () => {
-  const [chats, setChats] = useState<Chat[]>(tempChats);
-  const [selectedChat, setSelectedChat] = useState<Chat | null>(tempChats[0]);
+  const [chats] = useState<Chat[]>(tempChats);
+  const [selectedChat] = useState<Chat | null>(tempChats[0]);
   const [messages, setMessages] = useState(tempMessages);
+  const currentUser = 'USER1';
 
-  const handleSendMessage = (message: string) => {
-    const newMessage = {
+  const handleSendMessage = async (message: string) => {
+    if (!selectedChat) {
+      alert('채팅방을 선택해주세요!');
+      return;
+    }
+
+    const tempMessage = {
       id: messages.length + 1,
-      senderId: 'user',
+      senderId: currentUser,
       content: message,
       timestamp: new Date().toLocaleTimeString([], {
         hour: '2-digit',
         minute: '2-digit',
       }),
     };
-    setMessages([...messages, newMessage]);
+
+    setMessages((prev) => [...prev, tempMessage]);
+
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_HTTP_API_URL}/chats/send`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            createTime: new Date().toISOString(),
+            chatRoomId: selectedChat.id,
+            message,
+            senderName: currentUser,
+          }),
+        },
+      );
+
+      if (!response.ok) throw new Error('서버 응답 오류');
+    } catch (err) {
+      console.error('전송 실패:', err);
+      setMessages((prev) => prev.filter((msg) => msg.id !== tempMessage.id));
+    }
   };
 
   return (
-    <div className="flex h-screen flex-col">
-      <div className="flex-1 flex flex-col">
-        {selectedChat && (
+    <div className="flex flex-col w-full min-h-full">
+      {selectedChat ? (
+        <>
           <ChatWindow
             messages={messages}
             receiverId={selectedChat.id}
             status={selectedChat.status}
             receiverProfileImg="/images/icons/chat/Profile.png"
+            currentUser={currentUser}
+            receiverName={selectedChat.name}
+            receiverStatus={selectedChat.status}
           />
-        )}
-        <MessageInput onSendMessage={handleSendMessage} />
-      </div>
+          <div className="h-[60px] border-t border-gray-700">
+            <MessageInput onSendMessage={handleSendMessage} />
+          </div>
+        </>
+      ) : (
+        <div className="flex items-center justify-center h-full text-white">
+          채팅방을 선택해주세요!
+        </div>
+      )}
     </div>
   );
 };
