@@ -48,7 +48,7 @@ const ChatPage = () => {
   const [selectedChat] = useState<Chat | null>(tempChats[0]);
   const [messages, setMessages] = useState(tempMessages);
   const currentUser = 'USER1';
-
+  console.log(chats);
   const handleSendMessage = async (message: string) => {
     if (!selectedChat) {
       alert('채팅방을 선택해주세요!');
