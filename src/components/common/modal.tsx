@@ -57,7 +57,7 @@ const Modal = ({
         <Dialog.Portal>
           <Dialog.Overlay className="fixed inset-0 bg-blackA6 data-[state=open]:animate-overlayShow" />
           <Dialog.Content className="fixed left-1/2 top-1/2 max-h-[85vh] w-[90vw] max-w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-xl bg-[#373734] p-3.5 shadow-[var(--shadow-6)] focus:outline-none data-[state=open]:animate-contentShow">
-            <Dialog.Title className="text-white text-[15px] font-semibold text-center">
+            <Dialog.Title className="text-white text-[15px] font-semibold text-center whitespace-pre-line">
               {currentModal.title}
             </Dialog.Title>
             <Dialog.Description className="text-[#b0b0b0] text-[13px] text-center whitespace-pre-line">
