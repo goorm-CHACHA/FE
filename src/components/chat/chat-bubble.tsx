@@ -46,7 +46,7 @@ const ChatBubble = ({
   return (
     <div
       className={cn(
-        'mb-2 flex gap-2 items-start', // 상단 정렬
+        'mb-2 flex gap-2 items-start',
         variant === 'sender' ? 'justify-end' : 'justify-start',
       )}
     >
