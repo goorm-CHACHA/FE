@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import ChatBubble from './chat-bubble';
 import DefaultProfile from '../common/default-profile';
+import TableApplicationCard from './table-application-card';
 
 interface Message {
   id: number;
@@ -13,42 +14,85 @@ interface ChatWindowProps {
   messages: Message[];
   receiverId: number;
   status: 'accepted' | 'pending';
-  receiverProfileImg?: string;
+  receiverProfileImg: string;
+  currentUser: string;
+  receiverName: string;
+  receiverStatus: string;
 }
 
 const ChatWindow = ({
   messages,
-  // receiverId,
   receiverProfileImg,
   status,
+  receiverName,
+  receiverStatus,
 }: ChatWindowProps) => {
-  return (
-    <div className="flex-1 flex flex-col bg-[#1f1f1f]">
-      {/* 🔹 채팅방 상단에 수신자 프로필 표시 */}
-      <div className="p-4 flex items-center gap-3 border-b border-gray-700">
-        <DefaultProfile size="profileChat" imgSrc={receiverProfileImg} />
-        <span className="text-white text-lg font-semibold">상대방</span>
-      </div>
+  const chatRef = useRef<HTMLDivElement>(null);
 
-      <div className="flex-1 overflow-y-auto p-4">
-        {status === 'accepted' ? (
-          messages.map((message) => (
+  useEffect(() => {
+    if (chatRef.current) {
+      chatRef.current.scrollTop = chatRef.current.scrollHeight;
+    }
+  }, [messages]);
+
+  const handleConfirm = () => {
+    console.log('테이블 신청 확인');
+    // 여기에 테이블 신청 로직 추가
+  };
+
+  const handleCancel = () => {
+    console.log('테이블 신청 취소');
+    // 여기에 취소 로직 추가
+  };
+
+  return (
+    <div className="flex flex-col h-full mt-[55px]">
+      {/* 상단 고정 알림 */}
+      <div className="fixed top-[55px] left-0 right-0 z-10">
+        <TableApplicationCard
+          title="테이블을 신청해볼까요?"
+          description="테이블을 신청하면 네트워킹 존을 이용할 수 있어요."
+          onConfirm={handleConfirm}
+          onCancel={handleCancel}
+        />
+      </div>
+      {/* 알림 높이만큼 공간 확보 */}
+      <div className="h-[85px]" /> {/* 프로필 + 채팅 메시지 스크롤 영역 */}
+      <div className="flex-1 overflow-y-auto " ref={chatRef}>
+        {/* 프로필 */}
+        <div className="flex flex-col items-center p-6 border border-gray-700/60">
+          <DefaultProfile size="profileChat" imgSrc={receiverProfileImg} />
+          <div className="flex flex-col items-center gap-1.5 mt-6">
+            <p className="text-lg font-semibold text-center text-[#fefefe] w-[200px]">
+              {receiverName}
+            </p>
+            <p className="text-[13px] text-center text-[#a6a6a6] w-[228px]">
+              {receiverStatus}
+            </p>
+          </div>
+        </div>
+
+        {/* 채팅 메시지 영역 */}
+        <div className="p-4 ">
+          {status === 'accepted' ? (
+            messages.map((message) => (
+              <ChatBubble
+                key={message.id}
+                variant={message.senderId === 'other' ? 'receiver' : 'sender'}
+                message={message.content}
+                showProfile={message.senderId === 'other'}
+                imgSrc={receiverProfileImg}
+              />
+            ))
+          ) : (
             <ChatBubble
-              key={message.id}
-              variant={message.senderId === 'other' ? 'receiver' : 'sender'}
-              message={message.content}
-              showProfile={message.senderId === 'other'} // 수신자의 경우만 프로필 표시
+              message="안녕하세요~"
+              variant="receiver"
+              showProfile={true}
               imgSrc={receiverProfileImg}
             />
-          ))
-        ) : (
-          <ChatBubble
-            message="안녕하세요~"
-            variant="receiver"
-            showProfile={true}
-            imgSrc={receiverProfileImg}
-          />
-        )}
+          )}
+        </div>
       </div>
     </div>
   );
