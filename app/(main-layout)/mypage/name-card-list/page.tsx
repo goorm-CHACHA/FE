@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import MatchCard from '~/components/match/match-card';
+import MatchCard from '~/components/card/match-card';
 import { mockUserData } from '~/components/mypage/mock-user-data';
 
 const Page = () => {
