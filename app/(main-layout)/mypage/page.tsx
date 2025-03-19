@@ -7,7 +7,6 @@ import {
   AccordionTrigger,
   AccordionContent,
 } from '~/components/common/accordion/accordion';
-import DefaultProfile from '~/components/common/default-profile';
 import InfoOptional from '~/components/mypage/info-optional';
 import InfoRequired from '~/components/mypage/info-required';
 import { mockUserData } from '~/components/mypage/mock-user-data';
@@ -52,17 +51,16 @@ const Page = () => {
     return <div> 사용자 정보 없습니다.</div>;
   }
   return (
-    <div className="w-full m-auto max-w-3xl flex flex-col justify-center items-center gap-4 mt-2">
-      <Accordions>
-        <AccordionItem value="item-1">
+    <div className="m-auto w-full max-w-2xl flex flex-col justify-center items-center gap-4 mt-2 px-5 ">
+      <Accordions className="w-full rounded-2xl">
+        <AccordionItem value="item-1" className="w-full">
           <AccordionTrigger>
-            <div className="flex justify-center items-center gap-6">
-              <DefaultProfile />
+            <div className="flex justify-start items-center gap-6 w-full">
               <p>내 정보 수정</p>
             </div>
           </AccordionTrigger>
-          <AccordionContent>
-            <div className="flex flex-col justify-center items-center gap-2">
+          <AccordionContent className="w-full">
+            <div className="flex flex-col justify-center items-center gap-2 w-full">
               <div className="w-full">
                 <p className="mb-2">필수</p>
                 <InfoRequired
@@ -80,21 +78,24 @@ const Page = () => {
             </div>
           </AccordionContent>
         </AccordionItem>
-        <AccordionItem value="item-2">
-          <AccordionTrigger>내 명함 수정</AccordionTrigger>
+
+        <AccordionItem value="item-2" className="w-full">
+          <AccordionTrigger className="w-full">내 명함 수정</AccordionTrigger>
           <AccordionContent className="w-full">
             <div className="w-full">
               <ModifyCard userData={userData} />
             </div>
           </AccordionContent>
         </AccordionItem>
+
+        <AccordionItem value="item-3" className="w-full">
+          <Link href="/mypage/name-card-list">
+            <AccordionTrigger className="w-full">
+              저장한 명함 목록
+            </AccordionTrigger>
+          </Link>
+        </AccordionItem>
       </Accordions>
-      <div className="h-20 bg-[#222222] w-full rounded-md items-center flex justify-center text-white">
-        <Link href="/mypage/name-card-list">저장한 명함 목록</Link>
-      </div>
-      <div className="h-20 bg-[#222222] w-full rounded-md items-center flex justify-center text-white">
-        <Link href="/qr-reader">QR</Link>
-      </div>
       <div
         className="h-20 bg-[#222222] w-full rounded-md items-center flex justify-center text-white"
         onClick={signOutHandler}
