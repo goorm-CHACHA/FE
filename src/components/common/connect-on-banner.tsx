@@ -4,14 +4,17 @@ import ToggleSwitch from './switch';
 const ConnectOnBanner = () => {
   const { isSubscribed, toggleSubscription } = useNetworkStore();
   return (
-    <div className="w-full bg-mauve11 px-5 py-3 rounded-xl mb-8 relative flex">
-      <div>
-        <p className="text-base font-semibold flex-2">네트워킹 ON</p>
-        <p className="text-xs">참여를 원하지 않는다면 스위치를 꺼도 돼요</p>
+    <div>
+      <div className="w-full bg-gray-600 px-3 py-3 rounded-xl mb-4 relative flex">
+        <div>
+          <p className="text-lg flex-2">알림 ON</p>
+          <p className="text-sm">네트워킹 요청을 확인하려면 알림을 켜야해요</p>
+        </div>
+        <div className="relative text-xs text-transparent flex-1 w-42 left-5 top-[12px]">
+          <ToggleSwitch toggle={isSubscribed} setToggle={toggleSubscription} />
+        </div>
       </div>
-      <div className="relative -top-2 left-0 text-xs text-transparent flex-1 w-42">
-        <ToggleSwitch toggle={isSubscribed} setToggle={toggleSubscription} />
-      </div>
+      <div className="w-full h-[0.5] bg-gray-700"></div>
     </div>
   );
 };
