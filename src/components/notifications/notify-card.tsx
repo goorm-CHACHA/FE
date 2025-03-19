@@ -2,6 +2,8 @@
 import React from 'react';
 import { GrFormNext } from 'react-icons/gr';
 import { MessageType } from '../../stores/use-notify-store';
+import DefaultProfile from '../common/default-profile';
+import Button from '../common/button';
 import { useRouter } from 'next/navigation';
 import { formatDistanceToNow } from 'date-fns';
 import { ko } from 'date-fns/locale';
@@ -13,25 +15,69 @@ interface NotifyProps {
   messageData: {
     message: string;
     subMessage: string;
-    status?: MessageType;
+    // status?: MessageType;
     requester?: NotifyUser;
+    status: 'request' | 'normal';
     chatRoomId?: number;
     timeStamp?: number;
+    requesterId: number;
+    receiverId: number;
   };
 }
 
 const NotifyCard = ({ messageData }: NotifyProps) => {
-  const { message, subMessage, chatRoomId, timeStamp, status } = messageData;
+  const {
+    message,
+    subMessage,
+    chatRoomId,
+    timeStamp,
+    status,
+    // requesterId,
+    // receiverId,
+  } = messageData;
 
   const router = useRouter();
 
-  const handleAccept = () => {
-    // 채팅룸 ID가 존재하면 해당 채팅룸 페이지로 이동
-    if (chatRoomId) {
-      router.push(`/chat/${chatRoomId}`);
-    } else {
-      // 채팅룸 ID가 없으면 기본 채팅룸 페이지로 이동하거나 에러 처리 가능
-      router.push('/chat');
+  const handleAccept = async () => {
+    const requesterId = Number(messageData?.requester?.id) || 1;
+
+    const receiverId = messageData?.receiverId || 2; // 채팅 수락자 ID (디폴트 값 설정)
+
+    console.log('requesterId:', requesterId);
+    console.log('receiverId:', receiverId);
+    console.log(process.env.NEXT_PUBLIC_HTTP_API_URL);
+
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_HTTP_API_URL}/chats/private-chatroom/accept`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            requesterId: 1,
+            receiverId: 2,
+          }),
+        },
+      );
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('채팅 수락 실패:', errorText);
+        return;
+      }
+
+      const data = await response.json();
+      const newChatRoomId = data?.privateChatRoomId || chatRoomId;
+
+      if (newChatRoomId) {
+        router.push(`/chat/${newChatRoomId}?user=1`);
+      } else {
+        router.push('/chat?user=1');
+      }
+    } catch (err) {
+      console.error('채팅 수락 처리 중 오류:', err);
     }
   };
 

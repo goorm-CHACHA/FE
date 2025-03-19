@@ -5,4 +5,4 @@ node_modules
 .DS_*
 /public/sw*
 /public/workbox-*
-public/sw.js
+.sw.js

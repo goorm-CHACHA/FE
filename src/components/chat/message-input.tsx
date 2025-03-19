@@ -63,8 +63,8 @@ const MessageInput = ({ onSendMessage }: MessageInputProps) => {
           <Image
             src={
               isTyping
-                ? '/assets/svgs/Subtract-on.svg'
-                : '/assets/svgs/Subtract.svg'
+                ? '/assets/svgs/subtract-on.svg'
+                : '/assets/svgs/subtract.svg'
             }
             alt="Send Icon"
             width={24}
