@@ -20,6 +20,7 @@ export interface ModalProps extends ModalContent {
   onOpenChange: (open: boolean) => void;
   triggerButtonLabel?: string;
   triggerButtonVariant?: ButtonVariantProps['variant'];
+  customContent?: React.ReactNode;
 }
 
 const Modal = ({
@@ -30,6 +31,7 @@ const Modal = ({
   onOpenChange,
   triggerButtonLabel,
   triggerButtonVariant,
+  customContent,
 }: ModalProps) => {
   const initialModal = { title, subText, buttons };
   const [currentModal, setCurrentModal] = useState<ModalContent>({
@@ -61,6 +63,7 @@ const Modal = ({
           <Dialog.Description className="text-[#b0b0b0] text-[13px] text-center whitespace-pre-line">
             {currentModal.subText}
           </Dialog.Description>
+          {customContent && <div className="mt-4">{customContent}</div>}
           <div className="relative w-full text-center mt-4 flex gap-1.5">
             {currentModal.buttons.map((btn, index) => {
               if (btn.actionType === 'trigger') {

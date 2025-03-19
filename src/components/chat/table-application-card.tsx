@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Modal, { ModalProps } from '../common/modal';
+import CheckboxItem from './checkbox-item-modal';
 
 interface TableApplicationCardProps {
   variant: 'apply' | 'waiting' | 'assigned';
@@ -16,13 +18,50 @@ const TableApplicationCard: React.FC<TableApplicationCardProps> = ({
   onConfirm,
   onCancel,
 }) => {
-  const [isReserved, setIsReserved] = useState(false); // 예약 상태를 관리하는 상태
+  const router = useRouter();
+  const [isReserved, setIsReserved] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showCancelModal, setShowCancelModal] = useState(false);
+  const [showSecondCancelModal, setShowSecondCancelModal] = useState(false);
+  const [checkedItems, setCheckedItems] = useState<{ [key: string]: boolean }>({
+    '대기시간이 너무 길어요.': false,
+    '일정이 생겼어요.': false,
+    '기술적 문제가 발생했어요.': false,
+    '상대방이 응답하지 않아요.': false,
+  });
+
+  const handleCheckboxChange = (label: string) => {
+    setCheckedItems((prev) => ({ ...prev, [label]: !prev[label] }));
+  };
+
+  const handleFirstCancelConfirm = () => {
+    setShowCancelModal(false);
+    setShowSecondCancelModal(true);
+  };
+
+  const handleFinalCancel = () => {
+    const selectedReasons = Object.entries(checkedItems)
+      .filter(([_, isChecked]) => isChecked)
+      .map(([label, _]) => label);
+
+    console.log('선택된 취소 사유:', selectedReasons);
+
+    setShowSecondCancelModal(false);
+    if (onCancel) {
+      onCancel();
+    }
+    router.push('/home');
+  };
 
   const handleReservation = () => {
-    setIsReserved(true); // 예약 완료 상태로 변경
+    setIsReserved(true);
     if (onConfirm) {
-      onConfirm(); // 예약 동의 콜백 실행
+      onConfirm();
     }
+  };
+
+  const handleCancelNetworking = () => {
+    setShowCancelModal(true);
   };
 
   const getModalProps = (): ModalProps => {
@@ -46,12 +85,63 @@ const TableApplicationCard: React.FC<TableApplicationCardProps> = ({
         ],
         triggerButtonLabel: '테이블 신청',
         triggerButtonVariant: 'primary',
+        isOpen: isModalOpen,
+        onOpenChange: setIsModalOpen,
       };
     }
 
     return {} as ModalProps;
   };
 
+  const cancelNetworkingModalProps: ModalProps = {
+    title: '네트워킹을 취소하시겠어요?',
+    subText: '네트워킹을 취소하면 채팅방은 종료돼요.',
+    buttons: [
+      {
+        label: '아니요',
+        variant: 'black-transparent',
+        actionType: 'action',
+        onClick: () => setShowCancelModal(false),
+      },
+      {
+        label: '네',
+        variant: 'green',
+        actionType: 'action',
+        onClick: handleFirstCancelConfirm,
+      },
+    ],
+    isOpen: showCancelModal,
+    onOpenChange: setShowCancelModal,
+    triggerButtonLabel: '',
+  };
+
+  const secondCancelModalProps: ModalProps = {
+    title: '네트워킹을 취소하시겠어요?',
+    subText: '',
+    buttons: [
+      {
+        label: '제출하고 나가기',
+        variant: 'green',
+        actionType: 'action',
+        onClick: handleFinalCancel,
+      },
+    ],
+    isOpen: showSecondCancelModal,
+    onOpenChange: setShowSecondCancelModal,
+    triggerButtonLabel: '',
+    customContent: (
+      <div className="flex flex-col justify-start items-start self-stretch flex-grow-0 flex-shrink-0 gap-2 p-4 rounded-[10px] bg-[#1f1f1f]">
+        {Object.entries(checkedItems).map(([label, isChecked]) => (
+          <CheckboxItem
+            key={label}
+            label={label}
+            isChecked={isChecked}
+            onChange={() => handleCheckboxChange(label)}
+          />
+        ))}
+      </div>
+    ),
+  };
   const getTitle = () => {
     if (variant === 'apply') return '테이블을 신청해볼까요?';
     if (variant === 'waiting') return `예상 대기 시간: ${waitTime ?? '-'}분`;
@@ -73,7 +163,7 @@ const TableApplicationCard: React.FC<TableApplicationCardProps> = ({
         <div className="flex justify-start items-center flex-grow-0 flex-shrink-0 w-[335px] gap-1.5">
           <div
             className="flex justify-center items-center flex-grow relative px-4 py-2.5 rounded-lg bg-black/50"
-            onClick={onCancel}
+            onClick={handleCancelNetworking}
           >
             <p className="flex-grow-0 flex-shrink-0 text-sm font-semibold text-left text-[#dedede]">
               네트워킹 취소
@@ -159,6 +249,8 @@ const TableApplicationCard: React.FC<TableApplicationCardProps> = ({
         </div>
       </div>
       {renderButtons()}
+      <Modal {...cancelNetworkingModalProps} />
+      <Modal {...secondCancelModalProps} />
     </div>
   );
 };
