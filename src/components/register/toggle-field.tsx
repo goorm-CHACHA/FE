@@ -32,7 +32,7 @@ const ToggleField = <T extends FieldValues>({
   const { setError, setValue } = useFormContext();
 
   return (
-    <div className="mb-8">
+    <div className="mb-12">
       {label && (
         <div className="flex gap-3 content-center">
           <div className="w-6 h-6 border border-dashed border-[#02e473]" />
