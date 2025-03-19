@@ -10,7 +10,7 @@ import { useNetworkStore } from '~/stores/use-network-store';
 
 const NotificationsPage = () => {
   const messages = useNotifications();
-  const {isSubscribed} = useNetworkStore()
+  const { isSubscribed } = useNetworkStore();
 
   const handleQuickConnectToggle = useCallback((isOn: boolean) => {
     console.log('Quick Connect toggled:', isOn);

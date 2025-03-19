@@ -5,19 +5,26 @@ interface GroupNotificationsProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   messages: Record<string, any>;
   handleQuickConnectToggle: (isOn: boolean) => void;
-  isDisabled: boolean; 
+  isDisabled: boolean;
 }
 
-const GroupNotifications = ({ messages, isDisabled }: GroupNotificationsProps) => {
+const GroupNotifications = ({
+  messages,
+  isDisabled,
+}: GroupNotificationsProps) => {
   const filteredMessages = Object.entries(messages).filter(
-    ([, messageData]) => messageData.chatType === 'group'
+    ([, messageData]) => messageData.chatType === 'group',
   );
   return (
     <div className="w-full max-w-3xl rounded-lg mx-auto">
       <ConnectOnBanner isDisabled={isDisabled} />
       {filteredMessages.length > 0 ? (
         filteredMessages.map(([id, messageData]) => (
-          <NotifyCard key={id} messageData={messageData} isDisabled={isDisabled} />
+          <NotifyCard
+            key={id}
+            messageData={messageData}
+            isDisabled={isDisabled}
+          />
         ))
       ) : (
         <div className="text-center text-body-md py-28 text-gray-neutral-400">

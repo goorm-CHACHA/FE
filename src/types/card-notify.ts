@@ -5,7 +5,7 @@ interface CardNotifyProps {
   onAccept?: () => void; // "수락" 버튼 클릭 핸들러
   requester?: string;
   className?: string;
-  isDisabled?: boolean; 
+  isDisabled?: boolean;
 }
 
 export default CardNotifyProps;
