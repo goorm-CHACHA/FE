@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import ChatBubble from './chat-bubble';
 import DefaultProfile from '../common/default-profile';
 import TableApplicationCard from './table-application-card';
@@ -8,6 +8,11 @@ interface Message {
   senderId: string;
   content: string;
   timestamp: string;
+}
+
+interface Notification {
+  variant: 'apply' | 'waiting' | 'assigned';
+  tableNumber?: number;
 }
 
 interface ChatWindowProps {
@@ -29,12 +34,34 @@ const ChatWindow = ({
 }: ChatWindowProps) => {
   const chatRef = useRef<HTMLDivElement>(null);
 
+  // 초기 상태를 'apply'로 설정
+  const [notification, setNotification] = useState<Notification>({
+    variant: 'apply',
+    tableNumber: undefined,
+  });
+
   useEffect(() => {
     if (chatRef.current) {
       chatRef.current.scrollTop = chatRef.current.scrollHeight;
     }
   }, [messages]);
 
+  // 백엔드에서 알림 데이터 가져오기 (주석 처리)
+  /*
+  useEffect(() => {
+    const fetchNotification = async () => {
+      try {
+        const response = await fetch('/api/notifications');
+        const data: Notification = await response.json();
+        setNotification(data);
+      } catch (error) {
+        console.error('Failed to fetch notification:', error);
+      }
+    };
+
+    fetchNotification();
+  }, []);
+  */
   const handleConfirm = () => {
     console.log('테이블 신청 확인');
     // 여기에 테이블 신청 로직 추가
@@ -49,15 +76,19 @@ const ChatWindow = ({
     <div className="flex flex-col h-full mt-[55px]">
       {/* 상단 고정 알림 */}
       <div className="fixed top-[55px] left-0 right-0 z-10">
-        <TableApplicationCard
-          title="테이블을 신청해볼까요?"
-          description="테이블을 신청하면 네트워킹 존을 이용할 수 있어요."
-          onConfirm={handleConfirm}
-          onCancel={handleCancel}
-        />
+        {notification && (
+          <TableApplicationCard
+            variant={notification.variant}
+            tableNumber={notification.tableNumber}
+            onConfirm={handleConfirm}
+            onCancel={handleCancel}
+          />
+        )}
       </div>
       {/* 알림 높이만큼 공간 확보 */}
-      <div className="h-[85px]" /> {/* 프로필 + 채팅 메시지 스크롤 영역 */}
+      <div className="h-[85px]" />
+
+      {/* 프로필 + 채팅 메시지 스크롤 영역 */}
       <div className="flex-1 overflow-y-auto " ref={chatRef}>
         {/* 프로필 */}
         <div className="flex flex-col items-center p-6 border border-gray-700/60">
