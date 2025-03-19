@@ -1,7 +1,9 @@
 'use client';
 import React from 'react';
-import MatchCard from '~/components/card/match-card';
+import { Card, CardBody } from '~/components/common/card';
+import DefaultProfile from '~/components/common/default-profile';
 import { mockUserData } from '~/components/mypage/mock-user-data';
+import Image from 'next/image';
 
 const Page = () => {
   const downloadHandler = () => {
@@ -13,13 +15,21 @@ const Page = () => {
         {/* ⬇️  바로 밑에 div는 map으로 내가 저장한 카드 프린트... 명함 누르면 모달 열려야 함 (모달 수정 작업 먼저 필요)*/}
         <div className="flex gap-2 flex-col">
           {mockUserData.map((user) => (
-            <MatchCard
-              key={user.id}
-              userData={user}
-              inMyPage={true}
-              bgOnChipInterest={false}
-              bgOnChipPurpose={true}
-            />
+            <Card key={user.id}>
+              <CardBody className="flex gap-[10px]">
+                <DefaultProfile size="nameCard" />
+                {/* <DefaultProfile imgSrc={user.profileImage}/> */}
+                <div className="flex items-center">
+                  <p className="text-body-lg">{user.name}</p>
+                  <Image
+                    src="/assets/svgs/NextPage.svg"
+                    alt="BackArrow Icon"
+                    width={24}
+                    height={24}
+                  />
+                </div>
+              </CardBody>
+            </Card>
           ))}
         </div>
       </div>
