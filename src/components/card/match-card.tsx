@@ -50,7 +50,7 @@ const MatchCard = ({
     'right-16 z-40',
   ];
   return (
-    <Card className="w-[335px] bg-[color:var(--primitive-color-gray-warm-800)] border-none bg-[#333333] rounded-2xl pt-5">
+    <Card className="w-[335px] border-none rounded-2xl pt-5">
       {isGroup && (
         <CardHeader
           className="flex justify-between items-center mb-2 -mt-2"

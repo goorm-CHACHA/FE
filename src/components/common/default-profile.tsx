@@ -14,6 +14,7 @@ const defaultProfileVariants = cva(
         profileChat: 'h-[72px] w-[72px]',
         chatImg: 'h-8 w-8',
         groupChat: 'h-[24px] w-[24px]',
+        nameCard: 'h-[48px] w-[48px]',
       },
     },
     defaultVariants: {
