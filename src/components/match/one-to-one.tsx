@@ -1,16 +1,19 @@
-import Profile from '../common/profile';
+import MatchCard from '../card/match-card';
+// import Profile from '../common/profile';
 import Filter from '~/components/match/filter';
+import { mockUserData } from '../mypage/mock-user-data';
 
-const OneToOneMatching = ({
-  profiles,
-}: {
-  profiles: React.ComponentProps<typeof Profile>[];
-}) => {
+const OneToOneMatching = ({ profiles }: { profiles: typeof mockUserData }) => {
   return (
     <div className="flex flex-col items-center">
       <Filter />
       {profiles.map((profile) => (
-        <Profile key={profile.id} {...profile} />
+        <MatchCard
+          userData={profile}
+          key={profile.id}
+          inMyPage={false}
+          alignedOne={true}
+        />
       ))}
     </div>
   );
