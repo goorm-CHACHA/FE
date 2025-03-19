@@ -1,5 +1,4 @@
 import MatchCard from '../card/match-card';
-// import Profile from '../common/profile';
 import Filter from '~/components/match/filter';
 import { mockUserData } from '../mypage/mock-user-data';
 
