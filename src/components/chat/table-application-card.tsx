@@ -65,6 +65,10 @@ const TableApplicationCard: React.FC<TableApplicationCardProps> = ({
     setShowCancelModal(true);
   };
 
+  const handleQRRegistration = () => {
+    router.push('/qr-reader');
+  };
+
   const getModalProps = (): ModalProps => {
     if (variant === 'apply') {
       return {
@@ -207,7 +211,7 @@ const TableApplicationCard: React.FC<TableApplicationCardProps> = ({
           <Button
             variant="green"
             size="sm"
-            onClick={onConfirm}
+            onClick={handleQRRegistration}
             className="flex-grow"
           >
             QR 등록
