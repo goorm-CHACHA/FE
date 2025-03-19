@@ -35,7 +35,7 @@ const ChatWindow = ({
   const chatRef = useRef<HTMLDivElement>(null);
 
   // 초기 상태를 'apply'로 설정
-  const [notification, setNotification] = useState<Notification>({
+  const [notification] = useState<Notification>({
     variant: 'apply',
     tableNumber: undefined,
   });
