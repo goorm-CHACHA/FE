@@ -1,14 +1,13 @@
 import React from 'react';
-import InterestForm from '~/components/register/interest-form';
+import NetworkForm from '~/components/register/network-form';
 import RegisterTemplete from '~/components/register/register-templete';
 
 const RegisterInterest = () => {
   return (
     <RegisterTemplete
-      title="관심 분야를 선택하세요"
-      subtitle="관심분야를 선택하세요. (최대 2개)"
+      title={`아래 항목은 이번 컨퍼런스 행사 내 \n네트워킹 이벤트에 필요한 정보입니다.`}
     >
-      <InterestForm />
+      <NetworkForm />
     </RegisterTemplete>
   );
 };

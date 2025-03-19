@@ -33,6 +33,10 @@ const emailSchema = z
   .email({ message: '이메일 형식이 올바르지 않습니다.' })
   .min(1, '이메일을 입력해주세요');
 
+const phoneSchema = z
+  .string()
+  .regex(/^(\d{3}-\d{3,4}-\d{4})$/, '전화번호 형식이 유효하지 않습니다.');
+
 export const loginSchema = z.object({
   id: idSchema,
   password: passwordSchema,
@@ -43,6 +47,7 @@ export const signUpSchema = z.object({
   id: idSchema,
   email: emailSchema,
   password: passwordSchema,
+  phone: phoneSchema,
 });
 // .superRefine(({ password, passwordConfirm }, ctx) => {
 //   if (password !== passwordConfirm) {

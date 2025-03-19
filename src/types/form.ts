@@ -1,17 +1,20 @@
 export interface ProfileFormType {
   name: string;
   id: string;
-  password: string;
   email: string;
+  password: string;
+  phone: string;
 }
 
 export interface JobFormType {
   job: { category: string; value: string };
   career: { value: string } | string;
-  purpose: { category: string; value: string };
+  nickname: string;
 }
 
-export interface InterestFormType {
+export interface NetworkFormType {
+  purpose: { value: string };
+  interestJob: { category: string; value: string };
   interest: string[];
 }
 
@@ -20,9 +23,9 @@ export interface QRCodeType extends ProfileFormType {
   name: string;
   email: string;
   job: { category: string; value: string };
-  purpose: { category: string; value: string };
+  purpose: { value: string };
 }
 
-export type FormDataType = ProfileFormType & JobFormType & InterestFormType;
+export type FormDataType = ProfileFormType & JobFormType & NetworkFormType;
 export type PartialFormDataType = Partial<FormDataType>;
 export type PartialQRCodeType = Partial<QRCodeType>;
