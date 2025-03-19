@@ -4,7 +4,6 @@ import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 
 import ToggleSwitch from '~/components/common/switch';
 import Modal, { ModalProps } from '~/components/common/modal';
