@@ -38,7 +38,7 @@ const NotificationsPage = () => {
   const tabContents = [oneToOneNotifications, groupNotifications];
 
   return (
-    <div className="flex flex-col max-w-3xl min-h-screen w-full mx-auto items-center overflow-x-hidden">
+    <div className="flex flex-col gap-2 max-w-3xl min-h-screen w-full mx-auto items-center overflow-x-hidden">
       <div className="w-full">
         <NotifyBar tabLabels={tabLabels} tabContents={tabContents} />
       </div>

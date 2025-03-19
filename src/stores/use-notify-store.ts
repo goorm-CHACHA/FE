@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { NotifyUser } from '~/types/notify-user';
 
 export type MessageType =
   | 'request'
@@ -11,8 +12,8 @@ export type MessageType =
 
 interface NotificationData {
   status: MessageType;
-  requester: { id: string; name?: string } | null;
-  receiver: { id: string; name?: string } | null;
+  requester: NotifyUser | null;
+  receiver: NotifyUser | null;
   chatRoomId?: number;
   chatType?: '1to1' | 'group';
 }
@@ -21,7 +22,7 @@ interface MessageData {
   message: string;
   subMessage: string;
   status?: MessageType;
-  requester?: { id: string; name?: string } | null;
+  requester?: NotifyUser | null;
   chatType?: '1to1' | 'group';
 }
 
@@ -30,8 +31,8 @@ interface NotifyStore {
   setNotifyStatus: (
     id: string,
     status: MessageType,
-    requester?: { id: string; name?: string } | null,
-    receiver?: { id: string; name?: string } | null,
+    requester?: NotifyUser | null,
+    receiver?: NotifyUser | null,
     chatRoomId?: number,
     chatType?: '1to1' | 'group',
   ) => void;
@@ -90,7 +91,7 @@ const useNotifyStore = create<NotifyStore>((set, get) => ({
             break;
           case 'request':
             messageData = {
-              message: `${requesterName}님이 네트워킹을 요청했습니다.`,
+              message: `${requesterName}님이 매칭을 했습니다.`,
               subMessage: '3분 안에 수락하지 않으면 자동 취소됩니다.',
               status: notification.status,
               requester: notification.requester,

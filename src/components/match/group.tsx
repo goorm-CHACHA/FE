@@ -1,16 +1,18 @@
-import Profile from '../common/profile';
+import MatchCard from '../card/match-card';
 import Filter from '~/components/match/filter';
-
-const GroupMatching = ({
-  profiles,
-}: {
-  profiles: React.ComponentProps<typeof Profile>[];
-}) => {
+import { mockUserData } from '../mypage/mock-user-data';
+const GroupMatching = ({ profiles }: { profiles: typeof mockUserData }) => {
   return (
     <div className="flex flex-col items-center">
       <Filter />
       {profiles.map((profile) => (
-        <Profile key={profile.id} {...profile} />
+        <MatchCard
+          userData={profile}
+          key={profile.id}
+          isGroup={true}
+          inMyPage={false}
+          alignedOne={true}
+        />
       ))}
     </div>
   );
