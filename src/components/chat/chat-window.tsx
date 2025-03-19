@@ -49,12 +49,13 @@ const ChatWindow = ({
     <div className="flex flex-col h-full mt-[55px]">
       {/* 상단 고정 알림 */}
       <div className="fixed top-[55px] left-0 right-0 z-10">
-        <TableApplicationCard
+        {/* <TableApplicationCard
           variant="apply"
           onConfirm={handleConfirm}
           onCancel={handleCancel}
-        />
+        /> */}
         <TableApplicationCard variant="waiting" tableNumber={5} />
+        {/** <TableApplicationCard variant="assigned" tableNumber={5} /> */}
       </div>
       {/* 알림 높이만큼 공간 확보 */}
       <div className="h-[85px]" /> {/* 프로필 + 채팅 메시지 스크롤 영역 */}

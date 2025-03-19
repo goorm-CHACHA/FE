@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Modal, { ModalProps } from '../common/modal';
 
 interface TableApplicationCardProps {
   variant: 'apply' | 'waiting' | 'assigned';
-  tableNumber?: number; // assigned 상태일 때 필요
-  waitTime?: number; // waiting 상태일 때 필요
+  tableNumber?: number;
+  waitTime?: number;
   onConfirm?: () => void;
   onCancel?: () => void;
 }
@@ -16,9 +16,18 @@ const TableApplicationCard: React.FC<TableApplicationCardProps> = ({
   onConfirm,
   onCancel,
 }) => {
-  const renderButtons = () => {
+  const [isReserved, setIsReserved] = useState(false); // 예약 상태를 관리하는 상태
+
+  const handleReservation = () => {
+    setIsReserved(true); // 예약 완료 상태로 변경
+    if (onConfirm) {
+      onConfirm(); // 예약 동의 콜백 실행
+    }
+  };
+
+  const getModalProps = (): ModalProps => {
     if (variant === 'apply') {
-      const modalProps: ModalProps = {
+      return {
         title: '테이블을 신청하시겠어요?',
         subText: '신청 즉시 배정되므로,\n구성원의 동의 후에 신청해주세요!',
         buttons: [
@@ -38,45 +47,9 @@ const TableApplicationCard: React.FC<TableApplicationCardProps> = ({
         triggerButtonLabel: '테이블 신청',
         triggerButtonVariant: 'primary',
       };
-
-      return (
-        <div className="flex justify-start items-center w-[335px] gap-1.5">
-          <Modal {...modalProps} />
-        </div>
-      );
     }
 
-    if (variant === 'waiting') {
-      return (
-        <div className="flex justify-start items-center w-[335px] gap-1.5">
-          <button
-            className="flex-grow px-4 py-2.5 rounded-lg bg-black/50 text-sm font-semibold text-[#dedede]"
-            onClick={onCancel}
-          >
-            네트워킹 취소
-          </button>
-          <button
-            className="flex-grow px-4 py-2.5 rounded-lg bg-[#07ca7f] text-sm font-semibold text-[#fefefe]"
-            onClick={onConfirm}
-          >
-            예약 동의
-          </button>
-        </div>
-      );
-    }
-
-    if (variant === 'assigned') {
-      return (
-        <div className="flex justify-start items-center w-[335px] gap-1.5">
-          <button className="flex-grow px-4 py-2.5 rounded-lg bg-black/50 text-sm font-semibold text-[#dedede]">
-            위치 안내
-          </button>
-          <button className="flex-grow px-4 py-2.5 rounded-lg bg-[#07ca7f] text-sm font-semibold text-[#fefefe]">
-            QR 등록 00:00
-          </button>
-        </div>
-      );
-    }
+    return {} as ModalProps;
   };
 
   const getTitle = () => {
@@ -94,32 +67,97 @@ const TableApplicationCard: React.FC<TableApplicationCardProps> = ({
       return '테이블이 배정되었어요.\n네트워킹 존으로 이동해서 테이블 QR을 등록해주세요!';
   };
 
+  const renderButtons = () => {
+    if (variant === 'waiting') {
+      return (
+        <div className="flex justify-start items-center flex-grow-0 flex-shrink-0 w-[335px] gap-1.5">
+          <div
+            className="flex justify-center items-center flex-grow relative px-4 py-2.5 rounded-lg bg-black/50"
+            onClick={onCancel}
+          >
+            <p className="flex-grow-0 flex-shrink-0 text-sm font-semibold text-left text-[#dedede]">
+              네트워킹 취소
+            </p>
+          </div>
+          {isReserved ? (
+            <div className="flex justify-center items-center flex-grow relative px-4 py-2.5 rounded-lg bg-[#858585]/30">
+              <p className="flex-grow-0 flex-shrink-0 text-sm font-semibold text-left text-[#858585]">
+                예약 완료
+              </p>
+            </div>
+          ) : (
+            <div
+              className="flex justify-center items-center flex-grow relative px-4 py-2.5 rounded-lg bg-[#07ca7f]"
+              onClick={handleReservation}
+            >
+              <p className="flex-grow-0 flex-shrink-0 text-sm font-semibold text-left text-[#fefefe]">
+                예약 동의
+              </p>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    if (variant === 'assigned') {
+      return (
+        <div className="flex justify-start items-center w-[335px] gap-1.5">
+          <button
+            className="flex-grow px-4 py-2.5 rounded-lg bg-black/50 text-sm font-semibold text-[#dedede]"
+            onClick={onCancel}
+          >
+            위치 안내
+          </button>
+          <button
+            className="flex-grow px-4 py-2.5 rounded-lg bg-[#07ca7f] text-sm font-semibold text-[#fefefe]"
+            onClick={onConfirm}
+          >
+            QR 등록
+          </button>
+        </div>
+      );
+    }
+
+    return <Modal {...getModalProps()} />;
+  };
+
   return (
-    <div className="flex flex-col justify-center items-center w-[375px] gap-4 px-5 pt-5 pb-4 bg-[#3a3a3a]/60 backdrop-blur-[5px] rounded-xl">
-      {/* 아이콘 + 제목 */}
-      <div className="flex flex-col justify-start items-center self-stretch gap-2.5">
-        <div className="flex justify-center items-center self-stretch gap-1.5 px-1">
-          <div className="flex justify-start items-center relative gap-2">
-            <div className="w-6 h-6 relative bg-[#02e473]/25">
+    <div className="flex flex-col justify-center items-center flex-grow-0 flex-shrink-0 w-[375px] gap-4 px-5 pt-5 pb-4 bg-[#3a3a3a]/60 backdrop-blur-[5px]">
+      <div className="flex flex-col justify-start items-center self-stretch flex-grow-0 flex-shrink-0 gap-2.5">
+        <div className="flex justify-center items-center self-stretch flex-grow-0 flex-shrink-0 gap-1.5 px-1">
+          <div className="flex justify-start items-center flex-grow-0 flex-shrink-0 relative gap-2">
+            <div className="flex-grow-0 flex-shrink-0 w-6 h-6 relative bg-[#02e473]/25">
               <div className="w-5 h-5 absolute left-px top-px rounded-sm border border-[#02e473]/70 border-dashed"></div>
             </div>
           </div>
-          <div className="flex justify-start items-center gap-0.5">
-            <p className="text-lg font-semibold text-center text-[#fefefe]">
-              {getTitle()}
-            </p>
+          <div className="flex justify-start items-center flex-grow-0 flex-shrink-0 gap-0.5">
+            <div className="flex justify-start items-center flex-grow-0 flex-shrink-0 relative">
+              {variant === 'waiting' ? (
+                <>
+                  <p className="flex-grow-0 flex-shrink-0 text-lg font-semibold text-center text-[#fefefe]">
+                    예상 대기 시간:
+                  </p>
+                  <p className="flex-grow-0 flex-shrink-0 text-lg font-semibold text-center text-white">
+                    {waitTime}
+                  </p>
+                  <p className="flex-grow-0 flex-shrink-0 text-lg font-semibold text-center text-white">
+                    분
+                  </p>
+                </>
+              ) : (
+                <p className="flex-grow-0 flex-shrink-0 text-lg font-semibold text-center text-[#fefefe]">
+                  {getTitle()}
+                </p>
+              )}
+            </div>
           </div>
         </div>
-
-        {/* 설명 */}
-        <div className="flex flex-col justify-center items-start self-stretch relative gap-1 pl-1.5">
-          <p className="self-stretch w-[329px] text-sm text-center text-[#a6a6a6] whitespace-pre-line">
+        <div className="flex flex-col justify-center items-start self-stretch flex-grow-0 flex-shrink-0 relative gap-1 pl-1.5">
+          <p className="self-stretch flex-grow-0 flex-shrink-0 w-[329px] text-sm text-center text-[#a6a6a6] whitespace-pre-line">
             {getDescription()}
           </p>
         </div>
       </div>
-
-      {/* 버튼 영역 */}
       {renderButtons()}
     </div>
   );
