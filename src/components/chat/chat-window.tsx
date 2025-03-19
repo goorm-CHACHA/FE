@@ -45,6 +45,8 @@ const ChatWindow = ({
     // 여기에 취소 로직 추가
   };
 
+  console.log(handleConfirm, handleCancel); //apply
+
   return (
     <div className="flex flex-col h-full mt-[55px]">
       {/* 상단 고정 알림 */}

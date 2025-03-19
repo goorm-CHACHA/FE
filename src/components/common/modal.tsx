@@ -33,7 +33,7 @@ const Modal = ({
   triggerButtonVariant,
   customContent,
 }: ModalProps) => {
-  const initialModal = { title, subText, buttons };
+  // const initialModal = { title, subText, buttons };
   const [currentModal, setCurrentModal] = useState<ModalContent>({
     title,
     subText,

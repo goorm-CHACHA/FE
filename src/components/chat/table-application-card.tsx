@@ -41,8 +41,8 @@ const TableApplicationCard: React.FC<TableApplicationCardProps> = ({
 
   const handleFinalCancel = () => {
     const selectedReasons = Object.entries(checkedItems)
-      .filter(([_, isChecked]) => isChecked)
-      .map(([label, _]) => label);
+      .filter(([, isChecked]) => isChecked)
+      .map(([label]) => label);
 
     console.log('선택된 취소 사유:', selectedReasons);
 
