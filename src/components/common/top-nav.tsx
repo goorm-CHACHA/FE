@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 
@@ -16,7 +17,7 @@ const TopNavigation = () => {
 
   return (
     <div>
-      <div className="fixed z-10 top-0 flex justify-between items-center w-full max-w-[768px] h-[55px] px-5 py-3.5 bg-gray-neutral-900">
+      <div className="flex justify-between items-center w-full max-w-[768px] h-[55px] px-5 py-3.5 bg-gray-neutral-900">
         {type === 'quick-network' && (
           <>
             <div className="flex items-center gap-2">
@@ -65,6 +66,22 @@ const TopNavigation = () => {
               width={24}
               height={24}
             />
+          </>
+        )}
+
+        {type === 'user-info' && (
+          <>
+            <div className="flex items-center gap-2 justify-start">
+              <Link href="/notifications">
+                <Image
+                  src="/assets/svgs/BackArrow.svg"
+                  alt="BackArrow Icon"
+                  width={24}
+                  height={24}
+                />
+              </Link>
+              <p className="text-lg font-semibold text-white">뒤로 가기</p>
+            </div>
           </>
         )}
       </div>
