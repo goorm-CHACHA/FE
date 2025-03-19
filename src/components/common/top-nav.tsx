@@ -86,21 +86,22 @@ const TopNavigation = () => {
           </>
         )}
 
-        {type === 'user-info' && (
-          <>
-            <div className="flex items-center gap-2 justify-start">
-              <Link href="/notifications">
-                <Image
-                  src="/assets/svgs/BackArrow.svg"
-                  alt="BackArrow Icon"
-                  width={24}
-                  height={24}
-                />
-              </Link>
-              <p className="text-lg font-semibold text-white">뒤로 가기</p>
-            </div>
-          </>
-        )}
+        {type === 'user-info' ||
+          (type === 'modify-profile' && (
+            <>
+              <div className="flex items-center gap-2 justify-start">
+                <Link href="/notifications">
+                  <Image
+                    src="/assets/svgs/BackArrow.svg"
+                    alt="BackArrow Icon"
+                    width={24}
+                    height={24}
+                  />
+                </Link>
+                <p className="text-lg font-semibold text-white">뒤로 가기</p>
+              </div>
+            </>
+          ))}
       </div>
     </div>
   );

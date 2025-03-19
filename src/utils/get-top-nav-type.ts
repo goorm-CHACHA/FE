@@ -5,6 +5,7 @@ const routes = [
   { path: '/notifications', type: 'default', title: '알림' },
   { path: '/mypage', type: 'default', title: '마이페이지' },
   { path: '/user-info', type: 'user-info' },
+  { path: '/modify-profile', type: 'modify-profile' },
 ];
 
 export function getTopNavType(pathname: string) {
