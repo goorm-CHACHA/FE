@@ -4,40 +4,18 @@ import RadixTabs from '~/components/common/radix-tabs';
 import GroupMatching from '~/components/match/group';
 import OneToOneMatching from '~/components/match/one-to-one';
 import { useNetworkStore } from '~/stores/use-network-store';
-
+import { mockUserData } from '~/components/mypage/mock-user-data';
 const Page = () => {
   const { isConnect } = useNetworkStore();
-  // 샘플 profiles 데이터
-  const Profiles = [
-    { id: '1', name: '김중환', info1: '백엔드 개발자', info2: 'Java, Python' },
-    {
-      id: '2',
-      name: '황신혜',
-      info1: 'UX/UI 디자이너',
-      info2: 'Figma, Adobe XD',
-    },
-    {
-      id: '3',
-      name: '박지윤',
-      info1: '프론트엔드 개발자',
-      info2: 'Node.js, React',
-    },
-    {
-      id: '4',
-      name: '최현우',
-      info1: '프로덕트 매니지먼트',
-      info2: 'Notion, Jira',
-    },
-  ];
 
   const tabLabels = ['1:1 매칭', '그룹 매칭'];
   const tabContents = [
-    <OneToOneMatching key="one-to-one" profiles={Profiles} />,
-    <GroupMatching key="group" profiles={Profiles} />,
+    <OneToOneMatching key="one-to-one" profiles={mockUserData} />,
+    <GroupMatching key="group" profiles={mockUserData} />,
   ];
 
   return (
-    <div className="relative w-full min-h-screen flex flex-col items-center pt-[60px]">
+    <div className="relative w-full min-h-screen flex flex-col items-center">
       <div className="w-full max-w-3xl min-h-screen flex flex-col items-center pb-[92px]">
         <RadixTabs
           tabLabels={tabLabels}

@@ -4,6 +4,7 @@ interface BadgesAlignedProps {
   vertical?: boolean;
   className?: string;
   noneChip?: boolean;
+  alignedOne?: boolean;
 }
 
 const BadgesAligned = ({
@@ -12,21 +13,26 @@ const BadgesAligned = ({
   vertical,
   className,
   noneChip,
+  alignedOne,
 }: BadgesAlignedProps) => {
+  const displayItems = alignedOne ? items?.slice(0, 1) : items;
+
   return (
     <div
-      className={`gap-3 flex flex-col bg-[#333333] py-0.5 rounded-xl mt-2 ${className}`}
+      className={`gap-3 flex flex-col bg-[#333333] pb-0.5 rounded-xl ${className}`}
     >
-      {title && <div className="text-white font-medium"> {title} </div>}
+      {title && (
+        <div className="text-white text-body-md font-medium"> {title} </div>
+      )}
       <div
-        className={`flex ${vertical ? 'flex-col' : 'flex-row'} flex-wrap gap-2`}
+        className={`flex ${vertical ? 'flex-col' : 'flex-row gap-2'} flex-wrap `}
       >
-        {items?.map((item: string, index: number) => (
+        {displayItems?.map((item: string, index: number) => (
           <p
             key={index}
-            className={`w-fit px-2 py-1 rounded-md text-white ${noneChip ? 'bg-transparent py-1 text-sm' : 'bg-[#07ca7f] text-xs'}`}
+            className={`w-fit px-2 text-body-sm rounded-md text-white ${noneChip ? 'bg-transparent py-1 text-gray-neutral-300' : 'bg-gray-neutral-600'}`}
           >
-            {item}
+            {item.length > 19 ? `${item.slice(0, 19)}...` : item}
           </p>
         ))}
       </div>

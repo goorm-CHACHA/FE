@@ -9,7 +9,7 @@ const profileImportantVariants = cva('flex gap-2', {
       // 세로 배치: 이미지가 위, 텍스트가 아래
       vertical: 'flex-col items-center',
       // 가로 배치: 이미지와 텍스트가 한 줄
-      horizontal: 'items-center gap-2',
+      horizontal: 'items-center gap-3',
     },
   },
   defaultVariants: {
@@ -22,6 +22,7 @@ interface ProfileImportantProps
     VariantProps<typeof profileImportantVariants> {
   userData: UserData;
   children?: React.ReactNode;
+  isTopAligned?: boolean;
 }
 
 const ProfileImportant = ({
@@ -29,6 +30,7 @@ const ProfileImportant = ({
   layout,
   children,
   className,
+  isTopAligned = false,
   ...props
 }: ProfileImportantProps) => {
   return (
@@ -37,19 +39,24 @@ const ProfileImportant = ({
       {...props}
     >
       {/* 프로필 이미지 */}
-      <DefaultProfile />
+      <DefaultProfile
+        size="profileChat"
+        className={isTopAligned ? 'mt-[-12px]' : ''}
+      />
 
       {/* 텍스트 영역 */}
-      <div className="flex flex-col gap-1">
+      <div
+        className={`flex flex-col ${layout == 'vertical' ? 'gap-2' : 'gap-1'} `}
+      >
         <h3
           className={cn(
-            'font-bold text-lg',
+            'font-bold text-body-md',
             layout === 'vertical' ? 'text-center' : 'text-left',
           )}
         >
           {userData.name}
         </h3>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 text-body-sm">
           <p>{userData.position}</p>
           <div className="w-px h-4 bg-gray-500" />
           <p>{userData.joinedAt}</p>

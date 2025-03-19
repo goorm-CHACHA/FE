@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
+import Link from 'next/link';
 
 import ToggleSwitch from '~/components/common/switch';
 import Modal, { ModalProps } from '~/components/common/modal';
@@ -53,7 +54,7 @@ const TopNavigation = () => {
 
   return (
     <div>
-      <div className="fixed z-10 top-0 flex justify-between items-center w-full max-w-[768px] h-[55px] px-5 py-3.5 bg-gray-neutral-900">
+      <div className="flex justify-between items-center w-full max-w-[768px] h-[55px] px-5 py-3.5 bg-gray-neutral-900">
         {type === 'quick-network' && (
           <>
             <div className="flex items-center gap-2">
@@ -119,6 +120,23 @@ const TopNavigation = () => {
             />
           </>
         )}
+
+        {type === 'user-info' ||
+          (type === 'modify-profile' && (
+            <>
+              <div className="flex items-center gap-2 justify-start">
+                <Link href="/notifications">
+                  <Image
+                    src="/assets/svgs/BackArrow.svg"
+                    alt="BackArrow Icon"
+                    width={24}
+                    height={24}
+                  />
+                </Link>
+                <p className="text-lg font-semibold text-white">뒤로 가기</p>
+              </div>
+            </>
+          ))}
       </div>
       {showModal && (
         <Modal
