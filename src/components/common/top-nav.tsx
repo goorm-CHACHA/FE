@@ -81,7 +81,7 @@ const TopNavigation = () => {
               {pathname === '/create-group' && (
                 <button onClick={() => router.back()}>
                   <Image
-                    src="/assets/svgs/BackArrow.svg"
+                    src="/assets/svgs/back-arrow.svg"
                     alt="뒤로가기"
                     width={24}
                     height={24}
@@ -105,14 +105,14 @@ const TopNavigation = () => {
             >
               <p className="text-lg font-semibold text-white">채팅방</p>
               <Image
-                src="/assets/svgs/ExitIcon.svg"
+                src="/assets/svgs/exit-icon.svg"
                 alt="Exit Icon"
                 width={24}
                 height={24}
               />
             </button>
             <Image
-              src="/assets/svgs/Scanner.svg"
+              src="/assets/svgs/scanner.svg"
               alt="Scanner Icon"
               width={24}
               height={24}
