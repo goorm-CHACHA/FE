@@ -41,7 +41,19 @@ const TopNavigation = () => {
 
         {type === 'default' && (
           <>
-            <p className="text-lg font-semibold text-white">{title}</p>
+            <div className="flex gap-2">
+              {pathname === '/create-group' && (
+                <button onClick={() => router.back()}>
+                  <Image
+                    src="/assets/svgs/BackArrow.svg"
+                    alt="뒤로가기"
+                    width={24}
+                    height={24}
+                  />
+                </button>
+              )}
+              <p className="text-lg font-semibold text-white">{title}</p>
+            </div>
             <div className="flex gap-4">
               <div className="w-6 h-6 border border-dashed border-[#02e473]" />
               <div className="w-6 h-6 border border-dashed border-[#02e473]" />
@@ -51,15 +63,20 @@ const TopNavigation = () => {
 
         {type === 'chat-room' && (
           <>
-            <div className="flex items-center gap-2">
+            <button
+              className="flex items-center gap-2"
+              onClick={() => {
+                router.push('/home');
+              }}
+            >
+              <p className="text-lg font-semibold text-white">채팅방</p>
               <Image
                 src="/assets/svgs/ExitIcon.svg"
                 alt="Exit Icon"
                 width={24}
                 height={24}
               />
-              <p className="text-lg font-semibold text-white">채팅방</p>
-            </div>
+            </button>
             <Image
               src="/assets/svgs/Scanner.svg"
               alt="Scanner Icon"

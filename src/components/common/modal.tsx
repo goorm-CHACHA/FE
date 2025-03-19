@@ -1,38 +1,23 @@
 import { Dialog } from 'radix-ui';
 import { useState } from 'react';
-import Button from './button';
+import Button, { ButtonVariantProps } from './button';
 
-interface BaseButtonProps {
+interface ModalButtonProps extends ButtonVariantProps {
   label: string;
-  variant?: 'primary' | 'secondary' | 'gray-700' | 'red' | 'black/50';
-}
-
-interface TriggerButtonProps extends BaseButtonProps {
-  actionType: 'trigger';
-  nextModalContent: ModalContent;
-}
-
-interface ActionButtonProps extends BaseButtonProps {
-  actionType?: 'action';
+  actionType: 'trigger' | 'action';
   onClick?: () => void;
+  nextModalContent?: ModalContent;
 }
-
-export type ButtonProps = TriggerButtonProps | ActionButtonProps;
 
 interface ModalContent {
   title?: string;
   subText?: string;
-  buttons: ButtonProps[];
+  buttons: ModalButtonProps[];
 }
 
-interface ModalProps extends ModalContent {
+export interface ModalProps extends ModalContent {
   triggerButtonLabel: string;
-  triggerButtonVariant?:
-    | 'primary'
-    | 'secondary'
-    | 'gray-700'
-    | 'red'
-    | 'black/50';
+  triggerButtonVariant?: ButtonVariantProps['variant'];
 }
 
 const Modal = ({
@@ -72,10 +57,10 @@ const Modal = ({
         <Dialog.Portal>
           <Dialog.Overlay className="fixed inset-0 bg-blackA6 data-[state=open]:animate-overlayShow" />
           <Dialog.Content className="fixed left-1/2 top-1/2 max-h-[85vh] w-[90vw] max-w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-xl bg-[#373734] p-3.5 shadow-[var(--shadow-6)] focus:outline-none data-[state=open]:animate-contentShow">
-            <Dialog.Title className="text-white text-[15px] font-semibold text-left">
+            <Dialog.Title className="text-white text-[15px] font-semibold text-center">
               {currentModal.title}
             </Dialog.Title>
-            <Dialog.Description className="text-[#b0b0b0] text-[13px] text-left whitespace-pre-line">
+            <Dialog.Description className="text-[#b0b0b0] text-[13px] text-center whitespace-pre-line whitespace-pre-line">
               {currentModal.subText}
             </Dialog.Description>
             <div className="relative w-full text-center mt-4 flex gap-1.5">
@@ -85,7 +70,7 @@ const Modal = ({
                     <Button
                       key={index}
                       variant={btn.variant}
-                      onClick={() => handleModalContent(btn.nextModalContent)}
+                      onClick={() => handleModalContent(btn.nextModalContent!)}
                     >
                       {btn.label}
                     </Button>

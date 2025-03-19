@@ -1,8 +1,6 @@
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '~/utils/cn';
 
-// className=""
-
 const buttonVariants = cva(
   'flex justify-center items-center relative rounded-md text-body-md font-semibold disabled:bg-neutral-400 disabled:text-white',
   {
@@ -13,13 +11,15 @@ const buttonVariants = cva(
         'gray-700': 'bg-gray-700 text-white',
         red: 'bg-red-500 text-white',
         'black/50': 'bg-black/50 text-white',
+        green: 'bg-[#07ca7f] text-[#fefefe]',
+        'black-transparent': 'bg-black/50 text-[#dedede]',
       },
       size: {
         default: 'w-full h-[40px]',
         sm: 'py-[6px] px-[10px] text-[13px]',
         md: 'py-[10px] px-[16px] text-[14px]',
         lg: 'py-[14px] px-[28px] text-[16px]',
-        full: 'w-full h-[50px]',
+        full: 'w-full h-[50px] text-[16px]',
       },
     },
     defaultVariants: {
@@ -29,9 +29,12 @@ const buttonVariants = cva(
   },
 );
 
+// VariantProps를 사용하여 타입 추출
+export type ButtonVariantProps = VariantProps<typeof buttonVariants>;
+
 interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
+    ButtonVariantProps {
   children?: React.ReactNode;
 }
 
