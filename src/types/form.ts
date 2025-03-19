@@ -7,6 +7,7 @@ export interface ProfileFormType {
 }
 
 export interface JobFormType {
+  affiliation: string;
   job: { category: string; value: string };
   career: { value: string } | string;
   nickname: string;
@@ -18,12 +19,13 @@ export interface NetworkFormType {
   interest: string[];
 }
 
-export interface QRCodeType extends ProfileFormType {
-  id: string;
+export interface QRCodeType {
   name: string;
+  id: string;
   email: string;
+  phone: string;
+  affiliation: string;
   job: { category: string; value: string };
-  purpose: { value: string };
 }
 
 export type FormDataType = ProfileFormType & JobFormType & NetworkFormType;
