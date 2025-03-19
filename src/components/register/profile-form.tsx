@@ -14,9 +14,17 @@ const ProfileForm = () => {
     mode: 'onBlur',
   });
 
-  const { handleSubmit } = methods;
+  const { handleSubmit, setValue } = methods;
 
   const onSubmit = handleSubmit(useFormSubmit('/register/job'));
+
+  const phoneFormatter = (value: string) => {
+    const number = value.replace(/\D/g, '');
+
+    if (number.length < 4) return number;
+    if (number.length < 8) return `${number.slice(0, 3)}-${number.slice(3)}`;
+    return `${number.slice(0, 3)}-${number.slice(3, 7)}-${number.slice(7)}`;
+  };
 
   return (
     <div className="h-full">
@@ -32,7 +40,7 @@ const ProfileForm = () => {
               placeholder="아이디"
               label="아이디"
               button={
-                <Button className="h-[42px]" size="md">
+                <Button className="h-[42px]" size="md" type="button">
                   중복 확인
                 </Button>
               }
@@ -44,12 +52,15 @@ const ProfileForm = () => {
               label="비밀번호"
               type="password"
             />
-            {/* <Input
-              name="passwordConfirm"
-              placeholder="비밀번호 확인"
-              label="비밀번호 확인"
-              type="password"
-            /> */}
+            <Input
+              name="phone"
+              placeholder="휴대폰 번호"
+              label="휴대폰 번호"
+              maxLength={13}
+              onChange={(e) =>
+                setValue('phone', phoneFormatter(e.target.value))
+              }
+            />
           </div>
           <Button className="py-3" disabled={!methods.formState.isValid}>
             다음으로

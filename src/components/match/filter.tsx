@@ -3,7 +3,7 @@ import { Separator } from 'radix-ui';
 
 const Filter = () => {
   return (
-    <div className="flex items-center gap-[2px] w-full pb-2 h-[38px] gray-200">
+    <div className="flex items-center gap-[2px] w-full pb-2 h-[38px] text-gray-200">
       <div>필터</div>
       <Image
         src="/assets/svgs/filter.svg"

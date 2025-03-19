@@ -4,12 +4,14 @@ import { cva, VariantProps } from 'class-variance-authority';
 import { cn } from '~/utils/cn';
 import { FieldValues, Path } from 'react-hook-form';
 
+export type ToggleVariantsProps = VariantProps<typeof itemsVariants>;
+
 interface ToggleItem {
   value: string;
 }
 
 interface RadixToggleGroupProps<T extends FieldValues>
-  extends VariantProps<typeof itemsVariants> {
+  extends ToggleVariantsProps {
   items: ToggleItem[];
   value: string[];
   ariaLabel: string;

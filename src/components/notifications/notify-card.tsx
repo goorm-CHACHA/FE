@@ -1,15 +1,15 @@
 'use client';
 import React from 'react';
-import { GrFormNext } from 'react-icons/gr';
-import { MessageType } from '../../stores/use-notify-store';
-import DefaultProfile from '../common/default-profile';
-import Button from '../common/button';
-import { useRouter } from 'next/navigation';
 import { formatDistanceToNow } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import type { Locale } from 'date-fns';
+import { GrFormNext } from 'react-icons/gr';
+import { useRouter } from 'next/navigation';
 import NormalCard from '../card/normal-card';
 import RequestCard from '../card/request-card';
+// import { MessageType } from '../../stores/use-notify-store';
+// import DefaultProfile from '../common/default-profile';
+// import Button from '../common/button';
 import { NotifyUser } from '~/types/notify-user';
 interface NotifyProps {
   messageData: {
