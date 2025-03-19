@@ -54,7 +54,7 @@ const ChatWindow = ({
           onConfirm={handleConfirm}
           onCancel={handleCancel}
         />
-        <TableApplicationCard variant="assigned" tableNumber={5} />
+        <TableApplicationCard variant="waiting" tableNumber={5} />
       </div>
       {/* 알림 높이만큼 공간 확보 */}
       <div className="h-[85px]" /> {/* 프로필 + 채팅 메시지 스크롤 영역 */}

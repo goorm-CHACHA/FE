@@ -1,4 +1,4 @@
-const API_URL = `http://${process.env.NEXT_PUBLIC_API_URL}/chats/private-chatroom/request`; // Spring Boot API 서버
+const API_URL = `http://${process.env.NEXT_PUBLIC_API_URL}/chats/private-chatroom/request`;
 
 export const sendChatRequestAPI = async (
   requesterId: number,
@@ -17,16 +17,18 @@ export const sendChatRequestAPI = async (
     });
 
     if (!response.ok) {
-      const errorMessage = await response.text(); // 에러 메시지 출력
+      const errorMessage = await response.text();
       console.error('Response Error:', errorMessage);
       throw new Error('채팅 요청 실패');
     }
 
     alert('✅ 채팅 요청이 전송되었습니다!');
-  } catch (error: any) {
-    // console.error('⚠️ Error sending chat request:', error);
-    console.error('Error details:', error.message);
-
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error('Error details:', error.message);
+    } else {
+      console.error('Unknown error:', error);
+    }
     alert('❌ 채팅 요청 실패');
   }
 };
@@ -35,7 +37,7 @@ export const sendChatRequestAPI = async (
 export const acceptChatRequestAPI = async (
   requesterId: number,
   receiverId: number,
-) => {
+): Promise<{ chatRoomId: number }> => {
   try {
     const response = await fetch(
       'http://3.37.80.119:8081/chats/private-chatroom/accept',
@@ -57,11 +59,15 @@ export const acceptChatRequestAPI = async (
       throw new Error('채팅 수락 실패');
     }
 
-    const data = await response.json();
-    console.log('채팅 수락 후 데이터:', data); // chatRoomId 확인
-    return data; // chatRoomId 반환
+    const data: { chatRoomId: number } = await response.json();
+    console.log('채팅 수락 후 데이터:', data);
+    return data;
   } catch (error) {
-    console.error('채팅 수락 실패:', error);
+    if (error instanceof Error) {
+      console.error('채팅 수락 실패:', error.message);
+    } else {
+      console.error('Unknown error:', error);
+    }
     throw new Error('채팅 수락 실패');
   }
 };

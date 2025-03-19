@@ -4,8 +4,14 @@ import { useState } from 'react';
 
 const API_URL = 'http://3.37.80.119:80/chats/private-chatroom'; // 실제 API 주소로 설정
 
+interface ChatRoom {
+  id: string;
+  name: string;
+  // 기타 필요한 속성들...
+}
+
 const TestAPIRequest = () => {
-  const [responseData, setResponseData] = useState<any>(null); // 응답 데이터를 저장
+  const [responseData, setResponseData] = useState<ChatRoom[] | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 

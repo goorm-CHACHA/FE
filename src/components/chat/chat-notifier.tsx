@@ -5,19 +5,28 @@ import {
   connectWebSocket,
 } from '~/utils/websoket';
 
+interface ChatNotification {
+  requesterId: number;
+  receiverId: number;
+  message: string;
+  messageType: 'request' | 'info'; // 'request'와 'info' 두 가지 타입만 허용
+}
+
 export default function ChatNotifierPage({ userId }: { userId: number }) {
-  const [notification, setNotification] = useState<any>(null); // 알림 상태
+  const [notification, setNotification] = useState<ChatNotification | null>(
+    null,
+  );
 
   useEffect(() => {
     // 예시로 임시 알림 데이터
-    const mockNotification = {
+    const mockNotification: ChatNotification = {
       requesterId: 1,
       receiverId: userId,
       message: '채팅 요청이 도착했습니다.',
-      messageType: 'request', // 요청 메시지
+      messageType: 'request',
     };
 
-    setNotification(mockNotification); // 알림을 상태로 저장
+    setNotification(mockNotification);
   }, [userId]);
 
   // 채팅 요청 수락 처리 함수
