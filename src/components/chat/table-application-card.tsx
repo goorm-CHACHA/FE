@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Modal, { ModalProps } from '../common/modal';
 import CheckboxItem from './checkbox-item-modal';
+import Button from '../common/button';
 
 interface TableApplicationCardProps {
   variant: 'apply' | 'waiting' | 'assigned';
@@ -161,29 +162,32 @@ const TableApplicationCard: React.FC<TableApplicationCardProps> = ({
     if (variant === 'waiting') {
       return (
         <div className="flex justify-start items-center flex-grow-0 flex-shrink-0 w-[335px] gap-1.5">
-          <div
-            className="flex justify-center items-center flex-grow relative px-4 py-2.5 rounded-lg bg-black/50"
+          <Button
+            variant="black-transparent"
+            size="sm"
             onClick={handleCancelNetworking}
+            className="flex-grow"
           >
-            <p className="flex-grow-0 flex-shrink-0 text-sm font-semibold text-left text-[#dedede]">
-              네트워킹 취소
-            </p>
-          </div>
+            네트워킹 취소
+          </Button>
           {isReserved ? (
-            <div className="flex justify-center items-center flex-grow relative px-4 py-2.5 rounded-lg bg-[#858585]/30">
-              <p className="flex-grow-0 flex-shrink-0 text-sm font-semibold text-left text-[#858585]">
-                예약 완료
-              </p>
-            </div>
-          ) : (
-            <div
-              className="flex justify-center items-center flex-grow relative px-4 py-2.5 rounded-lg bg-[#07ca7f]"
-              onClick={handleReservation}
+            <Button
+              variant="black-transparent"
+              size="sm"
+              disabled
+              className="flex-grow bg-[#858585]/30 text-[#858585]"
             >
-              <p className="flex-grow-0 flex-shrink-0 text-sm font-semibold text-left text-[#fefefe]">
-                예약 동의
-              </p>
-            </div>
+              예약 완료
+            </Button>
+          ) : (
+            <Button
+              variant="green"
+              size="sm"
+              onClick={handleReservation}
+              className="flex-grow"
+            >
+              예약 동의
+            </Button>
           )}
         </div>
       );
@@ -192,18 +196,22 @@ const TableApplicationCard: React.FC<TableApplicationCardProps> = ({
     if (variant === 'assigned') {
       return (
         <div className="flex justify-start items-center w-[335px] gap-1.5">
-          <button
-            className="flex-grow px-4 py-2.5 rounded-lg bg-black/50 text-sm font-semibold text-[#dedede]"
+          <Button
+            variant="black-transparent"
+            size="sm"
             onClick={onCancel}
+            className="flex-grow"
           >
             위치 안내
-          </button>
-          <button
-            className="flex-grow px-4 py-2.5 rounded-lg bg-[#07ca7f] text-sm font-semibold text-[#fefefe]"
+          </Button>
+          <Button
+            variant="green"
+            size="sm"
             onClick={onConfirm}
+            className="flex-grow"
           >
             QR 등록
-          </button>
+          </Button>
         </div>
       );
     }
