@@ -1,18 +1,55 @@
 'use client';
 
 import Image from 'next/image';
-import { usePathname } from 'next/navigation';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 import ToggleSwitch from '~/components/common/switch';
+import Modal, { ModalProps } from '~/components/common/modal';
 import { useNetworkStore } from '~/stores/use-network-store';
 import { getTopNavType } from '~/utils/get-top-nav-type';
+import { ButtonVariantProps } from '~/components/common/button';
 
 const TopNavigation = () => {
   const { isConnect, setIsConnect } = useNetworkStore();
   const pathname = usePathname();
   const { type, title } = getTopNavType(pathname);
   const router = useRouter();
+  const [showModal, setShowModal] = useState(false);
+
+  const handleExitChatRoom = () => {
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
+  const handleConfirmExit = () => {
+    setShowModal(false);
+    router.push('/home');
+  };
+
+  const exitChatRoomModalProps: Omit<ModalProps, 'isOpen' | 'onOpenChange'> = {
+    title: '채팅방에서 나가시겠어요?',
+    subText: '채팅방에서 나가면 네트워킹이 취소돼요.',
+    buttons: [
+      {
+        label: '아니요',
+        variant: 'black-transparent',
+        actionType: 'action' as const,
+        onClick: handleCloseModal,
+      },
+      {
+        label: '네',
+        variant: 'green',
+        actionType: 'action' as const,
+        onClick: handleConfirmExit,
+      },
+    ],
+    triggerButtonLabel: '',
+    triggerButtonVariant: 'primary' as ButtonVariantProps['variant'],
+  };
 
   return (
     <div>
@@ -64,9 +101,7 @@ const TopNavigation = () => {
           <>
             <button
               className="flex items-center gap-2"
-              onClick={() => {
-                router.push('/home');
-              }}
+              onClick={handleExitChatRoom}
             >
               <p className="text-lg font-semibold text-white">채팅방</p>
               <Image
@@ -85,6 +120,13 @@ const TopNavigation = () => {
           </>
         )}
       </div>
+      {showModal && (
+        <Modal
+          {...exitChatRoomModalProps}
+          isOpen={showModal}
+          onOpenChange={setShowModal}
+        />
+      )}
     </div>
   );
 };
