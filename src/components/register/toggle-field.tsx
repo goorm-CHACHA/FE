@@ -12,9 +12,11 @@ interface ToggleFieldProps<T extends FieldValues> {
   control: Control<T>;
   options: { category?: string; value: string }[];
   label?: string;
+  subLabel?: string;
   rules?: string;
   minSelection?: number;
   maxSelection?: number;
+  toggleVariants?: 'black' | 'primary';
 }
 
 const ToggleField = <T extends FieldValues>({
@@ -22,28 +24,46 @@ const ToggleField = <T extends FieldValues>({
   control,
   options,
   label,
+  subLabel,
   minSelection = 1,
   maxSelection = 1,
+  toggleVariants = 'primary',
 }: ToggleFieldProps<T>) => {
   const { setError, setValue } = useFormContext();
 
   return (
     <div className="mb-8">
-      <div className="flex gap-3 content-center">
-        <div className="w-6 h-6 border border-dashed border-[#02e473]" />
-        <p className="mb-4 font-bold text-body-lg text-gray-neutral-50">
-          {label}
-        </p>
-      </div>
+      {label && (
+        <div className="flex gap-3 content-center">
+          <div className="w-6 h-6 border border-dashed border-[#02e473]" />
+          <div>
+            <p className="mb-4 font-bold text-body-lg text-gray-neutral-50">
+              {label}
+            </p>
+            {subLabel && (
+              <p className="mb-1 font-medium text-sm text-neutral-400">
+                {subLabel}
+              </p>
+            )}
+          </div>
+        </div>
+      )}
+
+      {!label && subLabel && (
+        <p className="mb-2 font-medium text-sm text-neutral-400">{subLabel}</p>
+      )}
+
       <Controller
         name={name}
         control={control}
         rules={{
-          validate: (value: string[]) => {
-            if (value.length < minSelection) {
+          validate: (value: string[] | undefined) => {
+            const selected = value ?? [];
+
+            if (selected.length < minSelection) {
               return `최소 ${minSelection}개 이상 선택해야 합니다.`;
             }
-            if (value.length > maxSelection) {
+            if (selected.length > maxSelection) {
               return `최대 ${maxSelection}개까지 선택 가능 합니다.`;
             }
             return true;
@@ -86,7 +106,7 @@ const ToggleField = <T extends FieldValues>({
                 value={value}
                 onChange={handleValueChange}
                 ariaLabel={`${label} 옵션`}
-                variant={'primary'}
+                variant={toggleVariants}
               />
               {error && (
                 <p className="text-red-500 text-sm mt-2">{error.message}</p>

@@ -70,7 +70,6 @@ export const careerOptions: CareerOption[] = [
   { value: '학생' },
   { value: '신입 (1년 이하)' },
   { value: '주니어 (1~3년)' },
-  { value: '미드 (4~7년)' },
-  { value: '시니어 (8년 이상)' },
-  { value: '창업자 / 임원' },
+  { value: '미드 (4~9년)' },
+  { value: '시니어 (10년 이상)' },
 ];

@@ -25,18 +25,24 @@ export const interestOptions: Options[] = [
 ];
 
 export const experienceOptions: Options[] = [
+  { value: '상관없음' },
   { value: '학생' },
   { value: '신입(1년 이하)' },
   { value: '주니어(1~3년)' },
-  { value: '미드 레벨(4~7년)' },
-  { value: '창업자/임원' },
+  { value: '미드 레벨(4~9년)' },
+  { value: '시니어 (10년이상)' },
 ];
 
 export const purposeOptions: Options[] = [
-  { value: '상관없음' },
-  { value: '멘토링 & 커리어 성장' },
-  { value: '비즈니스 파트너십' },
-  { value: '협업 & 프로젝트' },
-  { value: '채용 & 구인' },
-  { value: '기술 & 코드 리뷰' },
+  { value: '정보 교류 (업계/기술 트렌드)' },
+  { value: '협업/프로젝트 팀원 찾기' },
+  {
+    value: '멘토링/조언 받기',
+  },
+  {
+    value: '취업/이직',
+  },
+  { value: '채용 (정식 채용/인재 발굴)' },
+  { value: '투자/비즈니스 파트너 찾기' },
+  { value: '네트워킹/인맥 확장 (커뮤니티)' },
 ];
