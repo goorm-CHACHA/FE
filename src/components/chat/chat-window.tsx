@@ -37,7 +37,7 @@ const ChatWindow = ({
   // 초기 상태를 'apply'로 설정
   const [notification, setNotification] = useState<Notification>({
     variant: 'apply',
-    tableNumber: undefined
+    tableNumber: undefined,
   });
 
   useEffect(() => {
@@ -61,8 +61,7 @@ const ChatWindow = ({
 
     fetchNotification();
   }, []);
-  */;
-
+  */
   const handleConfirm = () => {
     console.log('테이블 신청 확인');
     // 여기에 테이블 신청 로직 추가
