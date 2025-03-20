@@ -37,7 +37,7 @@ const TableUsageRules: React.FC = () => {
               </span>
               <br />
               <span className="flex-grow w-[287px] text-[13px] text-left text-[#fefefe]">
-                '네트워킹 중단'를 눌러주세요.
+                {`'네트워킹 중단'`}를 눌러주세요.
               </span>
             </p>
           </div>
