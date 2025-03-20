@@ -14,6 +14,7 @@ function useFormSubmit(redirectUrl: string) {
       const nickname = `${data.job?.category}${random}`;
       setFormData({ ...data, nickname });
       setQRData({
+        affiliation: data.affiliation,
         job: data.job,
       });
     } else {
@@ -26,10 +27,6 @@ function useFormSubmit(redirectUrl: string) {
           email: data.email,
           phone: data.phone,
         });
-      }
-
-      if (path === '/register/interest') {
-        setQRData({ purpose: data.purpose });
       }
     }
     router.push(redirectUrl);
