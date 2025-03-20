@@ -9,7 +9,7 @@ export interface ProfileFormType {
 export interface JobFormType {
   affiliation: string;
   job: { category: string; value: string };
-  career: { value: string } | string;
+  career: { value: string };
   nickname: string;
 }
 
