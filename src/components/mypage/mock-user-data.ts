@@ -7,7 +7,7 @@ export const mockUserData = [
     career: '신입 (1년 이하)',
     contactInfo: '010-0321-0321',
     email: 'test0321@gmail.com',
-    
+
     // 직무 정보 (카테고리 + 값)
     interestJobCategory: '개발자 & 엔지니어',
     interestJobValue: '프론트엔드 개발자',
@@ -29,7 +29,7 @@ export const mockUserData = [
     career: '주니어 (1~3년)',
     contactInfo: '010-0321-0321',
     email: 'test0321@gmail.com',
-    
+
     interestJobCategory: '개발자 & 엔지니어',
     interestJobValue: '프론트엔드 개발자',
     jobCategory: '개발자 & 엔지니어',
@@ -74,5 +74,5 @@ export const mockUserData = [
     interests: ['데이터 & AI', '헬스케어 & 바이오'],
     participationPurpose: '네트워킹 및 파트너십',
     nickName: '민수',
-  }
+  },
 ];
