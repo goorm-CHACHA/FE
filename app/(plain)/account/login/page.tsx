@@ -3,22 +3,34 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, FormProvider } from 'react-hook-form';
 
+import axios from 'axios';
+import Link from 'next/link';
+
 import Input from '~/components/common/input';
 import Button from '~/components/common/button';
 import { loginPayload, loginSchema } from '~/schema/user';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 
 const Page = () => {
-  const router = useRouter();
   const methods = useForm<loginPayload>({
     resolver: zodResolver(loginSchema),
     mode: 'onSubmit',
   });
 
-  const onSubmit = methods.handleSubmit((data) => {
-    console.log('폼 제출 데이터:', data);
-    router.push('/landing');
+  const onSubmit = methods.handleSubmit(async (data) => {
+    try {
+      const res = await axios.post('/api/users/login', {
+        username: data.id,
+        password: data.password,
+      });
+
+      localStorage.setItem('accessToken', res.data.accessToken);
+      localStorage.setItem('refreshToken', res.data.refreshToken);
+    } catch {
+      methods.setError('password', {
+        type: 'manual',
+        message: '아이디 또는 비밀번호를 확인하세요.',
+      });
+    }
   });
 
   return (
@@ -28,7 +40,7 @@ const Page = () => {
           <form onSubmit={onSubmit} className="flex flex-col gap-4">
             <Input name="id" placeholder="아이디" />
             <Input name="password" placeholder="비밀번호" type="password" />
-            <Button>로그인</Button>
+            <Button type="submit">로그인</Button>
           </form>
         </FormProvider>
         <div className="flex justify-between text-xs mt-8 text-neutral-400">
