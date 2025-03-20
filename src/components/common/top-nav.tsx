@@ -3,13 +3,12 @@
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
+import Link from 'next/link';
 
 import ToggleSwitch from '~/components/common/switch';
 import Modal, { ModalProps } from '~/components/common/modal';
-import Modal, { ModalProps } from '~/components/common/modal';
 import { useNetworkStore } from '~/stores/use-network-store';
 import { getTopNavType } from '~/utils/get-top-nav-type';
-import { ButtonVariantProps } from '~/components/common/button';
 import { ButtonVariantProps } from '~/components/common/button';
 
 const TopNavigation = () => {
@@ -17,41 +16,6 @@ const TopNavigation = () => {
   const pathname = usePathname();
   const { type, title } = getTopNavType(pathname);
   const router = useRouter();
-  const [showModal, setShowModal] = useState(false);
-
-  const handleExitChatRoom = () => {
-    setShowModal(true);
-  };
-
-  const handleCloseModal = () => {
-    setShowModal(false);
-  };
-
-  const handleConfirmExit = () => {
-    setShowModal(false);
-    router.push('/home');
-  };
-
-  const exitChatRoomModalProps: Omit<ModalProps, 'isOpen' | 'onOpenChange'> = {
-    title: '채팅방에서 나가시겠어요?',
-    subText: '채팅방에서 나가면 네트워킹이 취소돼요.',
-    buttons: [
-      {
-        label: '아니요',
-        variant: 'black-transparent',
-        actionType: 'action' as const,
-        onClick: handleCloseModal,
-      },
-      {
-        label: '네',
-        variant: 'green',
-        actionType: 'action' as const,
-        onClick: handleConfirmExit,
-      },
-    ],
-    triggerButtonLabel: '',
-    triggerButtonVariant: 'primary' as ButtonVariantProps['variant'],
-  };
   const [showModal, setShowModal] = useState(false);
 
   const handleExitChatRoom = () => {
@@ -119,7 +83,6 @@ const TopNavigation = () => {
                 <button onClick={() => router.back()}>
                   <Image
                     src="/assets/svgs/back-arrow.svg"
-                    src="/assets/svgs/back-arrow.svg"
                     alt="뒤로가기"
                     width={24}
                     height={24}
@@ -140,11 +103,9 @@ const TopNavigation = () => {
             <button
               className="flex items-center gap-2"
               onClick={handleExitChatRoom}
-              onClick={handleExitChatRoom}
             >
               <p className="text-lg font-semibold text-white">채팅방</p>
               <Image
-                src="/assets/svgs/exit-icon.svg"
                 src="/assets/svgs/exit-icon.svg"
                 alt="Exit Icon"
                 width={24}
@@ -152,7 +113,6 @@ const TopNavigation = () => {
               />
             </button>
             <Image
-              src="/assets/svgs/scanner.svg"
               src="/assets/svgs/scanner.svg"
               alt="Scanner Icon"
               width={24}
@@ -178,13 +138,6 @@ const TopNavigation = () => {
             </>
           ))}
       </div>
-      {showModal && (
-        <Modal
-          {...exitChatRoomModalProps}
-          isOpen={showModal}
-          onOpenChange={setShowModal}
-        />
-      )}
       {showModal && (
         <Modal
           {...exitChatRoomModalProps}
