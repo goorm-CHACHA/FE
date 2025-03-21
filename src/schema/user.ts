@@ -75,7 +75,6 @@ export const updateProfileSchema = z.object({
   phone: phoneSchema, // 전화번호 유효성 검사
 });
 
-
 //payload
 export type loginPayload = z.infer<typeof loginSchema>;
 export type signUpPayload = z.infer<typeof signUpSchema>;
