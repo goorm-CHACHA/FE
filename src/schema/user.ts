@@ -3,16 +3,25 @@ import { z } from 'zod';
 //schema
 const idSchema = z
   .string()
-  .min(6, '아이디는 최소 6글자 이상이어야 합니다.')
+  .min(5, '아이디는 최소 5글자 이상이어야 합니다.')
   .max(20, '아이디는 최대 20글자까지 가능합니다.')
-  .regex(/^[a-z|A-Z|0-9]+$/, '아이디에는 영문과 숫자만 사용할 수 있습니다.');
+  .regex(/^[A-Za-z0-9]+$/, {
+    message: '아이디는 영문 대소문자와 숫자만 사용할 수 있습니다.',
+  })
+  .refine((val) => !/^\d+$/.test(val), {
+    message: '아이디는 숫자로만 이루어질 수 없습니다.',
+  });
 
 const passwordSchema = z
   .string()
-  .min(6, '비밀번호는 최소 6글자 이상이어야 합니다.')
-  .max(20, '비밀번호는 최대 20글자까지 가능합니다.');
-
-// const passwordConfirmSchema = z.string();
+  .min(8, { message: '비밀번호는 최소 8자 이상이어야 합니다.' })
+  .max(20, { message: '비밀번호는 최대 20자까지 가능합니다.' })
+  .regex(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,20}$/, {
+    message: '비밀번호는 영문, 숫자, 특수문자(!@#$%^&*)를 포함해야 합니다.',
+  })
+  .refine((val) => !/\s/.test(val), {
+    message: '비밀번호에는 공백을 포함할 수 없습니다.',
+  });
 
 const koreanNameSchema = z
   .string()
@@ -49,15 +58,6 @@ export const signUpSchema = z.object({
   password: passwordSchema,
   phone: phoneSchema,
 });
-// .superRefine(({ password, passwordConfirm }, ctx) => {
-//   if (password !== passwordConfirm) {
-//     ctx.addIssue({
-//       code: 'custom',
-//       message: '비밀번호가 맞지 않습니다.',
-//       path: ['passwordConfirm'],
-//     });
-//   }
-// });
 
 export const findIdSchema = z.object({
   name: nameSchema,

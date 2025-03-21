@@ -45,13 +45,14 @@ const ProfileForm = () => {
                 </Button>
               }
             />
-            <Input name="email" placeholder="이메일" label="이메일" />
             <Input
               name="password"
               placeholder="비밀번호"
               label="비밀번호"
               type="password"
+              subLabel="8~20자의 영문, 숫자 및 특수문자(!@#$%^&*) 조합"
             />
+            <Input name="email" placeholder="이메일" label="이메일" />
             <Input
               name="phone"
               placeholder="휴대폰 번호"

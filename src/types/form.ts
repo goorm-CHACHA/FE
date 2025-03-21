@@ -17,6 +17,7 @@ export interface NetworkFormType {
   purpose: { value: string };
   interestJob: { category: string; value: string };
   interest: string[];
+  agree: boolean;
 }
 
 export interface QRCodeType {

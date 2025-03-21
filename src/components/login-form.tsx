@@ -10,7 +10,7 @@ import Input from '~/components/common/input';
 import Button from '~/components/common/button';
 import { loginPayload, loginSchema } from '~/schema/user';
 
-const Page = () => {
+const LoginForm = () => {
   const methods = useForm<loginPayload>({
     resolver: zodResolver(loginSchema),
     mode: 'onSubmit',
@@ -34,8 +34,8 @@ const Page = () => {
   });
 
   return (
-    <div className="flex flex-col min-h-screen w-full justify-center items-center">
-      <div className="w-full max-w-3xl px-6">
+    <div className="flex flex-col w-full justify-center items-center">
+      <div className="w-full max-w-3xl">
         <FormProvider {...methods}>
           <form onSubmit={onSubmit} className="flex flex-col gap-4">
             <Input name="id" placeholder="아이디" />
@@ -43,8 +43,7 @@ const Page = () => {
             <Button type="submit">로그인</Button>
           </form>
         </FormProvider>
-        <div className="flex justify-between text-xs mt-8 text-neutral-400">
-          <Link href="/register">회원가입</Link>
+        <div className="text-right text-xs mt-4 mb-8 text-neutral-400">
           <Link href="/account/find-id-pw">아이디﹒비밀번호 찾기</Link>
         </div>
       </div>
@@ -52,4 +51,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default LoginForm;
