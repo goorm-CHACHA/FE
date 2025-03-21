@@ -69,6 +69,13 @@ export const findPasswordSchema = z.object({
   email: emailSchema,
 });
 
+export const updateProfileSchema = z.object({
+  name: nameSchema, // 이름 유효성 검사 (한글/영어)
+  email: emailSchema, // 이메일 유효성 검사
+  phone: phoneSchema, // 전화번호 유효성 검사
+});
+
+
 //payload
 export type loginPayload = z.infer<typeof loginSchema>;
 export type signUpPayload = z.infer<typeof signUpSchema>;

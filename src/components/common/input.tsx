@@ -28,6 +28,7 @@ interface InputProps
   label?: string;
   type?: string;
   button?: ReactNode;
+  className?: string;
   subLabel?: string;
 }
 
@@ -57,7 +58,7 @@ const Input = ({
       {label && (
         <label
           htmlFor={name}
-          className="mb-1 font-medium text-sm text-neutral-400"
+          className={`mb-1 font-medium text-sm text-neutral-400 ${className}`}
         >
           {label}
         </label>
