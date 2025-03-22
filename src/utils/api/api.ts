@@ -1,15 +1,8 @@
 import axios from 'axios';
 
 // axios 인스턴스 생성
-const api = axios.create();
-
-// 요청: accessToken을 자동으로 헤더에 추가
-api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('accessToken');
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
+const api = axios.create({
+  withCredentials: true,
 });
 
 // 응답: 401 발생 시 accessToken 갱신

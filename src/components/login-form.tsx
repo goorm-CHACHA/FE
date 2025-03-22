@@ -1,16 +1,17 @@
 'use client';
 
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, FormProvider } from 'react-hook-form';
-
-import axios from 'axios';
-import Link from 'next/link';
 
 import Input from '~/components/common/input';
 import Button from '~/components/common/button';
 import { loginPayload, loginSchema } from '~/schema/user';
+import { login } from '~/utils/api/user';
 
 const LoginForm = () => {
+  const router = useRouter();
   const methods = useForm<loginPayload>({
     resolver: zodResolver(loginSchema),
     mode: 'onSubmit',
@@ -18,18 +19,15 @@ const LoginForm = () => {
 
   const onSubmit = methods.handleSubmit(async (data) => {
     try {
-      const res = await axios.post('/api/users/login', {
-        username: data.id,
-        password: data.password,
-      });
-
-      localStorage.setItem('accessToken', res.data.accessToken);
-      localStorage.setItem('refreshToken', res.data.refreshToken);
-    } catch {
-      methods.setError('password', {
-        type: 'manual',
-        message: '아이디 또는 비밀번호를 확인하세요.',
-      });
+      await login(data.username, data.password);
+      router.push('/welcome');
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        methods.setError('password', {
+          type: 'manual',
+          message: error.message,
+        });
+      }
     }
   });
 
@@ -38,7 +36,7 @@ const LoginForm = () => {
       <div className="w-full max-w-3xl">
         <FormProvider {...methods}>
           <form onSubmit={onSubmit} className="flex flex-col gap-4">
-            <Input name="id" placeholder="아이디" />
+            <Input name="username" placeholder="아이디" />
             <Input name="password" placeholder="비밀번호" type="password" />
             <Button type="submit">로그인</Button>
           </form>

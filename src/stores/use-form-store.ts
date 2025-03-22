@@ -7,7 +7,8 @@ interface FormStoreType {
   qrData: PartialQRCodeType;
   setFormData: (data: PartialFormDataType) => void;
   setQRData: (data: PartialQRCodeType) => void;
-  clearformData: () => void;
+  clearFormData: () => void;
+  clearQrData: () => void;
 }
 
 export const useFormStore = create<FormStoreType>()(
@@ -21,7 +22,13 @@ export const useFormStore = create<FormStoreType>()(
       setFormData: (data) =>
         set((state) => ({ formData: { ...state.formData, ...data } })),
 
-      clearformData: () => {
+      clearFormData: () => {
+        set(() => ({
+          formData: {},
+        }));
+      },
+
+      clearQrData: () => {
         set(() => ({
           formData: {},
         }));

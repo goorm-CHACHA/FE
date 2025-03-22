@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 //schema
-const idSchema = z
+const usernameSchema = z
   .string()
   .min(5, '아이디는 최소 5글자 이상이어야 합니다.')
   .max(20, '아이디는 최대 20글자까지 가능합니다.')
@@ -47,13 +47,13 @@ const phoneSchema = z
   .regex(/^(\d{3}-\d{3,4}-\d{4})$/, '전화번호 형식이 유효하지 않습니다.');
 
 export const loginSchema = z.object({
-  id: idSchema,
+  username: usernameSchema,
   password: passwordSchema,
 });
 
 export const signUpSchema = z.object({
   name: nameSchema,
-  id: idSchema,
+  username: usernameSchema,
   email: emailSchema,
   password: passwordSchema,
   phone: phoneSchema,
@@ -65,7 +65,7 @@ export const findIdSchema = z.object({
 });
 
 export const findPasswordSchema = z.object({
-  id: idSchema,
+  username: usernameSchema,
   email: emailSchema,
 });
 
@@ -74,7 +74,6 @@ export const updateProfileSchema = z.object({
   email: emailSchema, // 이메일 유효성 검사
   phone: phoneSchema, // 전화번호 유효성 검사
 });
-
 
 //payload
 export type loginPayload = z.infer<typeof loginSchema>;

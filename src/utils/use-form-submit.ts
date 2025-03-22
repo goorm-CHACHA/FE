@@ -1,28 +1,31 @@
+'use client';
+
 import { usePathname, useRouter } from 'next/navigation';
 import { useFormStore } from '~/stores/use-form-store';
 import { PartialFormDataType } from '~/types/form';
-import axios from 'axios';
 import { formatFormData } from '~/utils/format-form-data';
+import { signup, login } from '~/utils/api/user';
 
-function useFormSubmit(redirectUrl: string) {
+function useFormSubmit(redirect: string) {
   const router = useRouter();
   const path = usePathname();
-  const { setFormData, setQRData, formData, clearformData } = useFormStore();
+  const { setFormData, setQRData, formData, clearFormData } = useFormStore();
+
+  const entry = path.split('/')[1];
 
   return async (data: PartialFormDataType) => {
     const updatedData = { ...data };
 
-    if (path === '/register/job') {
+    if (path.includes('/job')) {
       const random = Math.floor(1 + Math.random() * 1000);
       updatedData.nickname = `${data.job?.category}${random}`;
-
       setQRData({
         affiliation: data.affiliation,
         job: data.job,
       });
-    } else if (path === '/register') {
+    } else if (path.includes('/register')) {
       setQRData({
-        id: data.id,
+        username: data.username,
         name: data.name,
         email: data.email,
         phone: data.phone,
@@ -31,17 +34,27 @@ function useFormSubmit(redirectUrl: string) {
 
     setFormData(updatedData);
 
-    if (path === '/register/network') {
+    if (path.includes('/network')) {
       try {
         const formattedData = formatFormData({ ...formData, ...updatedData });
-        console.log(formattedData);
-        await axios.post('/api/users/signup', formattedData);
-        clearformData();
+        await signup(formattedData);
+        clearFormData();
+
+        if (entry === 'pre') {
+          router.push('/pre');
+        } else {
+          await login(formattedData.username, formattedData.password);
+          router.push('/welcome');
+        }
+        return;
       } catch (error) {
         console.error(error);
       }
     }
-    router.push(redirectUrl);
+
+    if (redirect) {
+      router.push(`/${entry}/${redirect}`);
+    }
   };
 }
 

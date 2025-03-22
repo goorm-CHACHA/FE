@@ -5,6 +5,7 @@ import { InputHTMLAttributes, ReactNode, useState } from 'react';
 import { cva, VariantProps } from 'class-variance-authority';
 import { cn } from '~/utils/cn';
 import Image from 'next/image';
+
 const inputVariants = cva(
   'border-none py-2 pl-3 outline-none outline-1 rounded-md bg-neutral-700 text-neutral-400',
   {
@@ -30,6 +31,8 @@ interface InputProps
   button?: ReactNode;
   className?: string;
   subLabel?: string;
+  customMessage?: string;
+  customMessageType?: 'success' | 'error';
 }
 
 const Input = ({
@@ -38,8 +41,10 @@ const Input = ({
   button,
   inputSize,
   className,
-  type,
+  type = 'text',
   subLabel,
+  customMessage,
+  customMessageType = 'error',
   ...props
 }: InputProps) => {
   const {
@@ -49,9 +54,16 @@ const Input = ({
 
   const errorMessage = errors[name]?.message?.toString();
   const [inputType, setInputType] = useState(type);
+
   const toggleType = () => {
     setInputType((prev) => (prev === 'password' ? 'text' : 'password'));
   };
+
+  const showMessage = errorMessage || customMessage;
+  const messageColor =
+    errorMessage || customMessageType === 'error'
+      ? 'text-red-400'
+      : 'text-green-500';
 
   return (
     <div className="flex flex-col w-full">
@@ -73,7 +85,7 @@ const Input = ({
           className={cn(
             inputVariants({ inputSize }),
             'flex-1',
-            className, // 전달받은 className을 병합
+            className,
             errors[name] && 'border-red-500',
           )}
           aria-invalid={!!errors[name]}
@@ -85,30 +97,27 @@ const Input = ({
             onClick={toggleType}
             type="button"
           >
-            {inputType === 'password' ? (
-              <Image
-                className="opacity-60"
-                src="/assets/svgs/eye.svg"
-                alt="비밀번호 보기"
-                width={24}
-                height={24}
-              />
-            ) : (
-              <Image
-                className="opacity-60"
-                src="/assets/svgs/eye-off.svg"
-                alt="비밀번호 숨김"
-                width={24}
-                height={24}
-              />
-            )}
+            <Image
+              className="opacity-60"
+              src={
+                inputType === 'password'
+                  ? '/assets/svgs/eye.svg'
+                  : '/assets/svgs/eye-off.svg'
+              }
+              alt={inputType === 'password' ? '비밀번호 보기' : '비밀번호 숨김'}
+              width={24}
+              height={24}
+            />
           </button>
         )}
       </div>
+
       {subLabel && <p className="text-xs text-neutral-500 mt-1">{subLabel}</p>}
 
-      {errorMessage && (
-        <p className="text-red-400 text-sm mt-1">{errorMessage}</p>
+      {showMessage && (
+        <p className={`text-sm mt-1 ${messageColor}`}>
+          {errorMessage ?? customMessage}
+        </p>
       )}
     </div>
   );
