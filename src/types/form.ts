@@ -1,6 +1,6 @@
 export interface ProfileFormType {
   name: string;
-  id: string;
+  username: string;
   email: string;
   password: string;
   phone: string;
@@ -9,7 +9,7 @@ export interface ProfileFormType {
 export interface JobFormType {
   affiliation: string;
   job: { category: string; value: string };
-  career: { value: string } | string;
+  career: { value: string };
   nickname: string;
 }
 
@@ -17,15 +17,32 @@ export interface NetworkFormType {
   purpose: { value: string };
   interestJob: { category: string; value: string };
   interest: string[];
+  agree: boolean;
 }
 
 export interface QRCodeType {
   name: string;
-  id: string;
+  username: string;
   email: string;
   phone: string;
   affiliation: string;
   job: { category: string; value: string };
+}
+
+export interface DBFormatttedType {
+  name: string;
+  username: string;
+  password: string;
+  affiliation: string;
+  career: string;
+  contactInfo: string;
+  email: string;
+  interestJobCategory: string;
+  interestJobValue: string;
+  jobCategory: string;
+  jobValue: string;
+  interests: string[];
+  participationPurpose: string;
 }
 
 export type FormDataType = ProfileFormType & JobFormType & NetworkFormType;
