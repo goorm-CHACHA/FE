@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import React from 'react';
 import BadgesAligned from '~/components/common/badges-aligned';
 import Button from '~/components/common/button';
-import ProfileImportant from '~/components/common/profile-important';;
+import ProfileImportant from '~/components/common/profile-important';
 import { TimeLeft } from '~/components/notifications/notify-card';
 import { rejectChatRequest } from '~/utils/reject-chat-request';
 import { useUserStore } from '~/stores/use-user-store';
@@ -15,9 +15,9 @@ const UserInfoPage = () => {
   const userId = params?.userId as string;
   const router = useRouter();
   const { users } = useUserStore();
-  
+
   const user = users.find((u) => String(u.id) === userId);
-  
+
   console.log(user);
   const handleAccept = () => {
     console.log('✅ 네트워킹 요청 수락');

@@ -8,6 +8,7 @@ import { mockUserData } from '~/components/mypage/mock-user-data';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { UserData } from '~/types/user.types';
+import { useUserStore } from '~/stores/use-user-store';
 const Page = () => {
   const { isConnect } = useNetworkStore();
   const [users, setUsers] = useState<UserData[]>([]);
@@ -21,6 +22,7 @@ const Page = () => {
         );
 
         setUsers(res.data);
+        useUserStore.getState().setUsers(res.data);
       } catch (error) {
         console.error('유저 목록 불러오기 실패:', error);
       }
