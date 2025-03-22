@@ -1,6 +1,6 @@
-import { DBFormatttedType, PartialFormDataType } from '~/types/form';
+import { DBFormattedType, PartialFormDataType } from '~/types/form';
 
-export function formatFormData(data: PartialFormDataType): DBFormatttedType {
+export function formatFormData(data: PartialFormDataType): DBFormattedType {
   return {
     name: data.name ?? '',
     username: data.username ?? '',

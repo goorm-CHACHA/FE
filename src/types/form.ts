@@ -29,7 +29,7 @@ export interface QRCodeType {
   job: { category: string; value: string };
 }
 
-export interface DBFormatttedType {
+export interface DBFormattedType {
   name: string;
   username: string;
   password: string;
