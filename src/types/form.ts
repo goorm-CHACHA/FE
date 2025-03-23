@@ -21,6 +21,7 @@ export interface NetworkFormType {
 }
 
 export interface QRCodeType {
+  id: number;
   name: string;
   username: string;
   email: string;
@@ -36,6 +37,29 @@ export interface DBFormattedType {
   affiliation: string;
   career: string;
   contactInfo: string;
+  email: string;
+  interestJobCategory: string;
+  interestJobValue: string;
+  jobCategory: string;
+  jobValue: string;
+  interests: string[];
+  participationPurpose: string;
+}
+
+export interface MypageEditProfileType {
+  affiliation: string;
+  phone: string;
+  email: string;
+  career: { value: string };
+  job: { category: string; value: string };
+  interest: string[];
+  purpose: { value: string };
+}
+
+export interface DBMypageEditProfileType {
+  affiliation: string;
+  contactInfo: string;
+  career: string;
   email: string;
   interestJobCategory: string;
   interestJobValue: string;
