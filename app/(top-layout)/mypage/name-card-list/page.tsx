@@ -28,7 +28,7 @@ const Page = () => {
             />
           ))}
         </div>
-        <div className="w-full fixed left-0 bottom-5 px-5">
+        <div className="w-full max-w-[768px] fixed left-1/2 transform -translate-x-1/2 bottom-5 px-5">
           <Button size="full" variant="green" onSubmit={downloadHandler}>
             명함 전체 다운로드
           </Button>
