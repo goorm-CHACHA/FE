@@ -5,21 +5,18 @@ import GroupMatching from '~/components/match/group';
 import OneToOneMatching from '~/components/match/one-to-one';
 import { useNetworkStore } from '~/stores/use-network-store';
 import { mockUserData } from '~/components/mypage/mock-user-data';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import axios from 'axios';
-import { UserData } from '~/types/user.types';
 import { useUserStore } from '~/stores/use-user-store';
 const Page = () => {
   const { isConnect } = useNetworkStore();
-  const [users, setUsers] = useState<UserData[]>([]);
+  const { users, setUsers } = useUserStore();
 
   // ✅ 모든 유저 불러오기
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const res = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/users/all`,
-        );
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}api/users/all`,);
 
         setUsers(res.data);
         useUserStore.getState().setUsers(res.data);
@@ -29,7 +26,7 @@ const Page = () => {
     };
 
     fetchUsers();
-  }, []);
+  }, [setUsers]);
 
   const tabLabels = ['1:1 매칭', '그룹 매칭'];
   const tabContents = [
