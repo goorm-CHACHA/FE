@@ -35,7 +35,7 @@ const DetailCard = ({ user, isShowQR = false }: DetailCardProps) => {
 };
 
 const FrontCard = ({ user }: { user: QRCodeType | null }) => (
-  <div className="absolute w-full h-full backface-hidden bg-stone-900 py-16 px-12 rounded-2xl">
+  <div className="absolute w-full h-full backface-hidden bg-stone-900 py-16 px-10 rounded-2xl">
     <div className="flex flex-col items-start h-full">
       <Dialog.Title className="text-white text-4xl font-semibold leading-[43.2px] mb-10">
         {user?.name}
@@ -52,9 +52,9 @@ const FrontCard = ({ user }: { user: QRCodeType | null }) => (
 );
 
 const BackCard = ({ qrData }: { qrData: object }) => (
-  <div className="absolute w-full h-full rotate-y-180 backface-hidden bg-stone-900 py-16 px-12 rounded-2xl">
-    <div className="flex flex-col items-center justify-center gap-7 h-full">
-      <QRCodeSVG value={JSON.stringify(qrData)} className="w-full" />
+  <div className="absolute w-full h-full rotate-y-180 backface-hidden bg-stone-900 py-16 px-10 rounded-2xl">
+    <div className="flex flex-col items-center justify-top gap-7 h-full">
+      <QRCodeSVG value={JSON.stringify(qrData)} width={170} height={170} />
       <Dialog.Title className="text-white text-xl font-medium">
         QR코드
       </Dialog.Title>
@@ -64,7 +64,7 @@ const BackCard = ({ qrData }: { qrData: object }) => (
 
 const InfoRow = ({ label, value }: { label: string; value?: string }) => (
   <div className="flex text-sm text-neutral-200">
-    <Dialog.Description className="w-[95px]">{label}</Dialog.Description>
+    <Dialog.Description className="w-[85px]">{label}</Dialog.Description>
     <Dialog.Description>{value}</Dialog.Description>
   </div>
 );
