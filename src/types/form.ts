@@ -21,7 +21,7 @@ export interface NetworkFormType {
 }
 
 export interface QRCodeType {
-  id: number;
+  id?: number;
   name: string;
   username: string;
   email: string;
