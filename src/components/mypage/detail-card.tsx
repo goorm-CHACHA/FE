@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
 import { Dialog } from 'radix-ui';
-import { useFormStore } from '~/stores/use-form-store';
 import { QRCodeType } from '~/types/form';
 
 interface DetailCardProps {
@@ -13,8 +12,6 @@ interface DetailCardProps {
 
 const DetailCard = ({ user, isShowQR = false }: DetailCardProps) => {
   const [showQR, setShowQR] = useState(isShowQR);
-  const qrData = JSON.stringify(user);
-
   const handleToggle = () => setShowQR((prev) => !prev);
 
   return (
@@ -28,7 +25,7 @@ const DetailCard = ({ user, isShowQR = false }: DetailCardProps) => {
         }`}
       >
         <FrontCard user={user} />
-        <BackCard qrData={qrData} />
+        <BackCard user={user} />
       </div>
     </div>
   );
@@ -51,10 +48,10 @@ const FrontCard = ({ user }: { user: QRCodeType | null }) => (
   </div>
 );
 
-const BackCard = ({ qrData }: { qrData: object }) => (
+const BackCard = ({ user }: { user: QRCodeType | null }) => (
   <div className="absolute w-full h-full rotate-y-180 backface-hidden bg-stone-900 py-16 px-10 rounded-2xl">
     <div className="flex flex-col items-center justify-top gap-7 h-full">
-      <QRCodeSVG value={JSON.stringify(qrData)} width={170} height={170} />
+      <QRCodeSVG value={JSON.stringify(user)} width={170} height={170} />
       <Dialog.Title className="text-white text-xl font-medium">
         QR코드
       </Dialog.Title>
