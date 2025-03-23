@@ -13,7 +13,7 @@ interface DetailCardProps {
 
 const DetailCard = ({ user, isShowQR = false }: DetailCardProps) => {
   const [showQR, setShowQR] = useState(isShowQR);
-  const { qrData } = useFormStore();
+  const qrData = JSON.stringify(user);
 
   const handleToggle = () => setShowQR((prev) => !prev);
 
