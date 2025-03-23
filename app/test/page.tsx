@@ -31,9 +31,9 @@ const Page = () => {
     <>
       <div className="h-screen flex flex-col content-center justify-center text-center">
         <div className="text-lg mb-3">Push Notification</div>
-        <div className="mx-auto">
-          <Button onClick={() => sendPush(token ?? '')}>푸시 알림</Button>
+        <div className="mx-auto w-[300px] flex flex-col gap-4">
           <NotificationButton />
+          <Button onClick={() => sendPush(token ?? '')}>푸시 알림</Button>
         </div>
       </div>
     </>
