@@ -26,3 +26,8 @@ export async function viewAllUser() {
     console.error(error);
   }
 }
+
+export async function getUserDetail(userId: number | string) {
+  const res = await axios.get(`/user/${userId}`);
+  return res.data;
+}
