@@ -66,7 +66,9 @@ export default MatchOneToOne;
       >
         <BadgesAligned
           items={userData.interests}
+          items={userData.interests}
           className="!bg-transparent !text-body-sm mt-[0.5px]"
           vertical={false}
         />
+      </ProfileImportant> */
       </ProfileImportant> */

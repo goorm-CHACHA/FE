@@ -1,5 +1,8 @@
 'use client';
 
+import { useEffect } from 'react';
+import api from '~/utils/api/api';
+
 import RadixTabs from '~/components/common/radix-tabs';
 import GroupMatching from '~/components/match/group';
 import OneToOneMatching from '~/components/match/one-to-one';
@@ -32,6 +35,7 @@ const Page = () => {
 
   const tabLabels = ['1:1 매칭', '그룹 매칭'];
   const tabContents = [
+    <OneToOneMatching key="one-to-one" profiles={users} />,
     <OneToOneMatching key="one-to-one" profiles={users} />,
     <GroupMatching key="group" profiles={mockUserData} />,
   ];

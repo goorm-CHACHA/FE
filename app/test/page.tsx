@@ -1,32 +1,25 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '~/components/common/button';
 import NotificationButton from '~/components/notification-button';
-import { useCardStore } from '~/stores/use-card-store';
+import { sendPush } from '~/utils/api/send-push';
 
 const Page = () => {
-  const { cards, resetCard } = useCardStore();
+  const [token, setToken] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fcmToken = localStorage.getItem('FCMToken');
+    setToken(fcmToken);
+  }, []);
+
   return (
     <>
       <div className="h-screen flex flex-col content-center justify-center text-center">
         <div className="text-lg mb-3">Push Notification</div>
-        <div className="mx-auto">
+        <div className="mx-auto w-[300px] flex flex-col gap-4">
           <NotificationButton />
-          {cards.map((card, idx) => {
-            return (
-              <div key={`${card.id}-${idx}`} className="bg-white">
-                <div>{card.affiliation}</div>
-                <div>{card.email}</div>
-                <div>
-                  {card.job.category}/ {card.job.value}
-                </div>
-                <div>{card.name}</div>
-                <div>{card.phone}</div>
-              </div>
-            );
-          })}
-          <Button onClick={resetCard}>카드 리스트 리셋</Button>
+          <Button onClick={() => sendPush(token ?? '')}>푸시 알림</Button>
         </div>
       </div>
     </>
