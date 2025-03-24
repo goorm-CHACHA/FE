@@ -20,7 +20,7 @@ const defaultQR = {
   name: '',
   affiliation: '',
   email: '',
-  phone: '',
+  contactInfo: '',
   job: { value: '', category: '' },
 };
 

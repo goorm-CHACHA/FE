@@ -1,7 +1,7 @@
 import {
   DBFormattedType,
-  DBMypageEditProfileType,
-  MypageEditProfileType,
+  UserType,
+  DBUserType,
   PartialFormDataType,
 } from '~/types/form';
 
@@ -12,47 +12,49 @@ export function formatFormData(data: PartialFormDataType): DBFormattedType {
     password: data.password ?? '',
     affiliation: data.affiliation ?? '',
     career: data.career?.value ?? '',
-    contactInfo: data.phone ?? '',
+    contactInfo: data.contactInfo ?? '',
     email: data.email ?? '',
     interestJobCategory: data.interestJob?.category ?? '',
     interestJobValue: data.interestJob?.value ?? '',
     jobCategory: data.job?.category ?? '',
     jobValue: data.job?.value ?? '',
     interests: data.interest ?? [],
-    participationPurpose: data.purpose?.value ?? '',
+    participationPurpose: data.participationPurpose?.value ?? '',
   };
 }
 
-export function formatToMyPageForm(
-  data: DBMypageEditProfileType,
-): MypageEditProfileType {
+export function formatToMyPageForm(data: DBUserType): UserType {
   return {
+    name: data.name,
     affiliation: data.affiliation,
-    phone: data.contactInfo,
+    contactInfo: data.contactInfo,
     email: data.email,
     career: { value: data.career },
     job: {
       category: data.jobCategory,
       value: data.jobValue,
     },
-    interest: data.interests,
-    purpose: { value: data.participationPurpose },
+    interests: data.interests,
+    interestJob: {
+      category: data.interestJobCategory,
+      value: data.interestJobValue,
+    },
+    participationPurpose: { value: data.participationPurpose },
   };
 }
 
-export function formatToDB(
-  data: MypageEditProfileType,
-): DBMypageEditProfileType {
+export function formatToDB(data: UserType): DBUserType {
   return {
+    name: data.name,
     affiliation: data.affiliation,
-    contactInfo: data.phone,
+    contactInfo: data.contactInfo,
     email: data.email,
     career: data.career.value,
     jobCategory: data.job.category,
     jobValue: data.job.value,
-    interests: data.interest,
-    interestJobCategory: data.job.category,
-    interestJobValue: data.job.value,
-    participationPurpose: data.purpose.value,
+    interests: data.interests,
+    interestJobCategory: data.interestJob.category,
+    interestJobValue: data.interestJob.value,
+    participationPurpose: data.participationPurpose.value,
   };
 }

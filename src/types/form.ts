@@ -3,7 +3,7 @@ export interface ProfileFormType {
   username: string;
   email: string;
   password: string;
-  phone: string;
+  contactInfo: string;
 }
 
 export interface JobFormType {
@@ -14,7 +14,7 @@ export interface JobFormType {
 }
 
 export interface NetworkFormType {
-  purpose: { value: string };
+  participationPurpose: { value: string };
   interestJob: { category: string; value: string };
   interest: string[];
   agree: boolean;
@@ -25,7 +25,7 @@ export interface QRCodeType {
   name: string;
   username: string;
   email: string;
-  phone: string;
+  contactInfo: string;
   affiliation: string;
   job: { category: string; value: string };
 }
@@ -46,26 +46,29 @@ export interface DBFormattedType {
   participationPurpose: string;
 }
 
-export interface MypageEditProfileType {
-  affiliation: string;
-  phone: string;
+export interface UserType {
+  name: string;
   email: string;
+  affiliation: string;
   career: { value: string };
+  contactInfo: string;
   job: { category: string; value: string };
-  interest: string[];
-  purpose: { value: string };
+  interestJob: { category: string; value: string };
+  interests: string[];
+  participationPurpose: { value: string };
 }
 
-export interface DBMypageEditProfileType {
-  affiliation: string;
-  contactInfo: string;
-  career: string;
+export interface DBUserType {
+  name: string;
   email: string;
+  affiliation: string;
+  career: string;
+  contactInfo: string;
   interestJobCategory: string;
   interestJobValue: string;
+  interests: string[];
   jobCategory: string;
   jobValue: string;
-  interests: string[];
   participationPurpose: string;
 }
 
