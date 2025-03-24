@@ -3,6 +3,7 @@ import {
   UserType,
   DBUserType,
   PartialFormDataType,
+  QRCodeType,
 } from '~/types/form';
 
 export function formatFormData(data: PartialFormDataType): DBFormattedType {
@@ -56,5 +57,18 @@ export function formatToDB(data: UserType): DBUserType {
     interestJobCategory: data.interestJob.category,
     interestJobValue: data.interestJob.value,
     participationPurpose: data.participationPurpose.value,
+  };
+}
+
+export function formatToQR(data: DBUserType): QRCodeType {
+  return {
+    name: data.name,
+    affiliation: data.affiliation,
+    contactInfo: data.contactInfo,
+    email: data.email,
+    job: {
+      category: data.jobCategory,
+      value: data.jobValue,
+    },
   };
 }

@@ -23,7 +23,7 @@ export interface NetworkFormType {
 export interface QRCodeType {
   id?: number;
   name: string;
-  username: string;
+  username?: string;
   email: string;
   contactInfo: string;
   affiliation: string;

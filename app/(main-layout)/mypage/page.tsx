@@ -2,13 +2,26 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import CardDialog from '~/components/mypage/card-dialog';
-import { useFormStore } from '~/stores/use-form-store';
+import { QRCodeType } from '~/types/form';
+import { fetchCard } from '~/utils/api/user';
 
 const Page = () => {
-  const { qrData } = useFormStore();
+  const [user, setUser] = useState<QRCodeType | null>(null);
   const [showCard, setShowCard] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await fetchCard();
+
+      if (data) {
+        setUser(data);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <div className="flex flex-col p-5 gap-4">
@@ -44,7 +57,7 @@ const Page = () => {
         <CardDialog
           open={!!showCard}
           onClose={() => setShowCard((prev) => !prev)}
-          user={qrData}
+          user={user}
         />
         <Link
           href="/mypage/name-card-list"
