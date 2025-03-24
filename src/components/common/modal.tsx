@@ -8,7 +8,7 @@ interface ModalButtonProps extends ButtonVariantProps {
   actionType: 'trigger' | 'action';
   onClick?: () => void;
   nextModalContent?: ModalContent;
-  useStoreTrigger?: boolean; 
+  useStoreTrigger?: boolean;
 }
 
 export interface ModalContent {
@@ -41,7 +41,7 @@ const Modal = ({
     subText,
     buttons,
   });
-  const shouldUsePropContent = buttons.some(btn => btn.useStoreTrigger);
+  const shouldUsePropContent = buttons.some((btn) => btn.useStoreTrigger);
 
   const handleModalContent = (newModal: ModalContent) => {
     setCurrentModal({
@@ -78,12 +78,12 @@ const Modal = ({
                   <Button
                     key={index}
                     variant={btn.variant}
-                    onClick={() =>  {
+                    onClick={() => {
                       if (btn.useStoreTrigger) {
                         btn.onClick?.(); // 이 안에서 store.openModal('request-sent', ...) 호출됨
                         return;
                       }
-              
+
                       // 기존 방식 (useState로 nextModalContent 넘기던)
                       handleModalContent(btn.nextModalContent!);
                     }}
