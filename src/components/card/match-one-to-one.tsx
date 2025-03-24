@@ -4,6 +4,7 @@ import { UserData } from '~/types/user.types';
 import CardBasic from '../common/card-basic';
 import DefaultProfile from '../common/default-profile';
 import Image from 'next/image';
+import { useMatchModalStore } from '~/stores/use-match-modal-store';
 
 interface MatchCardProps {
   userData: UserData;
@@ -18,8 +19,16 @@ const MatchOneToOne = ({
   userData,
   requestedNetwork = false,
 }: MatchCardProps) => {
+  const { openModal } = useMatchModalStore();
+
+  const handleClick = () => {
+    openModal('profile', {
+      id: userData.id,
+      isNotificationOn: false,
+    });
+  };
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4" onClick={handleClick}>
       <div className="flex justify-between items-center">
         <div className="flex gap-[10px] p-[10px]">
           <DefaultProfile size="nameCard" />
