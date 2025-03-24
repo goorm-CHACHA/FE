@@ -21,7 +21,7 @@ const Page = () => {
             내 정보 수정
           </p>
           <Image
-            src="/assets/svgs/Arrow.svg"
+            src="/assets/svgs/arrow.svg"
             width={24}
             height={24}
             alt="arrow"
@@ -35,7 +35,7 @@ const Page = () => {
             내 명함 보기
           </p>
           <Image
-            src="/assets/svgs/Arrow.svg"
+            src="/assets/svgs/arrow.svg"
             width={24}
             height={24}
             alt="arrow"
@@ -54,7 +54,7 @@ const Page = () => {
             저장한 명함 목록
           </p>
           <Image
-            src="/assets/svgs/Arrow.svg"
+            src="/assets/svgs/arrow.svg"
             width={24}
             height={24}
             alt="arrow"
