@@ -14,7 +14,7 @@ import ModifyCard from '~/components/mypage/modify-card';
 import { UserData } from '~/types/user.types';
 
 const Page = () => {
-  const currentUserId = 'hong123';
+  const currentUserId = 321;
   const currentUserData = mockUserData.find(
     (user) => user.id === currentUserId,
   ) as UserData | undefined;

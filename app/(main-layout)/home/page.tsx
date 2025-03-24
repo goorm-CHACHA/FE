@@ -16,7 +16,9 @@ const Page = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}api/users/all`,);
+        const res = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}api/users/all`,
+        );
 
         setUsers(res.data);
         useUserStore.getState().setUsers(res.data);
