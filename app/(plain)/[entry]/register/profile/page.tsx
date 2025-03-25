@@ -2,14 +2,12 @@ import React from 'react';
 import ProfileForm from '~/components/register/profile-form';
 import RegisterTemplete from '~/components/register/register-templete';
 
-interface PageProps {
-  params: {
-    entry: string;
-  };
-}
-
-const RegisterPage = async ({ params }: PageProps) => {
-  const entry = params.entry; // 나중에 fix
+const RegisterPage = async ({
+  params,
+}: {
+  params: Promise<{ entry: string }>;
+}) => {
+  const { entry } = await params;
 
   return (
     <RegisterTemplete
