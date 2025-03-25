@@ -41,7 +41,7 @@ export async function fetchProfile() {
   }
 }
 
-export async function fetchCard() {
+export async function fetchMyCard() {
   try {
     const res = await api.get('/api/users/mypage', undefined);
     return formatFromQR(res.data);

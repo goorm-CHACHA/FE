@@ -2,26 +2,13 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import CardDialog from '~/components/mypage/card-dialog';
-import { UserType } from '~/types/form';
-import { fetchProfile } from '~/utils/api/user';
+import { useFormStore } from '~/stores/use-form-store';
 
 const Page = () => {
-  const [user, setUser] = useState<UserType | null>(null);
   const [showCard, setShowCard] = useState(false);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await fetchProfile();
-
-      if (data) {
-        setUser(data);
-      }
-    };
-
-    fetchData();
-  }, []);
+  const { qrData } = useFormStore();
 
   return (
     <div className="flex flex-col p-5 gap-4">
@@ -55,9 +42,9 @@ const Page = () => {
           />
         </button>
         <CardDialog
-          open={!!showCard}
+          open={showCard}
           onClose={() => setShowCard((prev) => !prev)}
-          user={user}
+          user={qrData}
         />
         <Link
           href="/mypage/name-card-list"

@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
+import isEqual from 'lodash.isequal';
 
 import { careerOptions, groupedJobOptions } from '~/constants/job-options';
 import { purposeOptions } from '~/constants/purpose';
@@ -14,16 +15,15 @@ import Button from '~/components/common/button';
 import SelectField from '~/components/common/select-field';
 import { UserType } from '~/types/form';
 import { editProfile, fetchProfile } from '~/utils/api/user';
-import isEqual from 'lodash.isequal';
 import { phoneFormatter } from '~/utils/phone-formatter';
 
 const Page = () => {
   const router = useRouter();
   const methods = useForm<UserType>();
   const { watch, handleSubmit, setValue } = methods;
+
   const currentData = watch(); // 현재 데이터
   const [originData, setOriginData] = useState<UserType | null>(null); // 원본 데이터
-
   const isUnChanged = originData !== null && isEqual(originData, currentData); // 폼 값이 바뀌었는지 체크
 
   useEffect(() => {

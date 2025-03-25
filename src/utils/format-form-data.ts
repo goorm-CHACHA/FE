@@ -65,7 +65,20 @@ export function formatToDBUser(data: UserType): DBUserType {
 }
 
 // DB -> 프론트 명함 데이터로 포맷
-export function formatFromQR(data: DBQRCodeType[]): QRCodeType[] {
+export function formatFromQR(data: DBQRCodeType): QRCodeType {
+  return {
+    name: data.name,
+    affiliation: data.affiliation,
+    contactInfo: data.contactInfo,
+    email: data.email,
+    job: {
+      category: data.jobCategory,
+      value: data.jobValue,
+    },
+  };
+}
+
+export function formatFromQRList(data: DBQRCodeType[]): QRCodeType[] {
   return data.map((item) => ({
     name: item.name,
     affiliation: item.affiliation,

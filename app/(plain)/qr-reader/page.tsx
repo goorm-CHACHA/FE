@@ -3,11 +3,13 @@
 import QrScanner from 'qr-scanner';
 import React, { useEffect, useRef, useState } from 'react';
 import Button from '~/components/common/button';
-import { useCardStore } from '~/stores/use-card-store';
+import CardDialog from '~/components/mypage/card-dialog';
+import { useFormStore } from '~/stores/use-form-store';
+import { addCard } from '~/utils/api/card';
 
 const QrReader = () => {
-  const { addCard } = useCardStore();
   const [qrError, setQrError] = useState<boolean>(false);
+  const [showCard, setShowCard] = useState<boolean>(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const qrScannerRef = useRef<QrScanner | null>(null);
 
@@ -15,6 +17,8 @@ const QrReader = () => {
     const parsedData = JSON.parse(result.data);
     addCard(parsedData);
   };
+
+  const { qrData } = useFormStore();
 
   const QrOptions = {
     preferredCamera: 'environment',
@@ -60,11 +64,18 @@ const QrReader = () => {
           <h1>QR리더기</h1>
           <video className="w-full h-full object-contain" ref={videoRef} />
           <Button
+            onClick={() => setShowCard((prev) => !prev)}
             className="absolute top-2/3 left-1/2 -translate-x-1/2"
             size={'sm'}
           >
             나의 qr코드 바로 가기
           </Button>
+          <CardDialog
+            open={showCard}
+            onClose={() => setShowCard((prev) => !prev)}
+            user={qrData}
+            isShowQR={true}
+          />
         </div>
       )}
 
