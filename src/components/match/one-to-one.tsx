@@ -13,14 +13,16 @@ interface OneToOneMatchingProps {
 const OneToOneMatching = ({ profiles }: OneToOneMatchingProps) => {
   const [selectedUser, setSelectedUser] = useState<UserData | null>(null);
   // const { openModal } = useMatchModalStore();
-  const { requestedUserIds } = useMatchModalStore(); 
+  const { requestedUserIds } = useMatchModalStore();
   console.log(selectedUser);
   const sortedProfiles = [...profiles].sort((a, b) => {
-    const aRequested = typeof a.id === 'number' && requestedUserIds.includes(a.id);
-    const bRequested = typeof b.id === 'number' && requestedUserIds.includes(b.id);
-    
+    const aRequested =
+      typeof a.id === 'number' && requestedUserIds.includes(a.id);
+    const bRequested =
+      typeof b.id === 'number' && requestedUserIds.includes(b.id);
+
     if (aRequested && !bRequested) return -1; // a 먼저
-    if (!aRequested && bRequested) return 1;  // b 먼저
+    if (!aRequested && bRequested) return 1; // b 먼저
     return 0; // 그대로
   });
   return (

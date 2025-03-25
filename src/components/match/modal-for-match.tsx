@@ -59,7 +59,7 @@ const getModalContent = (
   userData: UserData,
   markUserAsRequested: (userId: number) => void,
   isSubscribed: boolean,
-  toggleSubscription: (checked: boolean) => void
+  toggleSubscription: (checked: boolean) => void,
 ): ExtendedModalContent | null => {
   switch (modalType) {
     case 'profile':
@@ -138,46 +138,46 @@ const getModalContent = (
           },
         ],
       };
-      case 'request-confirm':
-        const subscribed = useNetworkStore.getState().isSubscribed;
-        return subscribed
-          ? {
-              title: '네트워킹이 신청되었어요!',
-              subText: '요청 수락 시 알림으로 알려드릴게요!',
-              buttons: [
-                {
-                  label: '확인',
-                  variant: 'primary',
-                  actionType: 'trigger',
-                  useStoreTrigger: true,
-                  onClick: closeModal,
+    case 'request-confirm':
+      const subscribed = useNetworkStore.getState().isSubscribed;
+      return subscribed
+        ? {
+            title: '네트워킹이 신청되었어요!',
+            subText: '요청 수락 시 알림으로 알려드릴게요!',
+            buttons: [
+              {
+                label: '확인',
+                variant: 'primary',
+                actionType: 'trigger',
+                useStoreTrigger: true,
+                onClick: closeModal,
+              },
+            ],
+          }
+        : {
+            title: '네트워킹이 신청되었어요!',
+            subText: '요청이 수락되면 알림으로 알려드릴게요',
+            buttons: [
+              {
+                label: '괜찮아요',
+                variant: 'black/50',
+                actionType: 'trigger',
+                useStoreTrigger: true,
+                onClick: closeModal,
+              },
+              {
+                label: '알림받기',
+                variant: 'primary',
+                actionType: 'trigger',
+                useStoreTrigger: true,
+                onClick: async () => {
+                  await toggleSubscription(true);
+                  closeModal();
                 },
-              ],
-            }
-          : {
-              title: '네트워킹이 신청되었어요!',
-              subText: '요청이 수락되면 알림으로 알려드릴게요',
-              buttons: [
-                {
-                  label: '괜찮아요',
-                  variant: 'black/50',
-                  actionType: 'trigger',
-                  useStoreTrigger: true,
-                  onClick: closeModal,
-                },
-                {
-                  label: '알림받기',
-                  variant: 'primary',
-                  actionType: 'trigger',
-                  useStoreTrigger: true,
-                  onClick: async () => {
-                    await toggleSubscription(true);
-                    closeModal();
-                  },
-                },
-              ],
-            };
-      
+              },
+            ],
+          };
+
     case 'request-cancel':
       return {
         title: `${userData.id}와 네트워킹을 취소할까요?`,
@@ -197,7 +197,9 @@ const getModalContent = (
             useStoreTrigger: true,
             onClick: async () => {
               console.log('[API 호출] 네트워킹 취소!!');
-              useMatchModalStore.getState().removeUserFromRequested(userData.id!);
+              useMatchModalStore
+                .getState()
+                .removeUserFromRequested(userData.id!);
               closeModal();
             },
           },

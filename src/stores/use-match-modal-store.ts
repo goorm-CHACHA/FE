@@ -39,7 +39,7 @@ interface MatchModalState {
   closeModal: () => void;
   requestedUserIds: number[];
   markUserAsRequested: (userId: number) => void;
-  removeUserFromRequested: (userId: number) => void; 
+  removeUserFromRequested: (userId: number) => void;
 }
 
 export const useMatchModalStore = create<MatchModalState>((set) => ({
