@@ -1,6 +1,6 @@
 // user.types.ts
 export interface UserData {
-  id?: number | undefined;
+  id?: number;
   username?: string;
   password?: string;
   affiliation?: string;
