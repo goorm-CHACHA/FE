@@ -28,7 +28,6 @@ interface ChatWindowProps {
 const ChatWindow = ({
   messages,
   receiverProfileImg,
-  status,
   receiverName,
   receiverStatus,
 }: ChatWindowProps) => {

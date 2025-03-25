@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import ChatWindow from '~/components/chat/chat-window';
 import MessageInput from '~/components/chat/message-input';
 
@@ -28,16 +28,16 @@ const tempChats: Chat[] = [
 ];
 
 const ChatPage = () => {
-  const [chats] = useState<Chat[]>(tempChats);
+  // const [chats] = useState<Chat[]>(tempChats);
   const [selectedChat, setSelectedChat] = useState<Chat | null>(tempChats[0]);
   const [messages, setMessages] = useState<any[]>([]);
   const [websocket, setWebSocket] = useState<WebSocket | null>(null);
   const [currentUser, setCurrentUser] = useState<string | null>(null);
-
+  console.log(setSelectedChat);
   const fetchToken = () => {
     // 쿠키에서 access_token 가져오기
     const cookies = document.cookie.split(';');
-    for (let cookie of cookies) {
+    for (const cookie of cookies) {
       const [key, value] = cookie.trim().split('=');
       if (key === 'access_token') {
         return value;

@@ -3,8 +3,8 @@ import Button from '../common/button';
 import { UserData } from '~/types/user.types';
 import CardBasic from '../common/card-basic';
 import DefaultProfile from '../common/default-profile';
-import Image from 'next/image';
 import { useMatchModalStore } from '~/stores/use-match-modal-store';
+import Bookmark from '~/assets/svgs/bookmark.svg';
 
 interface MatchCardProps {
   userData: UserData;
@@ -62,12 +62,7 @@ const MatchOneToOne = ({
       </div>
       <div className="px-4 py-[10px] rounded-md self-stretch bg-gray-neutral-900 flex flex-row items-center justify-start py-spacing-10 pl-spacing-16 pr-spacing-10 gap-3 text-sm text-orange-500">
         <div className="flex !items-center !text-orange-500 gap-[6px]">
-          <Image
-            src="/assets/svgs/bookmark.svg"
-            alt="bookmark"
-            width={12}
-            height={14}
-          />
+          <Bookmark width={12} height={14} />
           <p>{userData.participationPurpose}</p>
         </div>
       </div>
