@@ -80,7 +80,7 @@ const Modal = ({
                     variant={btn.variant}
                     onClick={async () => {
                       if (btn.useStoreTrigger) {
-                        await btn.onClick?.(); // 이 안에서 store.openModal('request-sent', ...) 호출됨
+                        await btn.onClick?.();
                         return;
                       }
 
