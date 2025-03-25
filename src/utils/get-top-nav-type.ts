@@ -11,10 +11,15 @@ const routes = [
     type: 'back-arrow',
     title: '저장한 명함 목록',
   },
+  {
+    path: '/user-info',
+    type: 'back-arrow',
+    title: '사용자 프로필',
+  },
 ];
 
 export function getTopNavType(pathname: string) {
-  const findRoute = routes.find((route) => pathname === route.path);
+  const findRoute = routes.find((route) => pathname.includes(route.path));
   return {
     type: findRoute?.type,
     title: findRoute?.title,

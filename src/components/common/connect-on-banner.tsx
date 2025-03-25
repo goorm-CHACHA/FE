@@ -7,7 +7,7 @@ const ConnectOnBanner = ({ isDisabled }: { isDisabled: boolean }) => {
   return (
     <div className="px-5">
       <div
-        className={`w-full bg-gray-neutral-600 px-4 py-4 rounded-xl mb-4 relative flex items-center justify-between ${isDisabled ? 'opacity-50 pointer-events-none' : ''}`}
+        className={`w-full bg-gray-neutral-700 px-4 py-4 rounded-[12px] mb-4 relative flex items-center justify-between ${isDisabled ? 'opacity-50 pointer-events-none' : ''}`}
       >
         <div>
           <p className="text-lg flex-2">알림 {isSubscribed ? 'ON' : 'OFF'}</p>
