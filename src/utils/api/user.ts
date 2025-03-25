@@ -5,7 +5,6 @@ import {
   formatFromQR,
   formatToDBUser,
 } from '~/utils/format-form-data';
-import { formatToDB, formatToMyPageForm } from '../format-form-data';
 import axios from 'axios';
 
 export async function signup(data: DBFormattedType) {
