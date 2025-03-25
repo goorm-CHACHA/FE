@@ -78,9 +78,9 @@ const Modal = ({
                   <Button
                     key={index}
                     variant={btn.variant}
-                    onClick={() => {
+                    onClick={async () => {
                       if (btn.useStoreTrigger) {
-                        btn.onClick?.(); // 이 안에서 store.openModal('request-sent', ...) 호출됨
+                        await btn.onClick?.(); // 이 안에서 store.openModal('request-sent', ...) 호출됨
                         return;
                       }
 
