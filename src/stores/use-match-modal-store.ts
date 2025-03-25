@@ -24,6 +24,7 @@ export type MatchModalType =
   | 'profile'
   | 'request-sent'
   | 'request-confirm'
+  | 'request-cancel'
   | null;
 
 export interface MatchModalData {
@@ -34,14 +35,20 @@ export interface MatchModalData {
 interface MatchModalState {
   currentModal: MatchModalType;
   modalData: MatchModalData | null;
-  openModal: (modal: MatchModalType, data?: MatchModalData | null) => void;
+  openModal: (modal: MatchModalType, data?: MatchModalData) => void;
   closeModal: () => void;
+  requestedUserIds: number[];
+  markUserAsRequested: (userId: number) => void;
 }
 
 export const useMatchModalStore = create<MatchModalState>((set) => ({
   currentModal: null,
   modalData: null,
-  openModal: (modal, data = null) =>
-    set({ currentModal: modal, modalData: data }),
+  openModal: (modal, data) => set({ currentModal: modal, modalData: data }),
   closeModal: () => set({ currentModal: null, modalData: null }),
+  requestedUserIds: [],
+  markUserAsRequested: (userId) =>
+    set((state) => ({
+      requestedUserIds: [...state.requestedUserIds, userId],
+    })),
 }));
