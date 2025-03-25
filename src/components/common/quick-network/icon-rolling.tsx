@@ -53,6 +53,7 @@ const IconRolling = () => {
         .fill(null)
         .map(() => colors[Math.floor(Math.random() * colors.length)]),
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
