@@ -1,6 +1,6 @@
-import React from 'react';
-import Image from 'next/image';
 // import  { GroupData } from '~/types/'
+import React from 'react';
+import ExitIcon from '~/assets/svgs/exit-icon.svg';
 
 interface GroupData {
   job: string[];
@@ -21,22 +21,22 @@ const MatchGroup = ({ groupData }: MatchGroupProps) => {
   const infoList = [
     {
       title: '직무',
-      src: '/assets/svgs/exit-icon.svg',
+      components: <ExitIcon width={14} height={14} />,
       text: groupData.job[0] || '선택 안함',
     },
     {
       title: '경력',
-      src: '/assets/svgs/exit-icon.svg',
+      components: <ExitIcon width={14} height={14} />,
       text: groupData.career[0] || '선택 안함',
     },
     {
       title: '관심분야',
-      src: '/assets/svgs/exit-icon.svg',
+      components: <ExitIcon width={14} height={14} />,
       text: groupData.interest[0] || '선택 안함',
     },
     {
       title: '참여목적',
-      src: '/assets/svgs/exit-icon.svg',
+      components: <ExitIcon width={14} height={14} />,
       text: groupData.purpose[0] || '선택 안함',
     },
   ];
@@ -45,12 +45,7 @@ const MatchGroup = ({ groupData }: MatchGroupProps) => {
       {infoList.map((info, index) => (
         <div key={index} className="mb-3 flex justify-between">
           <div className="flex items-center gap-2">
-            <Image
-              src={info.src} // 나중에 아이콘 확정되면...
-              alt="Exit Icon"
-              width={14}
-              height={14}
-            />
+            {info.components}
             <span className="text-white font-semibold text-body-sm">
               {info.title}
             </span>
