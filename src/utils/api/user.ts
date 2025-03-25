@@ -1,6 +1,7 @@
 import { DBFormattedType, MypageEditProfileType } from '~/types/form';
 import api from './api';
 import { formatToDB, formatToMyPageForm } from '../format-form-data';
+import axios from 'axios';
 
 export async function signup(data: DBFormattedType) {
   try {
