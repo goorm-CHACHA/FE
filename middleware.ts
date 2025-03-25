@@ -2,8 +2,8 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 export function middleware(req: NextRequest) {
-  const { pathname } = req.nextUrl;
-  const token = req.cookies.get('AccessToken')?.value;
+  const pathname = req.nextUrl.pathname;
+  const token = req.cookies.get('access_token')?.value;
 
   const PublicPage = ['/', '/pre', '/register', '/account'];
   const isPublicPage = PublicPage.some((page) => pathname.includes(page));
