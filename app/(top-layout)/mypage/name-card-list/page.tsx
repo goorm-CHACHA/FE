@@ -29,10 +29,10 @@ const Page = () => {
       <div className="flex flex-col justify-between w-full h-full">
         <div className="w-full flex gap-2 flex-col">
           {/* 카드 리스트 */}
-          {cards.map((user) => (
+          {cards.map((user, index) => (
             <CardItem
               user={user}
-              key={user.id}
+              key={`${user.name}-${index}`}
               onClick={() => setSelectedUser(user)}
             />
           ))}
