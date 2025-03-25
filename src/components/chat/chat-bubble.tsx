@@ -42,7 +42,7 @@ const ChatBubble = ({
   className,
   message,
   createTime,
-  senderName,
+  // senderName,
   showProfile = false,
   imgSrc,
   ...props
