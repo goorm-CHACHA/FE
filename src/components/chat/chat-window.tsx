@@ -105,16 +105,14 @@ const ChatWindow = ({
 
         {/* 채팅 메시지 영역 */}
         <div className="p-4 ">
-          {
-             messages.map((message) => (
-              <ChatBubble
+          {messages.map((message) => (
+            <ChatBubble
               key={message.createTime}
               message={message.message} // 메시지 내용
               createTime={message.createTime}
               senderName={message.senderName}
             />
-            ))
-          }
+          ))}
         </div>
       </div>
     </div>
