@@ -10,12 +10,22 @@ import { addCard } from '~/utils/api/card';
 const QrReader = () => {
   const [qrError, setQrError] = useState<boolean>(false);
   const [showCard, setShowCard] = useState<boolean>(false);
+  const [scanned, setScanned] = useState<boolean>(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const qrScannerRef = useRef<QrScanner | null>(null);
 
   const handleScan = (result: QrScanner.ScanResult) => {
-    const parsedData = JSON.parse(result.data);
-    addCard(parsedData);
+    if (scanned) return;
+
+    try {
+      const parsedData = JSON.parse(result.data);
+      addCard(parsedData);
+      setScanned(true);
+
+      setTimeout(() => setScanned(false), 3000);
+    } catch {
+      alert('이미 저장된 명함입니다.');
+    }
   };
 
   const { qrData } = useFormStore();
