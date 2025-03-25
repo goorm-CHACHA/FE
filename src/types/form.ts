@@ -30,6 +30,17 @@ export interface QRCodeType {
   job: { category: string; value: string };
 }
 
+export interface DBQRCodeType {
+  id?: number;
+  name: string;
+  username?: string;
+  email: string;
+  contactInfo: string;
+  affiliation: string;
+  jobCategory: string;
+  jobValue: string;
+}
+
 export interface DBFormattedType {
   name: string;
   username: string;

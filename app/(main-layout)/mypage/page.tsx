@@ -4,16 +4,16 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import CardDialog from '~/components/mypage/card-dialog';
-import { QRCodeType } from '~/types/form';
-import { fetchCard } from '~/utils/api/user';
+import { UserType } from '~/types/form';
+import { fetchProfile } from '~/utils/api/user';
 
 const Page = () => {
-  const [user, setUser] = useState<QRCodeType | null>(null);
+  const [user, setUser] = useState<UserType | null>(null);
   const [showCard, setShowCard] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await fetchCard();
+      const data = await fetchProfile();
 
       if (data) {
         setUser(data);

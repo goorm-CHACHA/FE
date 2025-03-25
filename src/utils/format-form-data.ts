@@ -4,8 +4,10 @@ import {
   DBUserType,
   PartialFormDataType,
   QRCodeType,
+  DBQRCodeType,
 } from '~/types/form';
 
+// form 전송을 위한 데이터 변환
 export function formatFormData(data: PartialFormDataType): DBFormattedType {
   return {
     name: data.name ?? '',
@@ -24,7 +26,8 @@ export function formatFormData(data: PartialFormDataType): DBFormattedType {
   };
 }
 
-export function formatToMyPageForm(data: DBUserType): UserType {
+// DB -> mypage 등에서 사용할 수 있도록 변환
+export function formatFromDBUser(data: DBUserType): UserType {
   return {
     name: data.name,
     affiliation: data.affiliation,
@@ -44,7 +47,8 @@ export function formatToMyPageForm(data: DBUserType): UserType {
   };
 }
 
-export function formatToDB(data: UserType): DBUserType {
+// mypage -> DB로 전달
+export function formatToDBUser(data: UserType): DBUserType {
   return {
     name: data.name,
     affiliation: data.affiliation,
@@ -60,15 +64,28 @@ export function formatToDB(data: UserType): DBUserType {
   };
 }
 
-export function formatToQR(data: DBUserType): QRCodeType {
+// DB -> 프론트 명함 데이터로 포맷
+export function formatFromQR(data: DBQRCodeType[]): QRCodeType[] {
+  return data.map((item) => ({
+    name: item.name,
+    affiliation: item.affiliation,
+    contactInfo: item.contactInfo,
+    email: item.email,
+    job: {
+      category: item.jobCategory,
+      value: item.jobValue,
+    },
+  }));
+}
+
+// 명함 데이터 -> DB에 추가할 때
+export function formatToQRDB(data: QRCodeType): DBQRCodeType {
   return {
     name: data.name,
     affiliation: data.affiliation,
     contactInfo: data.contactInfo,
     email: data.email,
-    job: {
-      category: data.jobCategory,
-      value: data.jobValue,
-    },
+    jobCategory: data.job.category,
+    jobValue: data.job.value,
   };
 }
