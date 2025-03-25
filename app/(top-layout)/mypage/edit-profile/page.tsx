@@ -41,7 +41,12 @@ const Page = () => {
   return (
     <FormProvider {...methods}>
       <div className="w-full p-5">
-        <form onSubmit={handleSubmit(() => editProfile(currentData))}>
+        <form
+          onSubmit={handleSubmit(() => {
+            editProfile(currentData);
+            setOriginData(currentData);
+          })}
+        >
           <div className="flex flex-col w-full gap-7">
             {/* 프로필 정보 */}
             <div className="flex flex-col gap-2">
