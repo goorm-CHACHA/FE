@@ -15,7 +15,7 @@ const Page = () => {
   const methods = useForm<{
     job: string[];
     interest: string[];
-    career: string[];
+    career: number[];
     participationPurpose: string[];
   }>({
     defaultValues: {
@@ -69,7 +69,7 @@ const Page = () => {
             control={control}
             options={interestOptions}
           />
-          <SliderCareer name="career" control={control} label="경력" />
+          <SliderCareer name="career" label="경력" />
           <ToggleField
             label="참여목적"
             name="participationPurpose"

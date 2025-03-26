@@ -1,13 +1,6 @@
 // import  { GroupData } from '~/types/'
 import React from 'react';
 
-interface GroupData {
-  job: string[];
-  career: string[];
-  interest: string[];
-  purpose: string[];
-}
-
 interface MatchGroupProps {
   groupData: {
     job: string[];

@@ -3,8 +3,12 @@ import { Controller, Control } from 'react-hook-form';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 
+interface CareerFormValues {
+  [key: string]: number[] | string;
+}
+
 interface SliderCareerProps {
-  control: Control<any>;
+  control?: Control<CareerFormValues>;
   name: string;
   label?: string;
 }
@@ -50,8 +54,8 @@ const SliderCareer: React.FC<SliderCareerProps> = ({
               min={0}
               max={4}
               step={1}
-              value={value}
-              onChange={(newValue) => onChange(newValue)}
+              value={value as number[]}
+              onChange={(newValue) => onChange(newValue as number[])}
               railStyle={{
                 backgroundColor: '#85858530',
                 height: 4,
@@ -97,7 +101,7 @@ const SliderCareer: React.FC<SliderCareerProps> = ({
                 >
                   <span
                     className={`text-sm font-semibold ${
-                      value[0] <= index && index <= value[1]
+                      Number(value[0]) <= index && index <= Number(value[1])
                         ? 'text-[#07ca7f]'
                         : 'text-gray-400'
                     }`}
