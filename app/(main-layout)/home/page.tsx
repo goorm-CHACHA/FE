@@ -126,6 +126,10 @@ const Page = () => {
 
         alert(message); // '채팅 요청이 거절되었습니다' 등 메시지 띄우기
       }
+
+      if (notificationData.messageType === 'accept') {
+        //룸 아이디와 함께 채팅페이지로 이동
+      }
     };
 
     fetchLoggedInUser();
