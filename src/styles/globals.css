@@ -36,3 +36,7 @@ body {
   perspective-origin: center;
   perspective: 1000px;
 }
+
+.scan-region-highlight-svg {
+  stroke: #07ca7f !important;
+}
