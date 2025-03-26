@@ -44,6 +44,7 @@ const ProfileImportant = ({
       <DefaultProfile
         size="profileChat"
         className={isTopAligned ? 'mt-[-12px]' : ''}
+        jobValue={userData?.jobValue}
       />
 
       {/* 텍스트 영역 */}
