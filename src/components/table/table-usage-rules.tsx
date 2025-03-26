@@ -1,5 +1,5 @@
 import React from 'react';
-import CheckCircle from '/assets/svgs/check-circle.svg';
+import CheckCircle from '~/assets/svgs/check-circle.svg';
 
 const TableUsageRules: React.FC = () => {
   return (

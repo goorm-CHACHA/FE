@@ -1,6 +1,6 @@
 import { cva, VariantProps } from 'class-variance-authority';
 import { cn } from '~/utils/cn';
-import BirdIcon from '../common/quick-network/welcome-icon/bird'
+import BirdIcon from '../common/quick-network/welcome-icon/bird';
 import CatIcon from '../common/quick-network/welcome-icon/cat';
 import DogIcon from '../common/quick-network/welcome-icon/dog';
 import JellyFishIcon from '../common/quick-network/welcome-icon/jelly-fish';
@@ -40,7 +40,6 @@ const colors = [
   '#FFF280', // Yellow
 ];
 
-
 const defaultProfileVariants = cva(
   'relative rounded-full overflow-hidden bg-gray-neutral-900',
   {
@@ -63,7 +62,9 @@ const defaultProfileVariants = cva(
 );
 
 const RandomIcon = () => {
-  const [SelectedIcon, setSelectedIcon] = useState<React.FC<React.SVGProps<SVGSVGElement>> | null>(null);
+  const [SelectedIcon, setSelectedIcon] = useState<React.FC<
+    React.SVGProps<SVGSVGElement>
+  > | null>(null);
   const [color, setColor] = useState<string>('#000');
 
   useEffect(() => {
@@ -91,7 +92,7 @@ interface DefaultProfileProps
 const DefaultProfile = ({ size, className }: DefaultProfileProps) => {
   return (
     <div className={cn(defaultProfileVariants({ size }), className)}>
-       <RandomIcon />
+      <RandomIcon />
     </div>
   );
 };
