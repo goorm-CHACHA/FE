@@ -6,8 +6,8 @@ import MatchOneToOne from './match-one-to-one';
 import MatchGroup from './match-group';
 import DefaultProfile from '../common/default-profile';
 import { useGroupMatchStore } from '~/stores/use-group-match-store';
-import Image from 'next/image';
 import { useMatchModalStore } from '~/stores/use-match-modal-store';
+import Plus from '~/assets/svgs/plus.svg';
 
 interface MatchCardProps {
   userData: UserData;
@@ -71,12 +71,7 @@ const MatchCard = ({
               />
             ))}
             <div className="h-[24px] w-[24px] bg-gray-neutral-800 text-gray-neutral-700 rounded-full flex items-center justify-center text-center m-auto outline outline-[1px] outline-gray-neutral-800">
-              <Image
-                src="/assets/svgs/plus.svg"
-                alt="plus icon"
-                width={24}
-                height={24}
-              />
+              <Plus width={24} height={24} />
             </div>
           </div>
         </CardHeader>
