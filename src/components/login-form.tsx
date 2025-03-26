@@ -24,7 +24,7 @@ const LoginForm = () => {
     try {
       const response = await login(data.username, data.password);
 
-      console.log(response);      
+      console.log(response);
 
       const { accessToken, refreshToken } = response;
       localStorage.setItem('accessToken', accessToken);
