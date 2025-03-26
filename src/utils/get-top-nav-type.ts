@@ -1,6 +1,6 @@
 const routes = [
   { path: '/home', type: 'quick-network' },
-  { path: '/create-group', type: 'default', title: '그룹 만들기' },
+  { path: '/create-group', type: 'back-arrow', title: '그룹 만들기' },
   { path: '/chat', type: 'chat-room' },
   { path: '/notifications', type: 'default', title: '알림' },
   {
