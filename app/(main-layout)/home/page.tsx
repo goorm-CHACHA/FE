@@ -11,7 +11,6 @@ import { useUserStore } from '~/stores/use-user-store';
 import { UserData } from '~/types/user.types';
 import { useRouter } from 'next/navigation';
 
-
 const Page = () => {
   const { isConnect } = useNetworkStore();
   const { users, setUsers } = useUserStore();
@@ -35,8 +34,8 @@ const Page = () => {
       <button id="rejectButton">거절</button>
     `;
     document.body.appendChild(notificationElement); // 메시지를 UI에 추가
-    console.log("요청자"+requesterId);
-    console.log("받는 사람"+receiverId);
+    console.log('요청자' + requesterId);
+    console.log('받는 사람' + receiverId);
 
     // 수락 버튼 클릭 시 acceptChat 호출
     const acceptButton = notificationElement.querySelector('#acceptButton')!;
@@ -56,27 +55,22 @@ const Page = () => {
       receiverId: receiverId,
     };
 
-
-    console.log(chatsRequestDto)
-    api.post('api/chats/private-chatroom/accept', chatsRequestDto)
-    //수락시 승낙한 사람 
-
+    console.log(chatsRequestDto);
+    api.post('api/chats/private-chatroom/accept', chatsRequestDto);
+    //수락시 승낙한 사람
   }
 
   // 채팅 방 거절 함수
   function rejectChat(requesterId: number) {
-
-    api.get(`api/chats/private-chatroom/reject?requesterId=${requesterId}`)
-    
+    api.get(`api/chats/private-chatroom/reject?requesterId=${requesterId}`);
   }
 
   useEffect(() => {
     const access_token = localStorage.getItem('accessToken');
     const ws = new WebSocket(
-      `ws://${process.env.NEXT_PUBLIC_WS_API_URL}/notifications?access_token=${access_token}`
+      `ws://${process.env.NEXT_PUBLIC_WS_API_URL}/notifications?access_token=${access_token}`,
     );
     setWebSocket(ws);
-
 
     ws.onerror = (error) => {
       console.error('WebSocket 오류:', error);
