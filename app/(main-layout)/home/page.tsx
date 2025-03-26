@@ -10,12 +10,15 @@ import { useNetworkStore } from '~/stores/use-network-store';
 import { mockUserData } from '~/components/mypage/mock-user-data';
 import { useUserStore } from '~/stores/use-user-store';
 import { UserData } from '~/types/user.types';
+import { useRouter } from 'next/navigation';
+
 
 const Page = () => {
   const { isConnect } = useNetworkStore();
   const { users, setUsers } = useUserStore();
   const [loggedInUser, setLoggedInUser] = useState<UserData | null>(null);
   const [websocket, setWebSocket] = useState<WebSocket | null>(null);
+  const router = useRouter();
 
   console.log(users);
   console.log(loggedInUser);
@@ -33,6 +36,8 @@ const Page = () => {
       <button id="rejectButton">거절</button>
     `;
     document.body.appendChild(notificationElement); // 메시지를 UI에 추가
+    console.log("요청자"+requesterId);
+    console.log("받는 사람"+receiverId);
 
     // 수락 버튼 클릭 시 acceptChat 호출
     const acceptButton = notificationElement.querySelector('#acceptButton')!;
@@ -47,53 +52,36 @@ const Page = () => {
 
   // 채팅 방 수락 함수
   function acceptChat(requesterId: number, receiverId: number) {
-    const chatRequest = {
+    const chatsRequestDto = {
       requesterId: requesterId,
       receiverId: receiverId,
     };
 
-    // API 호출: 채팅 방 수락
-    fetch('/private-chatroom/accept', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(chatRequest),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log('채팅 방 수락 성공:', data);
-        // 수락 후 UI 업데이트 등 필요한 작업 추가
-        // 수락 후에 챗으로 가야함 방 번호와 함께
-      })
-      .catch((error) => {
-        console.error('채팅 방 수락 실패:', error);
-      });
+
+    console.log(chatsRequestDto)
+    api.post('api/chats/private-chatroom/accept', chatsRequestDto)
+    //수락시 승낙한 사람 
+
   }
 
   // 채팅 방 거절 함수
   function rejectChat(requesterId: number) {
-    // API 호출: 채팅 방 거절
-    fetch(`/private-chatroom/reject?requesterId=${requesterId}`, {
-      method: 'GET',
-    })
-      .then((response) => {
-        if (response.ok) {
-          console.log('채팅 방 거절 성공');
-          // 거절 후 UI 업데이트 등 필요한 작업 추가
-        }
-      })
-      .catch((error) => {
-        console.error('채팅 방 거절 실패:', error);
-      });
+
+    api.get(`api/chats/private-chatroom/reject?requesterId=${requesterId}`)
+    
   }
 
   useEffect(() => {
+    const access_token = localStorage.getItem('accessToken');
     const ws = new WebSocket(
-      `ws://${process.env.NEXT_PUBLIC_WS_API_URL}/notifications`,
+      `ws://${process.env.NEXT_PUBLIC_WS_API_URL}/notifications?access_token=${access_token}`
     );
     setWebSocket(ws);
 
+
+    ws.onerror = (error) => {
+      console.error('WebSocket 오류:', error);
+    };
     // WebSocket 연결이 열리면
     ws.onopen = () => {
       console.log('WebSocket 연결됨');
