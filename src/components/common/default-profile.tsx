@@ -1,3 +1,4 @@
+'use client'
 import { cva, VariantProps } from 'class-variance-authority';
 import { cn } from '~/utils/cn';
 import BirdIcon from '../common/quick-network/welcome-icon/bird';
@@ -11,6 +12,7 @@ import QuokkaIcon from '../common/quick-network/welcome-icon/quokka';
 import RabbitIcon from '../common/quick-network/welcome-icon/rabbit';
 import SnowmanIcon from '../common/quick-network/welcome-icon/snowman';
 import WhaleIcon from '../common/quick-network/welcome-icon/whale';
+import { useEffect, useState } from 'react';
 
 const valueIconMap: Record<string, React.FC<React.SVGProps<SVGSVGElement>>> = {
   '프론트엔드 개발자': MonkeyIcon,
@@ -83,8 +85,13 @@ const DefaultProfile = ({
   jobValue = '',
 }: DefaultProfileProps) => {
   const Icon = valueIconMap[jobValue.trim()] ?? WhaleIcon;
-  const color = colors[Math.floor(Math.random() * colors.length)];
+  const [color, setColor] = useState<string>(''); // 초기에는 빈 값
+  useEffect(() => {
+    const randomColor = colors[Math.floor(Math.random() * colors.length)];
+    setColor(randomColor);
+  }, []);
 
+  if (!color) return null;
   return (
     <div className={cn(defaultProfileVariants({ size }), className)}>
       <Icon
