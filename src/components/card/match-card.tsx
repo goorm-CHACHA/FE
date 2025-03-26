@@ -29,7 +29,7 @@ interface MatchCardProps {
 const MatchCard = ({
   userData,
   // inMyPage = false,
-  isGroup = false,
+  isGroup,
   groupId,
 }: MatchCardProps) => {
   const { groups, addMemberToGroup } = useGroupMatchStore();
@@ -42,6 +42,8 @@ const MatchCard = ({
     addMemberToGroup(groupId, {
       // ✅ number → string 변환
       id: Number(userData.id),
+      jobValue: userData.jobValue,
+      interestJobValue: userData.interestJobValue,
     });
   };
 
@@ -53,6 +55,7 @@ const MatchCard = ({
     'right-12 z-30',
     'right-16 z-40',
   ];
+
   return (
     <div className="w-full">
       <Card className="w-full border-none rounded-2xl pt-5 mb-3">
@@ -66,11 +69,13 @@ const MatchCard = ({
               <DefaultProfile
                 size="xs"
                 className="relative"
-                jobValue={userData.jobValue}
+                jobValue={userData.job?.[0] || ''}
+                interestJobValue={userData.interests?.[0] || ''}
               />
               {members.map((user, index) => (
                 <DefaultProfile
-                  jobValue={userData.jobValue}
+                  jobValue={user.jobValue || ''}
+                  interestJobValue={user.interestJobValue || ''}
                   key={user.id}
                   size="xs"
                   className={`absolute ${positionClass[index] || 'right-16 z-40'}`}
@@ -84,13 +89,12 @@ const MatchCard = ({
         )}
         <CardBody className="flex flex-col pt-[var(--size-spacing-20)] px-[var(--size-spacing-12)]">
           {isGroup ? (
-            // <MatchGroup groupData={groupData!} /> // ⬅ `inMyPage`를 직접 전달
             <MatchGroup
               groupData={{
-                job: ['프론트엔드 개발자'],
-                career: ['3년차'],
-                interest: ['React', 'Next.js'],
-                purpose: ['협업 프로젝트'],
+                job: userData.job || [],
+                career: userData.career || [],
+                interest: userData.interests || [],
+                purpose: userData.participationPurpose || [],
               }}
             />
           ) : (
