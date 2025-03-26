@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
 import { Dialog } from 'radix-ui';
 import { QRCodeType } from '~/types/form';
+import RepeatIcon from '~/assets/svgs/repeat.svg';
+import ScannerIcon from '~/assets/svgs/scanner.svg';
 
 interface DetailCardProps {
   user: QRCodeType | null;
@@ -34,9 +36,9 @@ const DetailCard = ({ user, isShowQR = false }: DetailCardProps) => {
 const FrontCard = ({ user }: { user: QRCodeType | null }) => (
   <div className="absolute w-full h-full backface-hidden bg-stone-900 py-16 px-10 rounded-2xl">
     <div className="flex flex-col items-start h-full">
-      <Dialog.Title className="text-white text-4xl font-semibold leading-[43.2px] mb-10">
+      <p className="text-white text-4xl font-semibold leading-[43.2px] mb-10">
         {user?.name}
-      </Dialog.Title>
+      </p>
 
       <div className="w-full space-y-3 font-['Pretendard'] font-light">
         <InfoRow label="직무/직책" value={user?.job.value} />
@@ -45,15 +47,27 @@ const FrontCard = ({ user }: { user: QRCodeType | null }) => (
         <InfoRow label="휴대폰 번호" value={user?.contactInfo} />
       </div>
     </div>
+    <Dialog.Title className="text-white text-sm font-medium flex justify-between w-[215px] absolute bottom-[-40px]">
+      <RepeatIcon />
+      카드를 뒤집어 명함을 교환하세요!
+    </Dialog.Title>
   </div>
 );
 
 const BackCard = ({ user }: { user: QRCodeType | null }) => (
   <div className="absolute w-full h-full rotate-y-180 backface-hidden bg-stone-900 py-16 px-10 rounded-2xl">
     <div className="flex flex-col items-center justify-top gap-7 h-full">
-      <QRCodeSVG value={JSON.stringify(user)} width={170} height={170} />
-      <Dialog.Title className="text-white text-xl font-medium">
-        QR코드
+      <QRCodeSVG
+        value={JSON.stringify(user)}
+        size={170}
+        bgColor="#FFF"
+        fgColor="#000"
+        level="H"
+        marginSize={2}
+      />
+      <Dialog.Title className="text-white text-sm font-medium flex justify-between absolute bottom-[-40px] w-[160px]">
+        <ScannerIcon />
+        QR코드를 스캔해주세요
       </Dialog.Title>
     </div>
   </div>
