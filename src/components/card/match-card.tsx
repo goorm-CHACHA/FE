@@ -30,7 +30,6 @@ const MatchCard = ({
   userData,
   // inMyPage = false,
   isGroup,
-  isGroup,
   groupId,
 }: MatchCardProps) => {
   const { groups, addMemberToGroup } = useGroupMatchStore();
@@ -43,8 +42,6 @@ const MatchCard = ({
     addMemberToGroup(groupId, {
       // ✅ number → string 변환
       id: Number(userData.id),
-      jobValue: userData.jobValue,
-      interestJobValue: userData.interestJobValue,
       jobValue: userData.jobValue,
       interestJobValue: userData.interestJobValue,
     });
@@ -73,13 +70,9 @@ const MatchCard = ({
               className="relative"
               jobValue={userData.job?.[0] || ''}
               interestJobValue={userData.interests?.[0] || ''}
-              jobValue={userData.job?.[0] || ''}
-              interestJobValue={userData.interests?.[0] || ''}
             />
             {members.map((user, index) => (
               <DefaultProfile
-                jobValue={user.jobValue || ''}
-                interestJobValue={user.interestJobValue || ''}
                 jobValue={user.jobValue || ''}
                 interestJobValue={user.interestJobValue || ''}
                 key={user.id}
@@ -97,10 +90,6 @@ const MatchCard = ({
         {isGroup ? (
           <MatchGroup
             groupData={{
-              job: userData.job || [],
-              career: userData.career || [],
-              interest: userData.interests || [],
-              purpose: userData.participationPurpose || [],
               job: userData.job || [],
               career: userData.career || [],
               interest: userData.interests || [],
