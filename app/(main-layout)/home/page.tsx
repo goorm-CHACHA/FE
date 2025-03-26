@@ -7,7 +7,6 @@ import RadixTabs from '~/components/common/radix-tabs';
 import GroupMatching from '~/components/match/group';
 import OneToOneMatching from '~/components/match/one-to-one';
 import { useNetworkStore } from '~/stores/use-network-store';
-import { mockUserData } from '~/components/mypage/mock-user-data';
 import { useUserStore } from '~/stores/use-user-store';
 import { UserData } from '~/types/user.types';
 import { useRouter } from 'next/navigation';
@@ -155,7 +154,7 @@ const Page = () => {
   const tabLabels = ['1:1 매칭', '그룹 매칭'];
   const tabContents = [
     <OneToOneMatching key="one-to-one" profiles={users} />,
-    <GroupMatching key="group" profiles={mockUserData} />,
+    <GroupMatching key="group" />,
   ];
 
   return (
