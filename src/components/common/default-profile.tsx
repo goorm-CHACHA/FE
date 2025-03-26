@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { cva, VariantProps } from 'class-variance-authority';
 import { cn } from '~/utils/cn';
 import BirdIcon from '../common/quick-network/welcome-icon/bird';
