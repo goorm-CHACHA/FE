@@ -34,7 +34,7 @@ const UserInfoPage = () => {
   return (
     <div className="flex flex-col justify-center items-center w-full">
       <div className="w-full px-5">
-        <div className="bg-gray-neutral-800 w-full py-7 px-4 rounded-[12px] flex flex-col gap-4 items-center">
+        <div className="bg-gray-neutral-800 w-full py-7 px-4 rounded-[12px] flex flex-col gap-4 items-center mt-5">
           <ProfileImportant
             userData={user}
             layout="vertical"

@@ -26,10 +26,14 @@ const OneToOneMatching = ({ profiles }: OneToOneMatchingProps) => {
     return 0; // 그대로
   });
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center w-full">
       <Filter />
       {sortedProfiles.map((profile) => (
-        <div key={profile.id} onClick={() => setSelectedUser(profile)}>
+        <div
+          className="w-full"
+          key={profile.id}
+          onClick={() => setSelectedUser(profile)}
+        >
           <MatchCard
             userData={profile}
             key={profile.id}

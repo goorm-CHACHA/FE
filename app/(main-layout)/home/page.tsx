@@ -39,7 +39,7 @@ const Page = () => {
   ];
 
   return (
-    <div className="relative w-full min-h-screen flex flex-col items-center">
+    <div className="relative w-full min-h-screen flex flex-col items-center bg-gray-neutral-900">
       <div className="w-full max-w-3xl min-h-screen flex flex-col items-center pb-[92px]">
         <RadixTabs
           tabLabels={tabLabels}
