@@ -6,21 +6,23 @@ import { useEffect, useState } from 'react';
 import { UserData } from '~/types/user.types';
 
 const GroupMatching = () => {
-  const [storedGroups, setStoredGroups] = useState<any[]>([]);
+  const [storedGroups, setStoredGroups] = useState<UserData[]>([]);
   const router = useRouter();
 
   useEffect(() => {
     const loadGroups = () => {
-      const storedGroups = JSON.parse(
+      const storedGroups: UserData[] = JSON.parse(
         localStorage.getItem('groupMatchings') || '[]',
       );
-      const convertedGroups: UserData[] = storedGroups.map((group: any) => ({
+
+      const convertedGroups: UserData[] = storedGroups.map((group) => ({
         id: group.id || Date.now(),
-        jobCategory: group.job || [],
-        career: group.career || [], // number[] 유지
-        interests: group.interest || [],
-        participationPurpose: group.participationPurpose || [], // string[] 유지
+        job: group.job ?? [],
+        career: group.career ?? [], // number[] 유지
+        interests: group.interests ?? [],
+        participationPurpose: group.participationPurpose ?? [],
       }));
+
       setStoredGroups(convertedGroups);
     };
 
