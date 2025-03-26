@@ -21,7 +21,7 @@ const UserInfoPage = () => {
     };
 
     fetchUser();
-  }, []);
+  }, [params.userId]);
 
   if (!user) {
     return (
