@@ -52,6 +52,7 @@ const colors = [
 
 const defaultProfileVariants = cva(
   'relative rounded-full overflow-hidden bg-gray-neutral-900',
+  'relative rounded-full overflow-hidden bg-gray-neutral-900',
   {
     variants: {
       size: {
@@ -71,6 +72,28 @@ const defaultProfileVariants = cva(
   },
 );
 
+const RandomIcon = () => {
+  const [SelectedIcon, setSelectedIcon] = useState<React.FC<
+    React.SVGProps<SVGSVGElement>
+  > | null>(null);
+  const [color, setColor] = useState<string>('#000');
+
+  useEffect(() => {
+    const icon = icons[Math.floor(Math.random() * icons.length)];
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    setSelectedIcon(() => icon);
+    setColor(color);
+  }, []);
+
+  if (!SelectedIcon) return null;
+
+  return (
+    <SelectedIcon
+      className="w-full h-full fill-current"
+      style={{ fill: color, color }}
+    />
+  );
+};
 interface DefaultProfileProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof defaultProfileVariants> {
