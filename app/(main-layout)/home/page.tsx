@@ -9,14 +9,14 @@ import OneToOneMatching from '~/components/match/one-to-one';
 import { useNetworkStore } from '~/stores/use-network-store';
 import { useUserStore } from '~/stores/use-user-store';
 import { UserData } from '~/types/user.types';
-import { useRouter } from 'next/navigation';
+// import { useRouter } from 'next/navigation';
 
 const Page = () => {
   const { isConnect } = useNetworkStore();
   const { users, setUsers } = useUserStore();
   const [loggedInUser, setLoggedInUser] = useState<UserData | null>(null);
-  const [websocket, setWebSocket] = useState<WebSocket | null>(null);
-  const router = useRouter();
+  const [, setWebSocket] = useState<WebSocket | null>(null);
+  // const router = useRouter();
 
   console.log(users);
   console.log(loggedInUser);
@@ -114,6 +114,7 @@ const Page = () => {
     };
 
     fetchLoggedInUser();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

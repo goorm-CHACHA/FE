@@ -30,6 +30,7 @@ const tempChats: Chat[] = [
 const ChatPage = () => {
   // const [chats] = useState<Chat[]>(tempChats);
   const [selectedChat, setSelectedChat] = useState<Chat | null>(tempChats[0]);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [messages, setMessages] = useState<any[]>([]);
   const [websocket, setWebSocket] = useState<WebSocket | null>(null);
   const [currentUser, setCurrentUser] = useState<string | null>(null);
@@ -134,7 +135,6 @@ const ChatPage = () => {
             messages={messages}
             receiverId={selectedChat.id}
             status={selectedChat.status}
-            receiverProfileImg="/images/icons/chat/Profile.png"
             currentUser={currentUser || 'unknown'}
             receiverName={selectedChat.name}
             receiverStatus={selectedChat.status}
