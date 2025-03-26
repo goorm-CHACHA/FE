@@ -38,7 +38,7 @@ const MatchOneToOne = ({
     >
       <div className="flex justify-between items-center">
         <div className="flex gap-[10px] p-[10px]">
-          <DefaultProfile size="nameCard" />
+          <DefaultProfile size="nameCard" jobValue={userData.jobValue!} />
           <CardBasic userId={userData.nickName ?? '익명'} />
         </div>
         {requestedNetwork && (
