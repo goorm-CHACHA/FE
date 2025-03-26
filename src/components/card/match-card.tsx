@@ -62,7 +62,11 @@ const MatchCard = ({
         >
           <StatusForGroup variants="available" />
           <div className="flex relative flex-row-reverse">
-            <DefaultProfile size="xs" className="relative" jobValue={userData.jobValue}/>
+            <DefaultProfile
+              size="xs"
+              className="relative"
+              jobValue={userData.jobValue}
+            />
             {members.map((user, index) => (
               <DefaultProfile
                 jobValue={userData.jobValue}
