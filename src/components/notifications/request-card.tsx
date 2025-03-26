@@ -16,7 +16,7 @@ import {
   CardFooter,
 } from '~/components/common/card';
 import DefaultProfile from '~/components/common/default-profile';
-import Image from 'next/image';
+import Arrow from '~/assets/svgs/arrow.svg';
 
 interface RequestCardProps {
   message: string;
@@ -48,12 +48,7 @@ const RequestCard = ({
         <TimeLeft text="매칭요청" />
         {requester && (
           <Link href={`/user-info/${requester}`}>
-            <Image
-              src="/assets/svgs/arrow.svg"
-              width={24}
-              height={24}
-              alt="화살표"
-            />
+            <Arrow width={24} height={24} />
           </Link>
         )}
       </CardHeader>
