@@ -20,9 +20,9 @@ const valueIconMap: Record<string, React.FC<React.SVGProps<SVGSVGElement>>> = {
   'AI 엔지니어': SnowmanIcon,
   '데이터 엔지니어': SnowmanIcon,
   '클라우드 엔지니어': WhaleIcon,
-  '마케팅': KoalaIcon,
-  '세일즈': CatIcon,
-  '투자유치': CatIcon,
+  마케팅: KoalaIcon,
+  세일즈: CatIcon,
+  투자유치: CatIcon,
   '파트너십 기획': CatIcon,
   '콘텐츠 운영': DogIcon,
   'UX/UI 디자이너': JellyFishIcon,
@@ -32,11 +32,11 @@ const valueIconMap: Record<string, React.FC<React.SVGProps<SVGSVGElement>>> = {
   '프로덕트 오너 (PO)': OtterIcon,
   '서비스 기획자': OtterIcon,
   '초기 스타트업 창업자': QuokkaIcon,
-  '투자자': RabbitIcon,
-  '액셀러레이터': RabbitIcon,
-  '연구원': BirdIcon,
-  '교육자': BirdIcon,
-  '컨설턴트': BirdIcon,
+  투자자: RabbitIcon,
+  액셀러레이터: RabbitIcon,
+  연구원: BirdIcon,
+  교육자: BirdIcon,
+  컨설턴트: BirdIcon,
 };
 
 const colors = [
@@ -78,7 +78,11 @@ interface DefaultProfileProps
 }
 
 // export default DefaultProfile;
-const DefaultProfile = ({ size, className, jobValue = '' }: DefaultProfileProps) => {
+const DefaultProfile = ({
+  size,
+  className,
+  jobValue = '',
+}: DefaultProfileProps) => {
   const Icon = valueIconMap[jobValue.trim()] ?? WhaleIcon;
   const color = colors[Math.floor(Math.random() * colors.length)];
 
