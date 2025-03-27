@@ -48,37 +48,33 @@ const ChatBubble = ({
   imgSrc,
   ...props
 }: ChatBubbleProps) => {
-
   const [savedNickName, setSavedNickName] = useState<string | null>(null);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const nickName = localStorage.getItem("nickName");
+    if (typeof window !== 'undefined') {
+      const nickName = localStorage.getItem('nickName');
       setSavedNickName(nickName);
       console.log(senderName);
-      
+
       // 상태 변경 전에 localStorage에서 가져온 값 확인
     }
   }, []);
   useEffect(() => {
-    console.log(senderName===savedNickName);
-  }, [savedNickName]); 
-console.log("sd:"+savedNickName);
+    console.log(senderName === savedNickName);
+  }, [savedNickName]);
+  console.log('sd:' + savedNickName);
   return (
     <div
-      className=
-      {cn(
+      className={cn(
         'mb-2 flex gap-2 items-start',
-      
+
         senderName === savedNickName ? 'justify-end' : 'justify-start',
       )}
     >
       {variant === 'receiver' && showProfile && imgSrc && (
         <DefaultProfile size="xs" />
       )}
-      <div
-
-      >
+      <div>
         <div className="message-content">{message}</div>{' '}
         <div className="message-time">
           {' '}
