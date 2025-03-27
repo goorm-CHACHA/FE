@@ -37,8 +37,12 @@ const MatchOneToOne = ({
       onClick={requestedNetwork ? undefined : handleClick}
     >
       <div className="flex justify-between items-center">
-        <div className="flex gap-[10px] p-[10px]">
-          <DefaultProfile size="nameCard" />
+        <div className="flex gap-[10px]">
+          <DefaultProfile
+            size="nameCard"
+            jobValue={userData.jobValue}
+            interestJobValue={userData.interestJobValue}
+          />
           <CardBasic userId={userData.nickName ?? '익명'} />
         </div>
         {requestedNetwork && (

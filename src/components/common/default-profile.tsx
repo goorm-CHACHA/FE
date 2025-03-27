@@ -76,16 +76,22 @@ const defaultProfileVariants = cva(
 interface DefaultProfileProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof defaultProfileVariants> {
-  jobValue: string | undefined;
+  jobValue?: string;
+  interestJobValue?: string;
 }
 
 const DefaultProfile = ({
   size,
   className,
   jobValue = '',
+  interestJobValue = '',
 }: DefaultProfileProps) => {
-  const Icon = valueIconMap[jobValue.trim()] ?? WhaleIcon;
-  const [color, setColor] = useState<string>(''); // 초기에는 빈 값
+  const Icon =
+    valueIconMap[interestJobValue.trim()] ||
+    valueIconMap[jobValue.trim()] ||
+    BirdIcon;
+  const [color, setColor] = useState<string>('');
+
   useEffect(() => {
     const randomColor = colors[Math.floor(Math.random() * colors.length)];
     setColor(randomColor);
