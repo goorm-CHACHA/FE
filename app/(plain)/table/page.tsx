@@ -16,7 +16,7 @@ const TablePage: React.FC = () => {
           userId={1}
         />
         <TableUsageRules />
-        <NetworkingActions tableNumber="1" userId={1}/>
+        <NetworkingActions tableNumber="1" userId={1} />
       </div>
     </div>
   );

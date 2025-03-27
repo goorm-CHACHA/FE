@@ -9,21 +9,30 @@ interface Chat {
   name: string;
   lastMessage: string;
   status: 'accepted' | 'pending';
+  chatRoomId: number;
 }
 
 const tempChats: Chat[] = [
-  { id: 1, name: '홍길동', lastMessage: '안녕하세요!', status: 'accepted' },
+  {
+    id: 1,
+    name: '홍길동',
+    lastMessage: '안녕하세요!',
+    status: 'accepted',
+    chatRoomId: 332,
+  },
   {
     id: 2,
     name: '김철수',
     lastMessage: '네트워킹 하실래요?',
     status: 'pending',
+    chatRoomId: 22,
   },
   {
     id: 3,
     name: '이영희',
     lastMessage: '프로젝트 협업 어떠세요?',
     status: 'accepted',
+    chatRoomId: 5,
   },
 ];
 
@@ -137,6 +146,7 @@ const ChatPage = () => {
             currentUser={currentUser || 'unknown'}
             receiverName={selectedChat.name}
             receiverStatus={selectedChat.status}
+            chatRoomId={1}
           />
           <div className="h-[60px] border-t border-gray-700">
             <MessageInput onSendMessage={handleSendMessage} />
