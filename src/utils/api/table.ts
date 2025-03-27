@@ -29,7 +29,7 @@ export async function startNetworking(userId: number, tableNumber: string) {
 
 export async function endsNetwork(userId: number, tableNumber: string) {
   try {
-    await api.post('/api/networking-table/end',{
+    await api.post('/api/networking-table/end', {
       userId,
       tableNumber,
     });
@@ -48,7 +48,7 @@ export async function reserveTable() {
 
 export async function consentReservation(chatRoomId: number, userId: number) {
   try {
-    await api.post('/api/reservation/consent',{
+    await api.post('/api/reservation/consent', {
       chatRoomId,
       userId,
     });
