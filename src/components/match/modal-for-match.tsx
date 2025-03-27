@@ -5,7 +5,7 @@ import { Card, CardBody } from '../common/card';
 import ProfileImportant from '../common/profile-important';
 import { UserData } from '~/types/user.types';
 import BadgesAligned from '../common/badges-aligned';
-import Image from 'next/image';
+import Bookmark from '~/assets/svgs/bookmark.svg';
 import { sendChatRequestAPI } from '~/utils/api';
 import {
   MatchModalType,
@@ -38,6 +38,7 @@ const NetworkingModalFlow = () => {
       {modalContent && (
         <Modal
           key={currentModal}
+          className="bg-gray-neutral-800 pt-4 pb-4"
           isOpen={!!currentModal}
           onOpenChange={(nextOpen) => {
             if (!nextOpen) {
@@ -93,12 +94,7 @@ const getModalContent = (
                 />
               </div>
               <div className="flex !items-center !text-orange-500 font-bold gap-[8px] w-full p-2 !bg-transparent">
-                <Image
-                  src="/assets/svgs/bookmark.svg"
-                  alt="bookmark"
-                  width={20}
-                  height={20}
-                />
+                <Bookmark width={20} height={20} />
                 <BadgesAligned
                   items={userData.participationPurpose || []}
                   userInfoColor={true}
