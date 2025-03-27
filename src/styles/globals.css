@@ -48,3 +48,7 @@ body {
 .rc-slider-mark-text {
   font-size: 0 !important;
 }
+
+.scan-region-highlight-svg {
+  stroke: #07ca7f !important;
+}
