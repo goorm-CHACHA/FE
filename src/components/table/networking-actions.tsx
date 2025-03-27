@@ -2,14 +2,24 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Button from '~/components/common/button';
 import Modal from '~/components/common/modal';
+import { endsNetwork } from '~/utils/api/table';
 
-const NetworkingActions: React.FC = () => {
+interface NetworkingActionsProps {
+  tableNumber: string;
+  userId: number;
+}
+
+const NetworkingActions: React.FC<NetworkingActionsProps> = ({
+  tableNumber,
+  userId,
+}) => {
   const router = useRouter();
   const [isFirstModalOpen, setIsFirstModalOpen] = useState(false);
   const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
 
   const handleNetworkingStop = () => {
     setIsFirstModalOpen(true);
+    endsNetwork(userId, tableNumber);
   };
 
   const handleCloseFirstModal = () => {
@@ -18,10 +28,12 @@ const NetworkingActions: React.FC = () => {
 
   const handleConfirmStop = () => {
     setIsFirstModalOpen(false);
+    endsNetwork(userId, tableNumber);
     setIsSecondModalOpen(true);
   };
 
   const handleReturnToList = () => {
+    endsNetwork(userId, tableNumber);
     setIsSecondModalOpen(false);
     router.push('/home');
   };
