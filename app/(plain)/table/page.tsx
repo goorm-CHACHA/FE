@@ -9,9 +9,14 @@ const TablePage: React.FC = () => {
   return (
     <div className="flex flex-col items-center justify-center p-4 bg-[#1a1a1a] min-h-screen">
       <div className="flex flex-col items-center gap-12 w-full max-w-md">
-        <TableRemainingTime initialMinutes={0} initialSeconds={2} />
+        <TableRemainingTime
+          initialMinutes={0}
+          initialSeconds={2}
+          tableNumber="1"
+          userId={1}
+        />
         <TableUsageRules />
-        <NetworkingActions />
+        <NetworkingActions tableNumber="1" userId={1}/>
       </div>
     </div>
   );

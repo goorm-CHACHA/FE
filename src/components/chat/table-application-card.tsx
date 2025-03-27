@@ -3,6 +3,7 @@ import { useRouter } from 'next/navigation';
 import Modal, { ModalProps } from '../common/modal';
 import CheckboxItem from './checkbox-item-modal';
 import Button from '../common/button';
+import { cancelTable } from '~/utils/api/table';
 
 interface TableApplicationCardProps {
   variant: 'apply' | 'waiting' | 'assigned';
@@ -10,14 +11,18 @@ interface TableApplicationCardProps {
   waitTime?: number;
   onConfirm?: () => void;
   onCancel?: () => void;
+  chatRoomId: number;
+  onConsent?: () => void;
 }
-
+// 시간 부분... 맞춰보기..
 const TableApplicationCard: React.FC<TableApplicationCardProps> = ({
   variant,
   tableNumber,
   waitTime,
   onConfirm,
   onCancel,
+  chatRoomId,
+  onConsent,
 }) => {
   const router = useRouter();
   const [isReserved, setIsReserved] = useState(false);
@@ -40,35 +45,52 @@ const TableApplicationCard: React.FC<TableApplicationCardProps> = ({
     setShowSecondCancelModal(true);
   };
 
-  const handleFinalCancel = () => {
+  const handleFinalCancel = async () => {
     const selectedReasons = Object.entries(checkedItems)
       .filter(([, isChecked]) => isChecked)
       .map(([label]) => label);
 
     console.log('선택된 취소 사유:', selectedReasons);
 
+    if (chatRoomId) {
+      await cancelTable(chatRoomId);
+      console.log('취소 됐는지요');
+    } else {
+      console.warn('👀 tableNumber가 없음', chatRoomId, '<-chatroomId');
+    }
+
+    // 이거 어디에 쓰는?  onCancel
     setShowSecondCancelModal(false);
     if (onCancel) {
-      onCancel();
+      onCancel(); // handleCancel (API: cancelTable)
     }
     router.push('/home');
   };
 
   const handleReservation = () => {
-    setIsReserved(true);
-    if (onConfirm) {
-      onConfirm();
+    if (onConsent) {
+      onConsent();
+      setIsReserved(true);
     }
   };
 
   const handleCancelNetworking = () => {
     setShowCancelModal(true);
+    if (onCancel) {
+      onCancel();
+    }
   };
 
+  const handleNoAction = () => {
+    setIsModalOpen(false);
+  };
+
+  //필요
   const handleQRRegistration = () => {
     router.push('/qr-reader');
   };
 
+  // ✅
   const getModalProps = (): ModalProps => {
     if (variant === 'apply') {
       return {
@@ -79,13 +101,13 @@ const TableApplicationCard: React.FC<TableApplicationCardProps> = ({
             label: '아니요',
             variant: 'black-transparent',
             actionType: 'action',
-            onClick: onCancel,
+            onClick: handleNoAction, // 아무 동작없어야하는.. ✅
           },
           {
             label: '네',
             variant: 'green',
             actionType: 'action',
-            onClick: onConfirm,
+            onClick: onConfirm, // ✅
           },
         ],
         triggerButtonLabel: '테이블 신청',
@@ -98,6 +120,7 @@ const TableApplicationCard: React.FC<TableApplicationCardProps> = ({
     return {} as ModalProps;
   };
 
+  //
   const cancelNetworkingModalProps: ModalProps = {
     title: '네트워킹을 취소하시겠어요?',
     subText: '네트워킹을 취소하면 채팅방은 종료돼요.',
@@ -106,13 +129,13 @@ const TableApplicationCard: React.FC<TableApplicationCardProps> = ({
         label: '아니요',
         variant: 'black-transparent',
         actionType: 'action',
-        onClick: () => setShowCancelModal(false),
+        onClick: handleNoAction, // 동작 없음  ✅
       },
       {
         label: '네',
         variant: 'green',
         actionType: 'action',
-        onClick: handleFirstCancelConfirm,
+        onClick: handleFirstCancelConfirm, // onCancel액션 ✅
       },
     ],
     isOpen: showCancelModal,
@@ -128,7 +151,7 @@ const TableApplicationCard: React.FC<TableApplicationCardProps> = ({
         label: '제출하고 나가기',
         variant: 'green',
         actionType: 'action',
-        onClick: handleFinalCancel,
+        onClick: handleFinalCancel, // 찐 나가면서 네트워킹종료.
       },
     ],
     isOpen: showSecondCancelModal,
