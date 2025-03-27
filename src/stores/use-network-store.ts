@@ -17,49 +17,67 @@ export const useNetworkStore = create<UseNetworkStoreType>()(
       isConnect: false,
       isSubscribed: false,
       setIsConnect: async () => {
-        set((state) => ({ isConnect: !state.isConnect })); // UI 즉시 반영
+        const prevConnect = get().isConnect;
+        const nextConnect = !prevConnect;
+        set({ isConnect: nextConnect }); // UI 즉시 반영
 
         try {
           const response = await api.put('/api/users/updateParticipate');
           if (response.status !== 200) {
-            set((state) => ({ isConnect: !state.isConnect })); // 실패 시 롤백
+            set({ isConnect: prevConnect });
             return;
           }
 
-          // 연결 ON일 때만 권한 요청 및 토큰 등록
-          const { isConnect, isSubscribed } = get();
-          if (isConnect && !isSubscribed) {
-            const granted = await requestPermission();
-            if (granted) {
+          if (nextConnect) {
+            // 네트워크 ON → 알림 설정 확인
+            if (Notification.permission === 'granted') {
               const token = await getFcmToken();
-
               const fcmRes = await api.post('/api/FCM/register-token', {
                 token,
               });
-              if (fcmRes.status !== 200) {
-                console.error('FCM 등록 실패');
-                return;
-              }
 
-              const notifyRes = await api.put('/api/users/updateNotifications');
-              if (notifyRes.status !== 200) {
-                console.error('알림 상태 업데이트 실패');
-                return;
-              }
+              console.log(fcmRes);
 
-              set({ isSubscribed: true });
+              if (fcmRes.status === 200) {
+                await api.put('/api/users/updateNotifications', {
+                  enabled: true,
+                });
+                set({ isSubscribed: true });
+              }
             } else {
-              console.warn('🔕 알림 권한 거부됨');
+              const granted = await requestPermission();
+              if (granted) {
+                const token = await getFcmToken();
+                const fcmRes = await api.post('/api/FCM/register-token', {
+                  token,
+                });
+
+                if (fcmRes.status === 200) {
+                  await api.put('/api/users/updateNotifications', {
+                    enabled: true,
+                  });
+                  set({ isSubscribed: true });
+                }
+              } else {
+                await api.put('/api/users/updateNotifications', {
+                  enabled: false,
+                });
+                set({ isSubscribed: false });
+              }
             }
+          } else {
+            // 네트워크 OFF → 알림 OFF
+            await api.put('/api/users/updateNotifications', { enabled: false });
+            set({ isSubscribed: false });
           }
         } catch (error) {
-          console.error('네트워킹 상태 변경 오류:', error);
-          set((state) => ({ isConnect: !state.isConnect }));
+          console.error('네트워크 상태 변경 오류:', error);
+          set({ isConnect: prevConnect }); // 롤백
         }
       },
 
       toggleSubscription: async (checked) => {
-        set({ isSubscribed: checked, isConnect: false }); // UI 즉시 반영
+        set({ isSubscribed: checked });
 
         try {
           const notifyRes = await api.put('/api/users/updateNotifications', {
@@ -67,17 +85,11 @@ export const useNetworkStore = create<UseNetworkStoreType>()(
           });
           if (notifyRes.status !== 200) {
             console.error('알림 상태 업데이트 실패');
-            set((prev) => ({
-              isSubscribed: !checked,
-              isConnect: !prev.isConnect,
-            })); // 실패 시 롤백
+            set({ isSubscribed: !checked }); // 롤백
           }
         } catch (error) {
           console.error('알림 설정 오류:', error);
-          set((prev) => ({
-            isSubscribed: !checked,
-            isConnect: !prev.isConnect,
-          })); // 오류 발생 시 롤백
+          set({ isSubscribed: !checked }); // 롤백
         }
       },
     }),
