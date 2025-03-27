@@ -3,6 +3,7 @@ import { useRouter } from 'next/navigation';
 import Button from '~/components/common/button';
 import Modal from '~/components/common/modal';
 import { endsNetwork } from '~/utils/api/table';
+import { useNetworkTimerStore } from '~/stores/use-network-timer-store';
 
 interface NetworkingActionsProps {
   tableNumber: string;
@@ -16,10 +17,14 @@ const NetworkingActions: React.FC<NetworkingActionsProps> = ({
   const router = useRouter();
   const [isFirstModalOpen, setIsFirstModalOpen] = useState(false);
   const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
+  const isFinished = useNetworkTimerStore((state) => state.isFinished); // ✅ 값 가져오기
 
-  const handleNetworkingStop = () => {
-    setIsFirstModalOpen(true);
-    endsNetwork(userId, tableNumber);
+  const handleNetworkingStop = async () => {
+    if (isFinished) {
+      setIsSecondModalOpen(true);
+    } else {
+      setIsFirstModalOpen(true);
+    }
   };
 
   const handleCloseFirstModal = () => {
@@ -28,12 +33,11 @@ const NetworkingActions: React.FC<NetworkingActionsProps> = ({
 
   const handleConfirmStop = () => {
     setIsFirstModalOpen(false);
-    endsNetwork(userId, tableNumber);
     setIsSecondModalOpen(true);
   };
 
-  const handleReturnToList = () => {
-    endsNetwork(userId, tableNumber);
+  const handleReturnToList = async () => {
+    await endsNetwork(userId, tableNumber);
     setIsSecondModalOpen(false);
     router.push('/home');
   };
@@ -90,7 +94,7 @@ const NetworkingActions: React.FC<NetworkingActionsProps> = ({
         size="full"
         className="px-7 py-3.5 rounded-[10px]"
       >
-        네트워킹 중단
+       { isFinished ? '네트워킹 종료' : '네트워킹 중단' }
       </Button>
       <Modal {...firstModalProps} />
       <Modal {...secondModalProps} />
