@@ -3,7 +3,7 @@ import { useRouter } from 'next/navigation';
 import Modal, { ModalProps } from '../common/modal';
 import CheckboxItem from './checkbox-item-modal';
 import Button from '../common/button';
-import { cancelTable } from '~/utils/api/table';
+import { cancelTable, startNetworking } from '~/utils/api/table';
 
 interface TableApplicationCardProps {
   variant: 'apply' | 'waiting' | 'assigned';
@@ -63,6 +63,7 @@ const TableApplicationCard: React.FC<TableApplicationCardProps> = ({
         if (waitTime && waitTime > 0) {
           setVariant('waiting');
         } else {
+          isTableCancelled(); 
           setVariant('apply');
         }
       }, 15000);
@@ -80,6 +81,10 @@ const TableApplicationCard: React.FC<TableApplicationCardProps> = ({
     }
     return () => clearInterval(interval);
   }, [variant, countdown]);
+
+  const isTableCancelled = async() => {
+    await cancelTable(chatRoomId);
+  }
 
   const handleCheckboxChange = (label: string) => {
     setCheckedItems((prev) => ({ ...prev, [label]: !prev[label] }));
@@ -194,6 +199,11 @@ const TableApplicationCard: React.FC<TableApplicationCardProps> = ({
     triggerButtonLabel: '',
   };
 
+  const networkStarts = async() => {
+    alert(' api 호출 완료');
+    await startNetworking(tableNumber!)
+    router.push('/table');
+  }
   const secondCancelModalProps: ModalProps = {
     title: '네트워킹을 취소하시겠어요?',
     subText: '네트워킹을 취소하면 채팅방은 종료돼요.',
@@ -307,10 +317,11 @@ const TableApplicationCard: React.FC<TableApplicationCardProps> = ({
             variant="black-transparent"
             size="sm"
             // 위치 안내 캔슬
-            onClick={onCancel}
+            // onClick={onCancel}
+            onClick={networkStarts}
             className="flex-grow"
           >
-            위치 안내
+            {/* 위치 안내 */} 네트워킹 시작 
           </Button>
           <Button
             variant="green"

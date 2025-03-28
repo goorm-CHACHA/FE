@@ -1,3 +1,4 @@
+import { table } from 'console';
 import api from './api';
 
 export async function requestTable(chatRoomId: number) {
@@ -22,23 +23,23 @@ export async function requestTable(chatRoomId: number) {
 
 export async function cancelTable(chatRoomId: number) {
   try {
-    await api.post(`/api/networking-table/apply/${chatRoomId}`);
+    await api.post(`/api/networking-table/cancel/${chatRoomId}`);
   } catch (error) {
     console.log(error);
   }
 }
 
-export async function startNetworking(chatRoomId: number) {
+export async function startNetworking(tableNumber: string) {
   try {
-    await api.post(`/api/networking-table/start/${chatRoomId}`);
+    await api.post(`/api/networking-table/start/${tableNumber}`);
   } catch (error) {
     console.log(error);
   }
 }
 
-export async function endsNetwork(chatRoomId: number) {
+export async function endsNetwork(tableNumber: string) {
   try {
-    await api.post(`/api/networking-table/end/${chatRoomId}`);
+    await api.post(`/api/networking-table/end/${tableNumber}`);
   } catch (error) {
     console.log(error);
   }
