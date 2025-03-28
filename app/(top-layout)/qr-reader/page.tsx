@@ -48,12 +48,12 @@ const QrReader = () => {
     calculateScanRegion: (video: HTMLVideoElement) => {
       // 스캔 영역을 화면 중앙에 위치
       const smallestDimension = Math.min(video.videoWidth, video.videoHeight);
-      const scanRegionSize = Math.round(smallestDimension * 0.28);
+      const scanRegionSize = Math.round(smallestDimension * 0.35);
       return {
         x: Math.round((video.videoWidth - scanRegionSize) / 2),
         y:
           Math.round((video.videoHeight - scanRegionSize) / 2) +
-          Math.round(video.videoHeight * -0.06), // y축 위치 조정
+          Math.round(video.videoHeight * -0.04), // y축 위치 조정
         width: scanRegionSize,
         height: scanRegionSize,
         downScaledWidth: scanRegionSize,
@@ -108,21 +108,21 @@ const QrReader = () => {
 
           {/* 스캔 영역 하이라이트 */}
           <div className="absolute inset-0">
-            <div className="absolute top-0 left-0 w-full h-[calc(20.4%)] bg-black/50" />
-            <div className="absolute bottom-0 left-0 w-full h-[calc(33%)] bg-black/50" />
+            <div className="absolute top-0 left-0 w-full h-[calc(20%)] bg-black/60" />
+            <div className="absolute bottom-0 left-0 w-full h-[calc(30%)] bg-black/60" />
           </div>
 
           {/* 안내 텍스트 */}
           <div className="absolute w-[280px] top-20 left-1/2 transform -translate-x-1/2 text-white text-center">
             <p className="bg-black/60 px-4 py-3 rounded-md text-sm">
-              네트워킹 상대의 명함 QR코드를 인식하세요
+              네트워킹 상대의 QR코드를 인식하세요
             </p>
           </div>
 
           {/* 버튼 */}
-          <div className="absolute bottom-[165px] left-1/2 transform -translate-x-1/2">
+          <div className="absolute bottom-[150px] left-1/2 transform -translate-x-1/2">
             <Button onClick={() => setShowCard((prev) => !prev)} size="lg">
-              내 명함 QR코드 보기
+              내 QR코드 보기
             </Button>
           </div>
 
