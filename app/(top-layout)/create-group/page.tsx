@@ -74,7 +74,7 @@ const Page: React.FC = () => {
           maxSelection={1} // purposeOptions 정의 필요
         />
 
-        <Button type="submit">Submit</Button>
+        <button type="submit">Submit</button>
       </form>
     </FormProvider>
   );
