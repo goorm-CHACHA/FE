@@ -14,8 +14,8 @@ const TableRemainingTime: React.FC<TableRemainingTimeProps> = ({
   tableNumber,
   userId,
 }) => {
-  const isFinished = useNetworkTimerStore((state) => state.isFinished); 
-  const setIsFinished = useNetworkTimerStore((state) => state.setIsFinished); 
+  const isFinished = useNetworkTimerStore((state) => state.isFinished);
+  const setIsFinished = useNetworkTimerStore((state) => state.setIsFinished);
   const [timeLeft, setTimeLeft] = useState(
     initialMinutes * 60 + initialSeconds,
   );
@@ -47,7 +47,7 @@ const TableRemainingTime: React.FC<TableRemainingTimeProps> = ({
             </div>
           </div>
           <p className="flex-grow-0 flex-shrink-0 text-lg font-semibold text-center text-[#fefefe]">
-            { isFinished ? '네트워킹이 종료되었어요' : '테이블 잔여 시간'}
+            {isFinished ? '네트워킹이 종료되었어요' : '테이블 잔여 시간'}
           </p>
         </div>
       </div>

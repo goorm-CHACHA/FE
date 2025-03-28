@@ -94,7 +94,7 @@ const NetworkingActions: React.FC<NetworkingActionsProps> = ({
         size="full"
         className="px-7 py-3.5 rounded-[10px]"
       >
-       { isFinished ? '네트워킹 종료' : '네트워킹 중단' }
+        {isFinished ? '네트워킹 종료' : '네트워킹 중단'}
       </Button>
       <Modal {...firstModalProps} />
       <Modal {...secondModalProps} />
