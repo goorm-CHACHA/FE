@@ -64,9 +64,8 @@ const ToggleField = <T extends FieldValues>({
 
             if (selected.length < minSelection) {
               return `최소 ${minSelection}개 이상 선택해야 합니다.`;
-
-              return true;
             }
+            return true;
           },
         }}
         render={({ field: { value }, fieldState: { error } }) => {
