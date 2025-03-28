@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Modal, { ModalProps } from '../common/modal';
 import CheckboxItem from './checkbox-item-modal';
@@ -16,9 +16,9 @@ interface TableApplicationCardProps {
 }
 // 시간 부분... 맞춰보기..
 const TableApplicationCard: React.FC<TableApplicationCardProps> = ({
-  variant,
+  variant: initialVariant,
   tableNumber,
-  waitTime,
+  waitTime: initialWaitTime,
   onConfirm,
   onCancel,
   chatRoomId,
@@ -35,6 +35,40 @@ const TableApplicationCard: React.FC<TableApplicationCardProps> = ({
     '기술적 문제가 발생했어요.': false,
     '상대방이 응답하지 않아요.': false,
   });
+  const [showReasonWhyPartnerQuitsModal, setShowReasonWhyPartnerQuitsModal] = useState(false);
+  const [waitTime, setWaitTime] = useState(initialWaitTime);
+  const [variant, setVariant] = useState(initialVariant);
+  const [isQRExpired, setIsQRExpired] = useState(false);
+  const [countdown, setCountdown] = useState(15);
+
+  //필요없
+  console.log(isQRExpired, setWaitTime)
+
+  useEffect(() => {
+    if (variant === 'assigned') {
+      const timer = setTimeout(() => {
+        setIsQRExpired(true);
+        console.log('📌 QR 등록 시간 초과됨. isQRExpired 실행됨');
+        if (waitTime && waitTime > 0) {
+          setVariant('waiting');
+        } else {
+          setVariant('apply');
+        }
+      }, 15000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [variant,waitTime]);
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (variant === 'assigned' && countdown > 0) {
+      interval = setInterval(() => {
+        setCountdown((prev) => prev - 1);
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [variant, countdown]);
 
   const handleCheckboxChange = (label: string) => {
     setCheckedItems((prev) => ({ ...prev, [label]: !prev[label] }));
@@ -43,6 +77,11 @@ const TableApplicationCard: React.FC<TableApplicationCardProps> = ({
   const handleFirstCancelConfirm = () => {
     setShowCancelModal(false);
     setShowSecondCancelModal(true);
+  };
+
+  const test = () => {
+    console.log('모달 열기 test 실행됨 ✅');
+    setShowReasonWhyPartnerQuitsModal(true);
   };
 
   const handleFinalCancel = async () => {
@@ -83,6 +122,7 @@ const TableApplicationCard: React.FC<TableApplicationCardProps> = ({
 
   const handleNoAction = () => {
     setIsModalOpen(false);
+    console.log('아무 동작 없는 거');
   };
 
   //필요
@@ -145,17 +185,46 @@ const TableApplicationCard: React.FC<TableApplicationCardProps> = ({
 
   const secondCancelModalProps: ModalProps = {
     title: '네트워킹을 취소하시겠어요?',
-    subText: '',
+    subText: '네트워킹을 취소하면 채팅방은 종료돼요.',
     buttons: [
       {
         label: '제출하고 나가기',
         variant: 'green',
         actionType: 'action',
-        onClick: handleFinalCancel, // 찐 나가면서 네트워킹종료.
+        // onClick: handleFinalCancel, // 찐 나가면서 네트워킹종료.
+        onClick: test,
       },
     ],
     isOpen: showSecondCancelModal,
     onOpenChange: setShowSecondCancelModal,
+    triggerButtonLabel: '',
+    customContent: (
+      <div className="flex flex-col justify-start items-start self-stretch flex-grow-0 flex-shrink-0 gap-2 p-4 rounded-[10px] bg-[#1f1f1f]">
+        {Object.entries(checkedItems).map(([label, isChecked]) => (
+          <CheckboxItem
+            key={label}
+            label={label}
+            isChecked={isChecked}
+            onChange={() => handleCheckboxChange(label)}
+          />
+        ))}
+      </div>
+    ),
+  };
+
+  const showReasonWhyPartnerQuitsProps: ModalProps = {
+    title: '네트워킹이 종료되었어요',
+    subText: `상대방이 다음과 같은 이유로 /n 네트워킹을 진행하기 어려웠어요.`,
+    buttons: [
+      {
+        label: '종료',
+        variant: 'green',
+        actionType: 'action',
+        onClick: handleFinalCancel,
+      },
+    ],
+    isOpen: showReasonWhyPartnerQuitsModal,
+    onOpenChange: setShowReasonWhyPartnerQuitsModal,
     triggerButtonLabel: '',
     customContent: (
       <div className="flex flex-col justify-start items-start self-stretch flex-grow-0 flex-shrink-0 gap-2 p-4 rounded-[10px] bg-[#1f1f1f]">
@@ -226,6 +295,7 @@ const TableApplicationCard: React.FC<TableApplicationCardProps> = ({
           <Button
             variant="black-transparent"
             size="sm"
+            // 위치 안내 캔슬
             onClick={onCancel}
             className="flex-grow"
           >
@@ -237,7 +307,7 @@ const TableApplicationCard: React.FC<TableApplicationCardProps> = ({
             onClick={handleQRRegistration}
             className="flex-grow"
           >
-            QR 등록
+            QR 등록 00:{countdown}
           </Button>
         </div>
       );
@@ -286,6 +356,7 @@ const TableApplicationCard: React.FC<TableApplicationCardProps> = ({
       {renderButtons()}
       <Modal {...cancelNetworkingModalProps} />
       <Modal {...secondCancelModalProps} />
+      <Modal {...showReasonWhyPartnerQuitsProps} />
     </div>
   );
 };
