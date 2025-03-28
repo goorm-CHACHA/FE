@@ -10,7 +10,7 @@ import ScannerIcon from '~/assets/svgs/scanner.svg';
 import UnderLeftDeco from '~/assets/svgs/graphic-under-left.svg';
 import UpRightDeco from '~/assets/svgs/graphic-up-right.svg';
 
-import { getHashColor, getIconByJob } from '~/utils/get-profile-style';
+import { getColorByJob, getIconByJob } from '~/utils/get-profile-style';
 
 interface DetailCardProps {
   user: QRCodeType | null;
@@ -47,7 +47,7 @@ const DetailCard = ({ user, isShowQR = false }: DetailCardProps) => {
 };
 
 const FrontCard = ({ user }: { user: QRCodeType | null }) => {
-  const color = getHashColor(user?.name ?? '');
+  const color = getColorByJob(user?.job.value ?? '');
   const Icon = getIconByJob(user?.job.value);
 
   return (
@@ -74,7 +74,7 @@ const FrontCard = ({ user }: { user: QRCodeType | null }) => {
         <p className="text-white text-4xl font-semibold leading-[43.2px] mb-10">
           {user?.name}
         </p>
-        <div className="w-full space-y-3 font-['Pretendard'] font-light">
+        <div className="w-full space-y-3 font-light">
           <InfoRow label="직무/직책" value={user?.job.value} />
           <InfoRow label="소속" value={user?.affiliation} />
           <InfoRow label="이메일" value={user?.email} />
@@ -90,11 +90,11 @@ const BackCard = ({ user }: { user: QRCodeType | null }) => (
     <div className="flex flex-col items-center justify-top gap-7 h-full">
       <QRCodeSVG
         value={JSON.stringify(user)}
-        size={170}
+        size={225}
         bgColor="#FFF"
         fgColor="#000"
         level="H"
-        marginSize={2}
+        marginSize={3}
       />
       <Dialog.Title className="text-white text-sm font-medium flex justify-between w-[160px]">
         <ScannerIcon />
