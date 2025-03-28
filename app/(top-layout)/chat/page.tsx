@@ -126,22 +126,22 @@ const ChatPage = () => {
 
   const exitChatRoom = async () => {
     if (!roomId) return;
-  
+
     try {
       await fetch(`${process.env.NEXT_PUBLIC_HTTP_API_URL}/chats/exit`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ chatRoomId: Number(roomId) }),
       });
-  
+
       console.log('채팅방 나가기 성공');
-  
+
       // WebSocket 연결 종료
       if (websocket) {
         websocket.close();
       }
-  
-      router.push(`/home`); 
+
+      router.push(`/home`);
     } catch (err) {
       console.error('채팅방 나가기 실패:', err);
     }
@@ -196,12 +196,12 @@ const ChatPage = () => {
           채팅방을 선택해주세요!
         </div>
       )}
-          <button 
-   className="px-4 py-2 text-white bg-red-500 rounded-md hover:bg-red-600"
-   onClick={exitChatRoom}
- >
-   채팅방 나가기
- </button>
+      <button
+        className="px-4 py-2 text-white bg-red-500 rounded-md hover:bg-red-600"
+        onClick={exitChatRoom}
+      >
+        채팅방 나가기
+      </button>
     </div>
   );
 };
