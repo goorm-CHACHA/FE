@@ -1,12 +1,30 @@
 import api from './api';
 
+
 export async function requestTable(chatRoomId: number) {
   try {
-    await api.post(`/api/networking-table/apply/${chatRoomId}`);
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_HTTP_API_URL}/networking-table/apply/${chatRoomId}`,
+      {
+        method: 'POST',
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error('테이블 신청 실패');
+    }
+
+    const data = await response.json();
+    const tableNumber = data.tableNumber; // 👉 여기서 값 추출!
+
+    console.log('배정된 테이블 번호:', tableNumber);
+    return tableNumber;
   } catch (error) {
-    console.log(error);
+    console.error('테이블 신청 중 오류 발생:', error);
+    return null;
   }
-}
+};
+
 
 export async function cancelTable(chatRoomId: number) {
   try {
@@ -16,42 +34,25 @@ export async function cancelTable(chatRoomId: number) {
   }
 }
 
-export async function startNetworking(userId: number, tableNumber: string) {
+export async function startNetworking(chatRoomId: number) {
   try {
-    await api.post('/api/networking-table/start', {
-      userId,
-      tableNumber,
-    });
+    await api.post(`/api/networking-table/start/${chatRoomId}`);
   } catch (error) {
     console.log(error);
   }
 }
 
-export async function endsNetwork(userId: number, tableNumber: string) {
+export async function endsNetwork(chatRoomId: number) {
   try {
-    await api.post('/api/networking-table/end', {
-      userId,
-      tableNumber,
-    });
+    await api.post(`/api/networking-table/end/${chatRoomId}`);
   } catch (error) {
     console.log(error);
   }
 }
 
-export async function reserveTable() {
+export async function consentReservation(chatRoomId: number) {
   try {
-    await api.post('/api/reservation/create');
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-export async function consentReservation(chatRoomId: number, userId: number) {
-  try {
-    await api.post('/api/reservation/consent', {
-      chatRoomId,
-      userId,
-    });
+    await api.post(`/api/reservation/consent/${chatRoomId}`);
   } catch (error) {
     console.log(error);
   }
