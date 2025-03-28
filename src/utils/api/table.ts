@@ -1,13 +1,12 @@
 import api from './api';
 
-
 export async function requestTable(chatRoomId: number) {
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_HTTP_API_URL}/networking-table/apply/${chatRoomId}`,
       {
         method: 'POST',
-      }
+      },
     );
 
     if (!response.ok) {
@@ -23,8 +22,7 @@ export async function requestTable(chatRoomId: number) {
     console.error('테이블 신청 중 오류 발생:', error);
     return null;
   }
-};
-
+}
 
 export async function cancelTable(chatRoomId: number) {
   try {
