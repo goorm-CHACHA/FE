@@ -5,6 +5,7 @@ const TextRolling = () => {
   const [interestJobCategory, setInterestJobCategory] =
     useState<string>('정보 없음');
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [countByInterest, setCountByInterest] = useState<number>(0);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,6 +31,41 @@ const TextRolling = () => {
   }, []);
 
   useEffect(() => {
+    const fetchCountByInterest = async () => {
+      try {
+        const accessToken = localStorage.getItem('accessToken');
+        if (!accessToken) {
+          console.error('Access token not found');
+          return;
+        }
+
+        // API 요청에 인증 헤더 추가
+        const response = await api.get('/api/users/countByInterests', {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+        console.log(response);
+
+        // 응답 데이터 처리
+        if (Array.isArray(response.data) && response.data.length === 0) {
+          setCountByInterest(0);
+        } else if (typeof response.data === 'number') {
+          setCountByInterest(response.data);
+        } else {
+          console.error('Unexpected data format:', response.data);
+          setCountByInterest(0);
+        }
+      } catch (error) {
+        console.error('Error fetching count by interest:', error);
+        setCountByInterest(0);
+      }
+    };
+
+    fetchCountByInterest();
+  }, []);
+
+  useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % 2);
     }, 4000);
@@ -42,14 +78,14 @@ const TextRolling = () => {
       <span className="text-white">[</span>
       <span className="text-[#07ca7f]">{interestJobCategory}</span>
       <span className="text-white">]에 관심있는 참여자가 [</span>
-      <span className="text-[#ff6f22]">321</span>
+      <span className="text-[#ff6f22]">{countByInterest}</span>
       <span className="text-white">]명 있어요</span>
     </>,
     <>
       <span className="text-white">내가 관심 있는 [</span>
       <span className="text-[#07ca7f]">{interestJobCategory}</span>
       <span className="text-white">] 참여자가 [</span>
-      <span className="text-[#ff6f22]">321</span>
+      <span className="text-[#ff6f22]">{countByInterest}</span>
       <span className="text-white">] 명 있어요</span>
     </>,
   ];
