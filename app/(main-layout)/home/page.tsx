@@ -129,7 +129,19 @@ const Page = () => {
       }
 
       if (notificationData.messageType === 'accept') {
-        //룸 아이디와 함께 채팅페이지로 이동
+        const roomId=notificationData.chatRoomId;
+        router.push(`/chat?roomId=${roomId}`); 
+      }
+      if(notificationData.messageType==='notification')
+      {
+        const roomId=notificationData.chatRoomId;
+        router.push(`/chat?roomId=${roomId}`); 
+      }
+      if(notificationData.messageType==='update')
+      {
+        const message = notificationData.message;
+
+        alert(message); 
       }
     };
 
