@@ -6,7 +6,7 @@ import {
   cancelTable,
   consentReservation,
   requestTable,
-  getWaitTime,
+  // getWaitTime,
 } from '~/utils/api/table';
 import SystemMessage from './system-message';
 
@@ -45,15 +45,16 @@ const ChatWindow = ({
   const chatRef = useRef<HTMLDivElement>(null);
   const [notifyTimeout, setNotifyTimeout] = useState(false);
   const [reserveTable, setReserveTable] = useState(false);
-  const [fullyBooked, setFullyBooked] = useState(false);
-  const [waitTime, setWaitTime] = useState<number | undefined>();
+  // const [fullyBooked, setFullyBooked] = useState(false);
+  // const [waitTime, setWaitTime] = useState<number | undefined>();
 
   // 삭제할거
   console.log(setNotifyTimeout, setReserveTable);
+  console.log(chatRoomId);
   // 건드리는 중
   // 초기 상태를 테이블 대기 시간에 따라 'apply' 혹은 'waiting' 로 설정
   const [notification, setNotification] = useState<Notification>({
-    variant: 'assigned',
+    variant: 'apply',
     tableNumber: undefined,
   });
 
@@ -104,43 +105,43 @@ const ChatWindow = ({
   //   }
   // }, [/* 필요한 조건들 */]);
 
-  useEffect(() => {
-    const fetchWaitTime = async () => {
-      const time = await getWaitTime(chatRoomId);
-      console.log('💡 가져온 waitTime:', waitTime);
-      console.log('chatRoomId', chatRoomId);
-      setWaitTime(time);
-      if (time <= 0) {
-        setNotification({
-          variant: 'apply',
-          tableNumber: undefined,
-        });
-      } else if (time > 0) {
-        setNotification({
-          variant: 'waiting',
-          tableNumber: undefined,
-        });
-        setFullyBooked(true); // <- 혹시 메시지 띄우고 싶다면
-      } else {
-        setNotification({
-          variant: 'assigned',
-          tableNumber: undefined,
-        });
-      }
-    };
+  // useEffect(() => {
+  //   const fetchWaitTime = async () => {
+  //     const time = await getWaitTime(chatRoomId);
+  //     console.log('💡 가져온 waitTime:', waitTime);
+  //     console.log('chatRoomId', chatRoomId);
+  //     setWaitTime(time);
+  //     if (time <= 0) {
+  //       setNotification({
+  //         variant: 'apply',
+  //         tableNumber: undefined,
+  //       });
+  //     } else if (time > 0) {
+  //       setNotification({
+  //         variant: 'waiting',
+  //         tableNumber: undefined,
+  //       });
+  //       setFullyBooked(true); // <- 혹시 메시지 띄우고 싶다면
+  //     } else {
+  //       setNotification({
+  //         variant: 'assigned',
+  //         tableNumber: undefined,
+  //       });
+  //     }
+  //   };
 
-    fetchWaitTime();
-  }, [chatRoomId, waitTime]);
+  //   fetchWaitTime();
+  // }, [chatRoomId, waitTime]);
 
   // /table-application-card onConfirm 함수 ✅
   const handleConfirm = async () => {
     if (chatRoomId) {
-      await requestTable(chatRoomId);
+      const tableNumber = await requestTable(chatRoomId);
       console.log('테이블 신청 확인');
       // 여기에 테이블 배정 알림 확인 푸시알림
       setNotification({
         variant: 'assigned',
-        tableNumber: chatRoomId,
+        tableNumber: tableNumber,
       });
     } else {
       console.warn('👀 tableNumber 없음');
@@ -175,7 +176,8 @@ const ChatWindow = ({
             onCancel={handleCancel}
             chatRoomId={chatRoomId}
             onConsent={handleConsent}
-            waitTime={waitTime}
+            currentUser={currentUser}
+            // waitTime={waitTime}
             // waitTime 여기에 ..
           />
         )}
@@ -210,7 +212,10 @@ const ChatWindow = ({
           ))}
           {notifyTimeout && <SystemMessage type="timeout" />}
           {reserveTable && <SystemMessage type="complete" />}
-          {fullyBooked && <SystemMessage type="notice" />}
+          {reserveTable && (
+            <SystemMessage type="complete" nickname={currentUser} />
+          )}
+          {/* {fullyBooked && <SystemMessage type="notice" />} */}
         </div>
       </div>
     </div>

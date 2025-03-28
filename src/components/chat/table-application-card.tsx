@@ -13,6 +13,7 @@ interface TableApplicationCardProps {
   onCancel?: () => void;
   chatRoomId: number;
   onConsent?: () => void;
+  currentUser: string;
 }
 // 시간 부분... 맞춰보기..
 const TableApplicationCard: React.FC<TableApplicationCardProps> = ({
@@ -23,6 +24,7 @@ const TableApplicationCard: React.FC<TableApplicationCardProps> = ({
   onCancel,
   chatRoomId,
   onConsent,
+  currentUser,
 }) => {
   const router = useRouter();
   const [isReserved, setIsReserved] = useState(false);
@@ -43,6 +45,14 @@ const TableApplicationCard: React.FC<TableApplicationCardProps> = ({
   const [countdown, setCountdown] = useState(15);
 
   //필요없
+  // props로 받은 값으로 내부 상태 동기화
+  useEffect(() => {
+    setVariant(initialVariant);
+  }, [initialVariant]);
+
+  useEffect(() => {
+    setWaitTime(initialWaitTime);
+  }, [initialWaitTime]);
   console.log(isQRExpired, setWaitTime);
 
   useEffect(() => {
