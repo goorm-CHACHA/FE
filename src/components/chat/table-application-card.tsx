@@ -35,14 +35,15 @@ const TableApplicationCard: React.FC<TableApplicationCardProps> = ({
     '기술적 문제가 발생했어요.': false,
     '상대방이 응답하지 않아요.': false,
   });
-  const [showReasonWhyPartnerQuitsModal, setShowReasonWhyPartnerQuitsModal] = useState(false);
+  const [showReasonWhyPartnerQuitsModal, setShowReasonWhyPartnerQuitsModal] =
+    useState(false);
   const [waitTime, setWaitTime] = useState(initialWaitTime);
   const [variant, setVariant] = useState(initialVariant);
   const [isQRExpired, setIsQRExpired] = useState(false);
   const [countdown, setCountdown] = useState(15);
 
   //필요없
-  console.log(isQRExpired, setWaitTime)
+  console.log(isQRExpired, setWaitTime);
 
   useEffect(() => {
     if (variant === 'assigned') {
@@ -58,7 +59,7 @@ const TableApplicationCard: React.FC<TableApplicationCardProps> = ({
 
       return () => clearTimeout(timer);
     }
-  }, [variant,waitTime]);
+  }, [variant, waitTime]);
 
   useEffect(() => {
     let interval: NodeJS.Timeout;

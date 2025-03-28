@@ -41,7 +41,9 @@ const NetworkingActions: React.FC<NetworkingActionsProps> = ({
     setIsSecondModalOpen(false);
     router.push('/home');
   };
-
+  const handleQRRegistration = () => {
+    router.push('/qr-reader');
+  };
   const firstModalProps = {
     isOpen: isFirstModalOpen,
     onOpenChange: setIsFirstModalOpen,
@@ -85,6 +87,7 @@ const NetworkingActions: React.FC<NetworkingActionsProps> = ({
         variant="green"
         size="full"
         className="px-7 py-3.5 rounded-[10px]"
+        onClick={handleQRRegistration}
       >
         온라인 명함 교환
       </Button>

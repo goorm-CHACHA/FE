@@ -6,7 +6,7 @@ import {
   cancelTable,
   consentReservation,
   requestTable,
-  getWaitTime, 
+  getWaitTime,
 } from '~/utils/api/table';
 import SystemMessage from './system-message';
 
@@ -48,9 +48,8 @@ const ChatWindow = ({
   const [fullyBooked, setFullyBooked] = useState(false);
   const [waitTime, setWaitTime] = useState<number | undefined>();
 
-
-  // 삭제할거 
-  console.log(setNotifyTimeout, setReserveTable)
+  // 삭제할거
+  console.log(setNotifyTimeout, setReserveTable);
   // 건드리는 중
   // 초기 상태를 테이블 대기 시간에 따라 'apply' 혹은 'waiting' 로 설정
   const [notification, setNotification] = useState<Notification>({
@@ -109,14 +108,14 @@ const ChatWindow = ({
     const fetchWaitTime = async () => {
       const time = await getWaitTime(chatRoomId);
       console.log('💡 가져온 waitTime:', waitTime);
-      console.log('chatRoomId',chatRoomId)
+      console.log('chatRoomId', chatRoomId);
       setWaitTime(time);
       if (time <= 0) {
         setNotification({
           variant: 'apply',
           tableNumber: undefined,
         });
-      } else if(time > 0){
+      } else if (time > 0) {
         setNotification({
           variant: 'waiting',
           tableNumber: undefined,
@@ -126,10 +125,10 @@ const ChatWindow = ({
         setNotification({
           variant: 'assigned',
           tableNumber: undefined,
-        })
+        });
       }
     };
-  
+
     fetchWaitTime();
   }, [chatRoomId, waitTime]);
 
@@ -138,7 +137,7 @@ const ChatWindow = ({
     if (chatRoomId) {
       await requestTable(chatRoomId);
       console.log('테이블 신청 확인');
-      // 여기에 테이블 배정 알림 확인 푸시알림 
+      // 여기에 테이블 배정 알림 확인 푸시알림
       setNotification({
         variant: 'assigned',
         tableNumber: chatRoomId,
@@ -161,7 +160,7 @@ const ChatWindow = ({
   };
   const handleConsent = async () => {
     await consentReservation(chatRoomId, receiverId);
-    console.log('currentUser', currentUser)
+    console.log('currentUser', currentUser);
   };
 
   return (

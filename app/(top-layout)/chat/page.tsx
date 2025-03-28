@@ -37,9 +37,10 @@ const tempChats: Chat[] = [
   },
 ];
 
+// currentUser 나 자신으로 잘 전달해주기
 const ChatPage = () => {
   // const [chats] = useState<Chat[]>(tempChats);
-  const [selectedChat, setSelectedChat] = useState<Chat | null>(tempChats[0]);
+  const [selectedChat, setSelectedChat] = useState<Chat | null>(tempChats[1]);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [messages, setMessages] = useState<any[]>([]);
   const [websocket, setWebSocket] = useState<WebSocket | null>(null);
@@ -160,7 +161,8 @@ const ChatPage = () => {
             currentUser={currentUser || 'unknown'}
             receiverName={selectedChat.name}
             receiverStatus={selectedChat.status}
-            chatRoomId={1}
+            chatRoomId={selectedChat.chatRoomId}
+            receiverJob="test"
           />
           <div className="h-[60px] border-t border-gray-700">
             <MessageInput onSendMessage={handleSendMessage} />
