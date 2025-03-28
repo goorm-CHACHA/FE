@@ -16,12 +16,12 @@ const Page = () => {
   const { users, setUsers } = useUserStore();
   const [loggedInUser, setLoggedInUser] = useState<UserData | null>(null);
   const [, setWebSocket] = useState<WebSocket | null>(null);
-   const router = useRouter();
-   const loggedInUserRef = useRef<UserData | null>(null);
-   useEffect(() => {
-     loggedInUserRef.current = loggedInUser;
-   }, [loggedInUser]);
-   
+  const router = useRouter();
+  const loggedInUserRef = useRef<UserData | null>(null);
+  useEffect(() => {
+    loggedInUserRef.current = loggedInUser;
+  }, [loggedInUser]);
+
   console.log(users);
   console.log(loggedInUser);
 
@@ -61,20 +61,22 @@ const Page = () => {
 
     console.log(chatsRequestDto);
     try {
-      const response = await api.post('api/chats/private-chatroom/accept', chatsRequestDto);
-      console.log(response.data+" sdsdssdsd");
-      const roomId = response.data // 응답에서 채팅방 ID 가져오기
+      const response = await api.post(
+        'api/chats/private-chatroom/accept',
+        chatsRequestDto,
+      );
+      console.log(response.data + ' sdsdssdsd');
+      const roomId = response.data; // 응답에서 채팅방 ID 가져오기
 
+      if (!response) throw new Error('응답에 roomId 없음');
 
-      if (!response) throw new Error("응답에 roomId 없음");
-      
-      console.log("loggedInUser 객체:", loggedInUserRef.current);
-      console.log("닉네임은"+loggedInUserRef.current?.nickName)
-      localStorage.setItem("nickName", loggedInUserRef.current?.nickName || "");
-      
-      router.push(`/chat?roomId=${roomId}`); 
+      console.log('loggedInUser 객체:', loggedInUserRef.current);
+      console.log('닉네임은' + loggedInUserRef.current?.nickName);
+      localStorage.setItem('nickName', loggedInUserRef.current?.nickName || '');
+
+      router.push(`/chat?roomId=${roomId}`);
     } catch (error) {
-      console.error("[ERROR] 채팅방 수락 실패:", error);
+      console.error('[ERROR] 채팅방 수락 실패:', error);
     }
   }
 
