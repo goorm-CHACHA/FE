@@ -3,12 +3,11 @@ import Button from '../common/button';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import api from '~/utils/api/api';
-interface GroupChatRoomResponseDto
-{
-  id:number;
+interface GroupChatRoomResponseDto {
+  id: number;
   job: string[];
   members: number;
-  career: string
+  career: string;
   interests: string;
   participationPurpose: string;
 }
@@ -21,8 +20,8 @@ const GroupMatching = () => {
     const fetchGroups = async () => {
       try {
         const response = await api.get('api/chats/group-chatroom'); // API URL
-        
-        console.log(response)
+
+        console.log(response);
         // 그룹 데이터를 상태에 저장
         setGroups(response.data);
       } catch (error) {
@@ -40,7 +39,7 @@ const GroupMatching = () => {
 
       console.log('참여 성공:', response.data);
       alert('그룹에 참여하였습니다!');
-      
+
       // 필요 시 해당 그룹 채팅방으로 이동
       // router.push(`/chat/${chatRoomId}`);
     } catch (error) {
@@ -54,16 +53,29 @@ const GroupMatching = () => {
       {/* 필터 컴포넌트 */}
       <Filter />
 
-       {/* 그룹 데이터 렌더링 */}
-       {groups.length > 0 ? (
+      {/* 그룹 데이터 렌더링 */}
+      {groups.length > 0 ? (
         groups.map((group) => (
-          <div key={group.id} className="mb-4 p-4 border border-gray-300 rounded-md cursor-pointer hover:bg-gray-100"
-          onClick={() => handleJoinGroup(group.id)}>
-            <p><strong>직업:</strong> {group.job.join(', ')}</p>
-            <p><strong>경력:</strong> {group.career}</p>
-            <p><strong>관심사:</strong> {group.interests}</p>
-            <p><strong>멤버수:</strong> {group.members}</p>
-            <p><strong>참여 목적:</strong> {group.participationPurpose}</p>
+          <div
+            key={group.id}
+            className="mb-4 p-4 border border-gray-300 rounded-md cursor-pointer hover:bg-gray-100"
+            onClick={() => handleJoinGroup(group.id)}
+          >
+            <p>
+              <strong>직업:</strong> {group.job.join(', ')}
+            </p>
+            <p>
+              <strong>경력:</strong> {group.career}
+            </p>
+            <p>
+              <strong>관심사:</strong> {group.interests}
+            </p>
+            <p>
+              <strong>멤버수:</strong> {group.members}
+            </p>
+            <p>
+              <strong>참여 목적:</strong> {group.participationPurpose}
+            </p>
           </div>
         ))
       ) : (
