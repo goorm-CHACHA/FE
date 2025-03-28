@@ -46,7 +46,8 @@ const ChatPage = () => {
   const [websocket, setWebSocket] = useState<WebSocket | null>(null);
   const [currentUser, setCurrentUser] = useState<string | null>(null);
   const searchParams = useSearchParams();
-  const roomId = searchParams.get('roomId');
+  const roomIdParam = searchParams.get('roomId');
+  const roomId = roomIdParam ? parseInt(roomIdParam, 10) : null;
   console.log(setSelectedChat);
   const router = useRouter();
   const [savedNickName, setSavedNickName] = useState<string | null>(null);
@@ -184,7 +185,7 @@ const ChatPage = () => {
             currentUser={currentUser || 'unknown'}
             receiverName={selectedChat.name}
             receiverStatus={selectedChat.status}
-            chatRoomId={selectedChat.chatRoomId}
+            chatRoomId={roomId!}
             receiverJob="test"
           />
           <div className="h-[60px] border-t border-gray-700">
