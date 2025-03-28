@@ -3,6 +3,7 @@ import Button from '../common/button';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import api from '~/utils/api/api';
+
 interface GroupChatRoomResponseDto
 {
   id:number;
@@ -21,8 +22,10 @@ const GroupMatching = () => {
     const fetchGroups = async () => {
       try {
         const response = await api.get('api/chats/group-chatroom'); // API URL
+
         
         console.log(response)
+
         // 그룹 데이터를 상태에 저장
         setGroups(response.data);
       } catch (error) {
@@ -40,7 +43,7 @@ const GroupMatching = () => {
 
       console.log('참여 성공:', response.data);
       alert('그룹에 참여하였습니다!');
-      
+
       // 필요 시 해당 그룹 채팅방으로 이동
       // router.push(`/chat/${chatRoomId}`);
     } catch (error) {
@@ -54,6 +57,7 @@ const GroupMatching = () => {
       {/* 필터 컴포넌트 */}
       <Filter />
 
+
        {/* 그룹 데이터 렌더링 */}
        {groups.length > 0 ? (
         groups.map((group) => (
@@ -64,6 +68,7 @@ const GroupMatching = () => {
             <p><strong>관심사:</strong> {group.interests}</p>
             <p><strong>멤버수:</strong> {group.members}</p>
             <p><strong>참여 목적:</strong> {group.participationPurpose}</p>
+
           </div>
         ))
       ) : (

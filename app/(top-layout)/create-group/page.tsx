@@ -10,6 +10,7 @@ import {
   jobOptions,
   purposeOptions,
 } from '~/constants/create-group';
+
 import { useState } from "react";
 import axios from "axios";
 
@@ -23,6 +24,7 @@ interface GroupChatsFormValues {
 
 
 const Page : React.FC = () => {
+
   const methods = useForm<GroupChatsFormValues>();
   const { control, handleSubmit } = methods;
   const [response, setResponse] = useState<any>(null);
@@ -30,6 +32,7 @@ const Page : React.FC = () => {
   const onSubmit = async (data: GroupChatsFormValues) => {
     // API 호출을 위해 data를 적절히 변환
     const groupChatsRequestDto = {
+
       job: data.job || [],  // job이 없으면 빈 배열
       career: "상관없음", // career 슬라이더 값을 직역: 예시로 "2-3"
       interests: data.interests || "상관없음", // interests가 없으면 "상관없음"
@@ -47,6 +50,7 @@ const Page : React.FC = () => {
   };
 
   return (
+
     <FormProvider {...methods}> 
     <form onSubmit={handleSubmit(onSubmit)}>
       <ToggleField
@@ -77,6 +81,7 @@ const Page : React.FC = () => {
       
     
     </form></FormProvider>
+
   );
 };
 

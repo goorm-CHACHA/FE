@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import ChatWindow from '~/components/chat/chat-window';
 import MessageInput from '~/components/chat/message-input';
-import { useSearchParams } from "next/navigation";
+import { useSearchParams } from 'next/navigation';
 
 interface Chat {
   id: number;
@@ -36,16 +36,16 @@ const ChatPage = () => {
   const [websocket, setWebSocket] = useState<WebSocket | null>(null);
   const [currentUser, setCurrentUser] = useState<string | null>(null);
   const searchParams = useSearchParams();
-  const roomId = searchParams.get("roomId");
+  const roomId = searchParams.get('roomId');
   console.log(setSelectedChat);
 
   const [savedNickName, setSavedNickName] = useState<string | null>(null);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const nickName = localStorage.getItem("nickName");
+    if (typeof window !== 'undefined') {
+      const nickName = localStorage.getItem('nickName');
       setSavedNickName(nickName);
-      console.log("닉네임은:" + nickName); // 상태 변경 전에 localStorage에서 가져온 값 확인
+      console.log('닉네임은:' + nickName); // 상태 변경 전에 localStorage에서 가져온 값 확인
     }
   }, []);
   const fetchToken = () => {
