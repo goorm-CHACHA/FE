@@ -10,8 +10,7 @@ export async function requestTable(chatRoomId: number) {
       throw new Error('테이블 신청 실패');
     }
 
-    const data = await response.json();
-    const tableNumber = data.tableNumber; // 👉 여기서 값 추출!
+    const tableNumber = await response.text();
 
     console.log('배정된 테이블 번호:', tableNumber);
     return tableNumber;
