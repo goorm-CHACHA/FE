@@ -130,6 +130,17 @@ const Page = () => {
         const roomId=notificationData.chatRoomId;
         router.push(`/chat?roomId=${roomId}`); 
       }
+      if(notificationData.messageType==='notification')
+      {
+        const roomId=notificationData.chatRoomId;
+        router.push(`/chat?roomId=${roomId}`); 
+      }
+      if(notificationData.messageType==='update')
+      {
+        const message = notificationData.message;
+
+        alert(message); 
+      }
     };
 
     fetchLoggedInUser();
