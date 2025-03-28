@@ -19,7 +19,7 @@ interface Message {
 
 interface Notification {
   variant: 'apply' | 'waiting' | 'assigned';
-  tableNumber?: number;
+  tableNumber?: string;
 }
 
 interface ChatWindowProps {

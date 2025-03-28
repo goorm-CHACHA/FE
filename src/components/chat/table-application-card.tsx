@@ -7,7 +7,7 @@ import { cancelTable } from '~/utils/api/table';
 
 interface TableApplicationCardProps {
   variant: 'apply' | 'waiting' | 'assigned';
-  tableNumber?: number;
+  tableNumber?: string;
   waitTime?: number;
   onConfirm?: () => void;
   onCancel?: () => void;

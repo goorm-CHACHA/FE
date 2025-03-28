@@ -2,12 +2,9 @@ import api from './api';
 
 export async function requestTable(chatRoomId: number) {
   try {
-    const response = await fetch(
-      `/api/networking-table/apply/${chatRoomId}`,
-      {
-        method: 'POST',
-      },
-    );
+    const response = await fetch(`/api/networking-table/apply/${chatRoomId}`, {
+      method: 'POST',
+    });
 
     if (!response.ok) {
       throw new Error('테이블 신청 실패');
