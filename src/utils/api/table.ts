@@ -3,7 +3,7 @@ import api from './api';
 export async function requestTable(chatRoomId: number) {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_HTTP_API_URL}/networking-table/apply/${chatRoomId}`,
+      `/api/networking-table/apply/${chatRoomId}`,
       {
         method: 'POST',
       },
