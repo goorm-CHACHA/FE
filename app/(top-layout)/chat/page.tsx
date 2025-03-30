@@ -4,53 +4,95 @@ import { useState, useEffect } from 'react';
 import ChatWindow from '~/components/chat/chat-window';
 import MessageInput from '~/components/chat/message-input';
 import { useSearchParams } from 'next/navigation';
-import { useRouter } from 'next/navigation';
-interface Chat {
-  id: number;
-  name: string;
-  lastMessage: string;
-  status: 'accepted' | 'pending';
+import { getReceiverIdFromChatRoom } from '~/utils/api/chats';
+import api from '~/utils/api/api';
+import { viewAllUser } from '~/utils/api/user';
+import { UserData } from '~/types/user.types';
+import { useWebSocketStore } from '~/stores/use-websocket-store';
+
+export type SystemMessageSubtype = 'notice' | 'agree' | 'complete' | 'timeout';
+
+interface SystemMessagePayload {
+  type: 'system';
+  subtype: SystemMessageSubtype;
+  senderName: string;
   chatRoomId: number;
 }
+export function sendSystemMessage(
+  subtype: SystemMessageSubtype,
+  senderName: string,
+  chatRoomId: number,
+  websocket: WebSocket | null,
+) {
+  if (!websocket || websocket.readyState !== WebSocket.OPEN) {
+    console.warn(
+      '⚠️ WebSocket 연결이 열려있지 않습니다. 시스템 메시지를 보낼 수 없습니다.',
+    );
+    return;
+  }
 
-const tempChats: Chat[] = [
-  {
-    id: 1,
-    name: '홍길동',
-    lastMessage: '안녕하세요!',
-    status: 'accepted',
-    chatRoomId: 332,
-  },
-  {
-    id: 2,
-    name: '김철수',
-    lastMessage: '네트워킹 하실래요?',
-    status: 'pending',
-    chatRoomId: 22,
-  },
-  {
-    id: 3,
-    name: '이영희',
-    lastMessage: '프로젝트 협업 어떠세요?',
-    status: 'accepted',
-    chatRoomId: 5,
-  },
-];
+  const message: SystemMessagePayload = {
+    type: 'system',
+    subtype,
+    senderName,
+    chatRoomId,
+  };
 
-// currentUser 나 자신으로 잘 전달해주기
+  websocket.send(JSON.stringify(message));
+}
+
 const ChatPage = () => {
-  // const [chats] = useState<Chat[]>(tempChats);
-  const [selectedChat, setSelectedChat] = useState<Chat | null>(tempChats[1]);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [messages, setMessages] = useState<any[]>([]);
-  const [websocket, setWebSocket] = useState<WebSocket | null>(null);
+  const [messages, setMessages] = useState<
+    { createTime: string; message: string; senderName: string }[]
+  >([]);
   const [currentUser, setCurrentUser] = useState<string | null>(null);
+  const [receiverUser, setReceiverUser] = useState<UserData | null>(null);
+  const [savedNickName, setSavedNickName] = useState<string | null>(null);
   const searchParams = useSearchParams();
   const roomIdParam = searchParams.get('roomId');
   const roomId = roomIdParam ? parseInt(roomIdParam, 10) : null;
-  console.log(setSelectedChat);
-  const router = useRouter();
-  const [savedNickName, setSavedNickName] = useState<string | null>(null);
+  const { websocket, setWebSocket } = useWebSocketStore();
+  const [systemMessages, setSystemMessages] = useState<
+    { type: string; nickname?: string }[]
+  >([]);
+
+  useEffect(() => {
+    const fetchCurrentUser = async () => {
+      const access_token = localStorage.getItem('accessToken');
+      if (!access_token) return;
+
+      try {
+        const res = await api.get('/api/users/mypage'); // ✅ 이게 핵심
+        setCurrentUser(res.data);
+        localStorage.setItem('nickName', res.data.nickName);
+      } catch (err) {
+        console.error('유저 정보 불러오기 실패:', err);
+      }
+    };
+
+    fetchCurrentUser();
+  }, []); // 유저 정보
+
+  console.log('receiver', receiverUser);
+  useEffect(() => {
+    const fetchReceiverId = async () => {
+      if (!roomId || !currentUser) return;
+
+      try {
+        const allUsers = await viewAllUser();
+        const receiver = await getReceiverIdFromChatRoom(
+          roomId,
+          currentUser,
+          allUsers,
+        );
+        setReceiverUser(receiver);
+      } catch (err) {
+        console.error('상대방 ID 가져오기 실패:', err);
+      }
+    };
+
+    fetchReceiverId();
+  }, [roomId, currentUser]);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -59,6 +101,7 @@ const ChatPage = () => {
       console.log('닉네임은:' + nickName); // 상태 변경 전에 localStorage에서 가져온 값 확인
     }
   }, []);
+
   const fetchToken = () => {
     // 쿠키에서 access_token 가져오기
     const cookies = document.cookie.split(';');
@@ -91,6 +134,18 @@ const ChatPage = () => {
     // WebSocket 메시지를 받으면
     ws.onmessage = (event) => {
       const incomingMessage = JSON.parse(event.data);
+
+      if (incomingMessage.type === 'system') {
+        // 여기서 시스템 메시지 상태를 업데이트해줘야 함
+        setSystemMessages((prev) => [
+          ...prev,
+          {
+            type: incomingMessage.subtype,
+            nickname: incomingMessage.senderName,
+          },
+        ]);
+        return;
+      }
 
       const formattedMessage = {
         createTime: incomingMessage.createTime, // createTime을 적절한 형식으로 변환
@@ -125,29 +180,6 @@ const ChatPage = () => {
     };
   }, []);
 
-  const exitChatRoom = async () => {
-    if (!roomId) return;
-
-    try {
-      await fetch(`${process.env.NEXT_PUBLIC_HTTP_API_URL}/chats/exit`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ chatRoomId: Number(roomId) }),
-      });
-
-      console.log('채팅방 나가기 성공');
-
-      // WebSocket 연결 종료
-      if (websocket) {
-        websocket.close();
-      }
-
-      router.push(`/home`);
-    } catch (err) {
-      console.error('채팅방 나가기 실패:', err);
-    }
-  };
-
   const handleSendMessage = async (message: string) => {
     // 메시지 객체를 서버에서 기대하는 형태에 맞게 수정
     const messageObject = {
@@ -155,6 +187,7 @@ const ChatPage = () => {
       chatRoomId: roomId, // 채팅방 ID
       message: message, // 메시지 내용
       senderName: savedNickName, // senderId -> senderName으로 수정
+      id: Date.now(),
     };
 
     // 서버로 메시지 전송
@@ -176,33 +209,24 @@ const ChatPage = () => {
 
   return (
     <div className="flex flex-col w-full min-h-full">
-      {selectedChat ? (
-        <>
-          <ChatWindow
-            messages={messages}
-            receiverId={selectedChat.id}
-            status={selectedChat.status}
-            currentUser={currentUser || 'unknown'}
-            receiverName={selectedChat.name}
-            receiverStatus={selectedChat.status}
-            chatRoomId={roomId!}
-            receiverJob="test"
-          />
-          <div className="h-[60px] border-t border-gray-700">
-            <MessageInput onSendMessage={handleSendMessage} />
-          </div>
-        </>
-      ) : (
-        <div className="flex items-center justify-center h-full text-white">
-          채팅방을 선택해주세요!
+      <>
+        <ChatWindow
+          messages={messages}
+          // status={selectedChat.status}
+          currentUser={savedNickName!}
+          receiverName={receiverUser?.nickName || 'nickname'}
+          receiverStatus="accepted"
+          chatRoomId={roomId!}
+          receiverJob={receiverUser?.affiliation || '직장 정보 없음'}
+          systemMessages={systemMessages}
+          onSystemMessageSend={(subtype) =>
+            sendSystemMessage(subtype, savedNickName!, roomId!, websocket)
+          }
+        />
+        <div className="h-[60px] border-t border-gray-700">
+          <MessageInput onSendMessage={handleSendMessage} />
         </div>
-      )}
-      <button
-        className="px-4 py-2 text-white bg-red-500 rounded-md hover:bg-red-600"
-        onClick={exitChatRoom}
-      >
-        채팅방 나가기
-      </button>
+      </>
     </div>
   );
 };
