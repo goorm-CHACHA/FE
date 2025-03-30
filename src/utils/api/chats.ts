@@ -27,9 +27,12 @@ export async function getReceiverIdFromChatRoom(
 
 export const exitChatRoom = async (chatRoomId: number): Promise<boolean> => {
   try {
-    await api.post('/chats/exit', {
-      chatRoomId,
+    const res = await fetch(`${process.env.NEXT_PUBLIC_HTTP_API_URL}/chats/exit`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ chatRoomId: Number(chatRoomId) }),
     });
+    if (!res.ok) throw new Error(`응답 실패: ${res.status}`);
 
     console.log('✅ 채팅방 나가기 성공');
     return true;
@@ -38,3 +41,4 @@ export const exitChatRoom = async (chatRoomId: number): Promise<boolean> => {
     return false;
   }
 };
+
