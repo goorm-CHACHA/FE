@@ -9,7 +9,7 @@ import api from '~/utils/api/api';
 import { viewAllUser } from '~/utils/api/user';
 import { UserData } from '~/types/user.types';
 import { useWebSocketStore } from '~/stores/use-websocket-store';
-
+import { sendTableStatusMessage } from '~/utils/websoket';
 export type SystemMessageSubtype = 'notice' | 'agree' | 'complete' | 'timeout';
 
 interface SystemMessagePayload {
@@ -45,7 +45,7 @@ const ChatPage = () => {
   const [messages, setMessages] = useState<
     { createTime: string; message: string; senderName: string }[]
   >([]);
-  const [currentUser, setCurrentUser] = useState<string | null>(null);
+  const [currentUser, setCurrentUser] = useState<UserData | null>(null);
   const [receiverUser, setReceiverUser] = useState<UserData | null>(null);
   const [savedNickName, setSavedNickName] = useState<string | null>(null);
   const searchParams = useSearchParams();
@@ -56,6 +56,11 @@ const ChatPage = () => {
     { type: string; nickname?: string }[]
   >([]);
 
+  console.log(
+    '요청 url:',
+    `${process.env.NEXT_PUBLIC_HTTP_API_URL}/chats/exit`,
+  );
+  console.log(currentUser, 'crt user');
   useEffect(() => {
     const fetchCurrentUser = async () => {
       const access_token = localStorage.getItem('accessToken');
@@ -82,7 +87,7 @@ const ChatPage = () => {
         const allUsers = await viewAllUser();
         const receiver = await getReceiverIdFromChatRoom(
           roomId,
-          currentUser,
+          currentUser.nickName!,
           allUsers,
         );
         setReceiverUser(receiver);
@@ -102,23 +107,38 @@ const ChatPage = () => {
     }
   }, []);
 
-  const fetchToken = () => {
-    // 쿠키에서 access_token 가져오기
-    const cookies = document.cookie.split(';');
-    for (const cookie of cookies) {
-      const [key, value] = cookie.trim().split('=');
-      if (key === 'access_token') {
-        return value;
+  // const fetchToken = () => {
+  //   // 쿠키에서 access_token 가져오기
+  //   const cookies = document.cookie.split(';');
+  //   for (const cookie of cookies) {
+  //     const [key, value] = cookie.trim().split('=');
+  //     if (key === 'access_token') {
+  //       return value;
+  //     }
+  //   }
+  //   return null;
+  // };
+  useEffect(() => {
+    const fetchCurrentUser = async () => {
+      const access_token = localStorage.getItem('accessToken');
+      if (!access_token) return;
+
+      try {
+        const res = await api.get('/api/users/mypage');
+        setCurrentUser(res.data); // ✅ 올바른 user 객체
+      } catch (err) {
+        console.error('유저 정보 불러오기 실패:', err);
       }
-    }
-    return null;
-  };
+    };
+
+    fetchCurrentUser();
+  }, []);
 
   useEffect(() => {
-    const token = fetchToken();
-    if (token) {
-      setCurrentUser(token); // 토큰을 통해 사용자 정보를 설정
-    }
+    // const token = fetchToken();
+    // if (token) {
+    //   setCurrentUser(token); // 토큰을 통해 사용자 정보를 설정
+    // }
     const access_token = localStorage.getItem('accessToken');
 
     const ws = new WebSocket(
@@ -222,6 +242,16 @@ const ChatPage = () => {
           onSystemMessageSend={(subtype) =>
             sendSystemMessage(subtype, savedNickName!, roomId!, websocket)
           }
+          onTableStatusSend={(variant, tableNumber) =>
+            sendTableStatusMessage(
+              variant,
+              savedNickName!,
+              roomId!,
+              websocket!,
+              tableNumber,
+            )
+          }
+          // senderName={senderName}
         />
         <div className="h-[60px] border-t border-gray-700">
           <MessageInput onSendMessage={handleSendMessage} />

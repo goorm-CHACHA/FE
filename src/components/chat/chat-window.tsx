@@ -17,11 +17,11 @@ interface Message {
   createTime: string;
 }
 
+type VariantType = 'apply' | 'waiting' | 'assigned';
 interface Notification {
-  variant: 'apply' | 'waiting' | 'assigned';
+  variant: VariantType;
   tableNumber?: string;
 }
-
 interface ChatWindowProps {
   messages: Message[];
   status?: 'accepted' | 'pending';
@@ -30,8 +30,10 @@ interface ChatWindowProps {
   receiverName: string;
   receiverStatus: string;
   chatRoomId: number;
+  // senderName: string;
   systemMessages?: { type: string; nickname?: string }[];
   onSystemMessageSend?: (subtype: SystemMessageSubtype) => void;
+  onTableStatusSend?: (variant: VariantType, tableNumber?: string) => void;
 }
 
 const ChatWindow = ({
@@ -43,6 +45,8 @@ const ChatWindow = ({
   chatRoomId,
   systemMessages,
   onSystemMessageSend,
+  onTableStatusSend,
+  // senderName,
 }: ChatWindowProps) => {
   const chatRef = useRef<HTMLDivElement>(null);
   const [waitTime, setWaitTime] = useState<number | undefined>();
@@ -88,12 +92,14 @@ const ChatWindow = ({
             (subtype) => onSystemMessageSend?.(subtype),
             (v) => (prevVariantRef.current = v),
           );
+          onTableStatusSend?.(newVariant);
           return { ...prev, variant: newVariant };
         });
       } else if (time > 0) {
         setNotification((prev) => {
           const newVariant = 'waiting';
           prevVariantRef.current = newVariant;
+          onTableStatusSend?.(newVariant);
           return { ...prev, variant: newVariant };
         });
         onSystemMessageSend?.('notice');
@@ -104,6 +110,7 @@ const ChatWindow = ({
         setNotification((prev) => {
           const newVariant = 'assigned';
           prevVariantRef.current = newVariant;
+          onTableStatusSend?.(newVariant);
           return { ...prev, variant: newVariant };
         });
       }
