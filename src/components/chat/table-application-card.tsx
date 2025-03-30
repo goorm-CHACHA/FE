@@ -3,7 +3,7 @@ import { useRouter } from 'next/navigation';
 import Modal, { ModalProps } from '../common/modal';
 import CheckboxItem from './checkbox-item-modal';
 import Button from '../common/button';
-import { cancelTable, startNetworking } from '~/utils/api/table';
+import { cancelTable } from '~/utils/api/table';
 
 interface TableApplicationCardProps {
   variant: 'apply' | 'waiting' | 'assigned';
@@ -14,6 +14,7 @@ interface TableApplicationCardProps {
   chatRoomId: number;
   onConsent?: () => void;
   currentUser: string;
+  receiverName: string;
 }
 // 시간 부분... 맞춰보기..
 const TableApplicationCard: React.FC<TableApplicationCardProps> = ({
@@ -24,7 +25,8 @@ const TableApplicationCard: React.FC<TableApplicationCardProps> = ({
   onCancel,
   chatRoomId,
   onConsent,
-  currentUser,
+  // currentUser,
+  // receiverName,
 }) => {
   const router = useRouter();
   const [isReserved, setIsReserved] = useState(false);
@@ -143,7 +145,7 @@ const TableApplicationCard: React.FC<TableApplicationCardProps> = ({
 
   //필요
   const handleQRRegistration = () => {
-    router.push('/qr-reader');
+    router.push('/networking-qr-reader');
   };
 
   // ✅
@@ -199,11 +201,6 @@ const TableApplicationCard: React.FC<TableApplicationCardProps> = ({
     triggerButtonLabel: '',
   };
 
-  const networkStarts = async () => {
-    alert(' api 호출 완료');
-    await startNetworking(tableNumber!);
-    router.push('/table');
-  };
   const secondCancelModalProps: ModalProps = {
     title: '네트워킹을 취소하시겠어요?',
     subText: '네트워킹을 취소하면 채팅방은 종료돼요.',
@@ -316,12 +313,10 @@ const TableApplicationCard: React.FC<TableApplicationCardProps> = ({
           <Button
             variant="black-transparent"
             size="sm"
-            // 위치 안내 캔슬
-            // onClick={onCancel}
-            onClick={networkStarts}
+            onClick={onCancel}
             className="flex-grow"
           >
-            {/* 위치 안내 */} 네트워킹 시작
+            위치 안내
           </Button>
           <Button
             variant="green"
