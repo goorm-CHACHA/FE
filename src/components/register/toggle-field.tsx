@@ -37,7 +37,6 @@ const ToggleField = <T extends FieldValues>({
     <div className={`${className}`}>
       {label && (
         <div className="flex gap-3 content-center">
-          <div className="w-6 h-6 border border-dashed border-[#02e473]" />
           <div>
             <p className="mb-4 font-bold text-body-lg text-gray-neutral-50">
               {label}
