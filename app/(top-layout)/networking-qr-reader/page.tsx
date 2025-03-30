@@ -10,10 +10,12 @@ import { networkingStart } from '~/utils/api/network';
 const QrReader = () => {
   const router = useRouter();
 
-  const handleNetworkingStart = (result: QrScanner.ScanResult) => {
+  const handleNetworkingStart = async (result: QrScanner.ScanResult) => {
     try {
       const parsedData = JSON.parse(result.data);
-      networkingStart(parsedData.tableNumber);
+
+      await networkingStart(parsedData.tableNumber);
+      router.push('/table');
     } catch (error) {
       console.error('QR 데이터 처리 실패:', error);
     }

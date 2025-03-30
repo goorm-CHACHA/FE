@@ -6,12 +6,12 @@ import {
   cancelTable,
   consentReservation,
   requestTable,
-  // getWaitTime,
+  getWaitTime,
 } from '~/utils/api/table';
 import SystemMessage from './system-message';
-
+import { SystemMessageSubtype } from '../../../app/(top-layout)/chat/page';
 interface Message {
-  id: number;
+  id?: number;
   senderName: string;
   message: string;
   createTime: string;
@@ -24,33 +24,29 @@ interface Notification {
 
 interface ChatWindowProps {
   messages: Message[];
-  receiverId: number;
-  status: 'accepted' | 'pending';
+  status?: 'accepted' | 'pending';
   receiverJob: string;
   currentUser: string;
   receiverName: string;
   receiverStatus: string;
   chatRoomId: number;
+  systemMessages?: { type: string; nickname?: string }[];
+  onSystemMessageSend?: (subtype: SystemMessageSubtype) => void;
 }
 
 const ChatWindow = ({
   messages,
-  receiverId,
   receiverName,
   receiverJob,
   receiverStatus,
   currentUser,
   chatRoomId,
+  systemMessages,
+  onSystemMessageSend,
 }: ChatWindowProps) => {
   const chatRef = useRef<HTMLDivElement>(null);
-  const [notifyTimeout, setNotifyTimeout] = useState(false);
-  const [reserveTable, setReserveTable] = useState(false);
-  // const [fullyBooked, setFullyBooked] = useState(false);
-  // const [waitTime, setWaitTime] = useState<number | undefined>();
-
-  // 삭제할거
-  console.log(setNotifyTimeout, setReserveTable);
-  console.log(chatRoomId);
+  const [waitTime, setWaitTime] = useState<number | undefined>();
+  const prevVariantRef = useRef<string | null>(null);
   // 건드리는 중
   // 초기 상태를 테이블 대기 시간에 따라 'apply' 혹은 'waiting' 로 설정
   const [notification, setNotification] = useState<Notification>({
@@ -58,11 +54,63 @@ const ChatWindow = ({
     tableNumber: undefined,
   });
 
+  const handleTimeoutSystemMessage = (
+    prevVariant: string | null,
+    newVariant: 'apply' | 'waiting' | 'assigned',
+    send: (subtype: SystemMessageSubtype) => void,
+    updatePrev?: (v: string) => void,
+  ) => {
+    if (prevVariant === 'assigned' && newVariant === 'apply') {
+      send('timeout');
+    }
+    if (updatePrev) updatePrev(newVariant);
+  };
+
   useEffect(() => {
     if (chatRef.current) {
       chatRef.current.scrollTop = chatRef.current.scrollHeight;
     }
   }, [messages]);
+
+  useEffect(() => {
+    const fetchWaitTime = async () => {
+      const time = await getWaitTime(chatRoomId);
+      console.log('💡 가져온 waitTime:', waitTime);
+      console.log('chatRoomId', chatRoomId);
+      setWaitTime(time);
+
+      if (time <= 0) {
+        setNotification((prev) => {
+          const newVariant = 'apply';
+          handleTimeoutSystemMessage(
+            prevVariantRef.current,
+            newVariant,
+            (subtype) => onSystemMessageSend?.(subtype),
+            (v) => (prevVariantRef.current = v),
+          );
+          return { ...prev, variant: newVariant };
+        });
+      } else if (time > 0) {
+        setNotification((prev) => {
+          const newVariant = 'waiting';
+          prevVariantRef.current = newVariant;
+          return { ...prev, variant: newVariant };
+        });
+        onSystemMessageSend?.('notice');
+      } else if (
+        prevVariantRef.current === 'apply' ||
+        prevVariantRef.current === 'waiting'
+      ) {
+        setNotification((prev) => {
+          const newVariant = 'assigned';
+          prevVariantRef.current = newVariant;
+          return { ...prev, variant: newVariant };
+        });
+      }
+    };
+
+    fetchWaitTime();
+  }, [chatRoomId, waitTime, onSystemMessageSend]);
 
   // 백엔드에서 알림 데이터 가져오기 (주석 처리)
   /*
@@ -80,58 +128,6 @@ const ChatWindow = ({
     fetchNotification();
   }, []);
   */
-  /* ⭐️⭐️ waitTime에 따른 variants 설정!!
-  if (waitTime === 0){
-  variant: 'apply' 
-  } else if {
-    variant: 'waiting' 
-    setFullyBooked(true);
-   }
-    여기에 waiting을 했는데 qr등록시간이 초과되었을 때도 {
-    variant: 'apply' 
-    하고 notifyTimeout true하기 
-    }
-
-*/
-  // ⭐️⭐️ waiting 상태에서 타임아웃 되었을 때 될 것
-  // useEffect(() => {
-  //   if (notification.variant === 'waiting' && /* 여기에 timeout 조건 */) {
-  //     setNotifyTimeout(true);
-  //     setNotification({
-  //       variant: 'apply',
-  //       tableNumber: 1,
-  //     })
-  //     // variant를 'apply'로 바꿔야 하면 setNotification 등도 추가
-  //   }
-  // }, [/* 필요한 조건들 */]);
-
-  // useEffect(() => {
-  //   const fetchWaitTime = async () => {
-  //     const time = await getWaitTime(chatRoomId);
-  //     console.log('💡 가져온 waitTime:', waitTime);
-  //     console.log('chatRoomId', chatRoomId);
-  //     setWaitTime(time);
-  //     if (time <= 0) {
-  //       setNotification({
-  //         variant: 'apply',
-  //         tableNumber: undefined,
-  //       });
-  //     } else if (time > 0) {
-  //       setNotification({
-  //         variant: 'waiting',
-  //         tableNumber: undefined,
-  //       });
-  //       setFullyBooked(true); // <- 혹시 메시지 띄우고 싶다면
-  //     } else {
-  //       setNotification({
-  //         variant: 'assigned',
-  //         tableNumber: undefined,
-  //       });
-  //     }
-  //   };
-
-  //   fetchWaitTime();
-  // }, [chatRoomId, waitTime]);
 
   // /table-application-card onConfirm 함수 ✅
   const handleConfirm = async () => {
@@ -141,7 +137,7 @@ const ChatWindow = ({
       // 여기에 테이블 배정 알림 확인 푸시알림
       setNotification({
         variant: 'assigned',
-        tableNumber: tableNumber,
+        tableNumber: tableNumber || undefined,
       });
     } else {
       console.warn('👀 tableNumber 없음');
@@ -155,12 +151,13 @@ const ChatWindow = ({
       console.log('테이블 신청 취소');
       await cancelTable(chatRoomId);
     } else {
-      console.warn('👀 tableNumber가 없음', chatRoomId, '<-챗룸');
+      console.warn('👀 신청 취소를 실패!: tableNumber가 없음', chatRoomId);
     }
-    // 여기에 취소 로직 추가
+    // 여기에 테이블 뭐지 이거 확인해야함
   };
   const handleConsent = async () => {
-    await consentReservation(chatRoomId, receiverId);
+    await consentReservation(chatRoomId);
+    onSystemMessageSend?.('agree');
     console.log('currentUser', currentUser);
   };
 
@@ -177,7 +174,8 @@ const ChatWindow = ({
             chatRoomId={chatRoomId}
             onConsent={handleConsent}
             currentUser={currentUser}
-            // waitTime={waitTime}
+            receiverName={receiverName}
+            waitTime={waitTime}
             // waitTime 여기에 ..
           />
         )}
@@ -210,12 +208,13 @@ const ChatWindow = ({
               senderName={message.senderName}
             />
           ))}
-          {notifyTimeout && <SystemMessage type="timeout" />}
-          {reserveTable && <SystemMessage type="complete" />}
-          {reserveTable && (
-            <SystemMessage type="complete" nickname={currentUser} />
-          )}
-          {/* {fullyBooked && <SystemMessage type="notice" />} */}
+          {systemMessages?.map((msg, idx) => (
+            <SystemMessage
+              key={idx}
+              type={msg.type as SystemMessageSubtype}
+              nickname={msg.nickname}
+            />
+          ))}
         </div>
       </div>
     </div>
