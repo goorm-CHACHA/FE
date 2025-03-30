@@ -180,7 +180,6 @@ const Page = () => {
           </p>
         </div>
       )}
-      ✅ 모달 추가
       <Modal
         isOpen={isChatRequestOpen}
         onOpenChange={() => setIsChatRequestOpen(false)}
