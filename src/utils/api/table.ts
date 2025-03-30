@@ -1,4 +1,3 @@
-import { table } from 'console';
 import api from './api';
 
 export async function requestTable(chatRoomId: number) {

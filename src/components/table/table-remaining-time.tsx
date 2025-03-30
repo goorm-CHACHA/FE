@@ -23,7 +23,7 @@ const TableRemainingTime: React.FC<TableRemainingTimeProps> = ({
   useEffect(() => {
     if (timeLeft <= 0) {
       setIsFinished(true);
-      endsNetwork(userId, tableNumber);
+      endsNetwork(tableNumber);
       return;
     }
 
