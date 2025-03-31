@@ -80,7 +80,7 @@ const ChatWindow = ({
 
   useEffect(() => {
     if (!websocket) return;
-  
+
     websocket.onmessage = (event) => {
       const incoming = JSON.parse(event.data);
       if (incoming.type === 'table-status') {
@@ -90,7 +90,7 @@ const ChatWindow = ({
         });
       }
     };
-  
+
     return () => {
       websocket.onmessage = null;
     };

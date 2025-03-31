@@ -114,7 +114,7 @@ const ChatPage = () => {
   //   }
   //   return null;
   // };
-  
+
   useEffect(() => {
     const fetchCurrentUser = async () => {
       const access_token = localStorage.getItem('accessToken');
@@ -204,7 +204,7 @@ const ChatPage = () => {
       senderName: savedNickName,
       chatRoomId: roomId,
     };
-  
+
     try {
       // ✅ 서버에 저장
       await fetch(`${process.env.NEXT_PUBLIC_HTTP_API_URL}chats/send`, {
@@ -212,7 +212,7 @@ const ChatPage = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(systemMessagePayload),
       });
-  
+
       // ✅ 웹소켓 전송
       if (websocket && websocket.readyState === WebSocket.OPEN) {
         websocket.send(JSON.stringify(systemMessagePayload));
@@ -262,9 +262,7 @@ const ChatPage = () => {
           receiverJob={receiverUser?.affiliation || '직장 정보 없음'}
           systemMessages={systemMessages}
           websocket={websocket ?? undefined}
-          onSystemMessageSend={(subtype) =>
-            handleSendSystemMessage(subtype)
-          }
+          onSystemMessageSend={(subtype) => handleSendSystemMessage(subtype)}
           onTableStatusSend={(variant, tableNumber) =>
             sendTableStatusMessage(
               variant,
