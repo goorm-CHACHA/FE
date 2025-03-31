@@ -4,6 +4,7 @@ import Button from '~/components/common/button';
 import Modal from '~/components/common/modal';
 import { endsNetwork } from '~/utils/api/table';
 import { useNetworkTimerStore } from '~/stores/use-network-timer-store';
+import { useWebSocketStore } from '~/stores/use-websocket-store';
 
 interface NetworkingActionsProps {
   tableNumber: string;
@@ -17,6 +18,11 @@ const NetworkingActions: React.FC<NetworkingActionsProps> = ({
   const [isFirstModalOpen, setIsFirstModalOpen] = useState(false);
   const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
   const isFinished = useNetworkTimerStore((state) => state.isFinished); // ✅ 값 가져오기
+  const { websocket } = useWebSocketStore();
+
+  const storedRoomId = typeof window !== 'undefined' ? localStorage.getItem('chatRoomId') : null;
+  const chatRoomId = storedRoomId ? parseInt(storedRoomId, 10) : null;
+
 
   const handleNetworkingStop = async () => {
     if (isFinished) {
@@ -38,6 +44,16 @@ const NetworkingActions: React.FC<NetworkingActionsProps> = ({
   const handleReturnToList = async () => {
     await endsNetwork(tableNumber);
     setIsSecondModalOpen(false);
+    if (websocket && websocket.readyState === WebSocket.OPEN && chatRoomId) {
+      websocket.send(
+        JSON.stringify({
+          messageType: 'table',
+          variant: 'end',
+          message: '네트워킹이 종료되었습니다.',
+          chatRoomId: chatRoomId,
+        }),
+      );
+    }
     router.push('/home');
   };
   const handleQRRegistration = () => {
