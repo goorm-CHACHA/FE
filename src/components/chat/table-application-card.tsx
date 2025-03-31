@@ -323,7 +323,11 @@ const TableApplicationCard: React.FC<TableApplicationCardProps> = ({
             onClick={handleQRRegistration}
             className="flex-grow"
           >
-            QR 등록 {Math.floor(countdown / 60).toString().padStart(2, '0')} : {(countdown % 60).toString().padStart(2, '0')}
+            QR 등록{' '}
+            {Math.floor(countdown / 60)
+              .toString()
+              .padStart(2, '0')}{' '}
+            : {(countdown % 60).toString().padStart(2, '0')}
           </Button>
         </div>
       );
