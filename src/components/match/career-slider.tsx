@@ -53,7 +53,7 @@ const SliderCareer: React.FC<SliderCareerProps> = ({
               min={0}
               max={4}
               step={1}
-              value={value as number[]}
+              value={Array.isArray(value) ? value.map(Number) : [0, 4]}
               onChange={(newValue) => onChange(newValue as number[])}
               railStyle={{
                 backgroundColor: '#85858530',
