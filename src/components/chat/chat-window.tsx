@@ -13,18 +13,24 @@ import { SystemMessageSubtype } from '../../../app/(top-layout)/chat/page';
 // import { useRouter } from 'next/navigation';
 interface Message {
   id?: number;
+  id?: number;
   senderName: string;
   message: string;
   createTime: string;
 }
 
 type VariantType = 'apply' | 'waiting' | 'assigned';
+type VariantType = 'apply' | 'waiting' | 'assigned';
 interface Notification {
+  variant: VariantType;
+  tableNumber?: string;
   variant: VariantType;
   tableNumber?: string;
 }
 interface ChatWindowProps {
   messages: Message[];
+  status?: 'accepted' | 'pending';
+  receiverJob: string;
   status?: 'accepted' | 'pending';
   receiverJob: string;
   currentUser: string;
@@ -40,6 +46,7 @@ const ChatWindow = ({
   messages,
   receiverName,
   receiverJob,
+  receiverJob,
   receiverStatus,
   currentUser,
   chatRoomId,
@@ -48,6 +55,11 @@ const ChatWindow = ({
   onTableStatusSend,
 }: ChatWindowProps) => {
   const chatRef = useRef<HTMLDivElement>(null);
+  const [waitTime, setWaitTime] = useState<number | undefined>();
+  const prevVariantRef = useRef<string | null>(null);
+  // 건드리는 중
+  // 초기 상태를 테이블 대기 시간에 따라 'apply' 혹은 'waiting' 로 설정
+  const [notification, setNotification] = useState<Notification>({
   const [waitTime, setWaitTime] = useState<number | undefined>();
   const prevVariantRef = useRef<string | null>(null);
   // 건드리는 중
@@ -227,6 +239,38 @@ const ChatWindow = ({
     await consentReservation(chatRoomId);
     onSystemMessageSend?.('agree');
     console.log('currentUser', currentUser);
+
+  // /table-application-card onConfirm 함수 ✅
+  const handleConfirm = async () => {
+    if (chatRoomId) {
+      const tableNumber = await requestTable(chatRoomId);
+      console.log('테이블 신청 확인');
+      // 여기에 테이블 배정 알림 확인 푸시알림
+      setNotification({
+        variant: 'assigned',
+        tableNumber: tableNumber || undefined,
+      });
+      onTableStatusSend?.('assigned', tableNumber || undefined);
+    } else {
+      console.warn('👀 tableNumber 없음');
+    }
+  };
+
+  // setShowSecondCancelModal
+  // 지금 나가는 거 waiting 중일 때,
+  const handleCancel = async () => {
+    if (chatRoomId) {
+      console.log('테이블 신청 취소');
+      await cancelTable(chatRoomId);
+    } else {
+      console.warn('👀 신청 취소를 실패!: tableNumber가 없음', chatRoomId);
+    }
+    // 여기에 테이블 뭐지 이거 확인해야함
+  };
+  const handleConsent = async () => {
+    await consentReservation(chatRoomId);
+    onSystemMessageSend?.('agree');
+    console.log('currentUser', currentUser);
   };
 
   return (
@@ -245,6 +289,12 @@ const ChatWindow = ({
             receiverName={receiverName}
             waitTime={waitTime}
             // waitTime 여기에 ..
+            chatRoomId={chatRoomId}
+            onConsent={handleConsent}
+            currentUser={currentUser}
+            receiverName={receiverName}
+            waitTime={waitTime}
+            // waitTime 여기에 ..
           />
         )}
       </div>
@@ -255,6 +305,7 @@ const ChatWindow = ({
       <div className="flex-1 overflow-y-auto " ref={chatRef}>
         {/* 프로필 */}
         <div className="flex flex-col items-center p-6 border border-gray-700/60">
+          <DefaultProfile size="profileChat" jobValue={receiverJob} />
           <DefaultProfile size="profileChat" jobValue={receiverJob} />
           <div className="flex flex-col items-center gap-1.5 mt-6">
             <p className="text-lg font-semibold text-center text-[#fefefe] w-[200px]">
