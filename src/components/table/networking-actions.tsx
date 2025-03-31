@@ -20,9 +20,9 @@ const NetworkingActions: React.FC<NetworkingActionsProps> = ({
   const isFinished = useNetworkTimerStore((state) => state.isFinished); // ✅ 값 가져오기
   const { websocket } = useWebSocketStore();
 
-  const storedRoomId = typeof window !== 'undefined' ? localStorage.getItem('chatRoomId') : null;
+  const storedRoomId =
+    typeof window !== 'undefined' ? localStorage.getItem('chatRoomId') : null;
   const chatRoomId = storedRoomId ? parseInt(storedRoomId, 10) : null;
-
 
   const handleNetworkingStop = async () => {
     if (isFinished) {
