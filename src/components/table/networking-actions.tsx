@@ -12,7 +12,6 @@ interface NetworkingActionsProps {
 
 const NetworkingActions: React.FC<NetworkingActionsProps> = ({
   tableNumber,
-  userId,
 }) => {
   const router = useRouter();
   const [isFirstModalOpen, setIsFirstModalOpen] = useState(false);
@@ -37,7 +36,7 @@ const NetworkingActions: React.FC<NetworkingActionsProps> = ({
   };
 
   const handleReturnToList = async () => {
-    await endsNetwork(userId, tableNumber);
+    await endsNetwork(tableNumber);
     setIsSecondModalOpen(false);
     router.push('/home');
   };

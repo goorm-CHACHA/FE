@@ -30,6 +30,7 @@ interface ChatWindowProps {
   receiverName: string;
   receiverStatus: string;
   chatRoomId: number;
+  websocket?: WebSocket;
   // senderName: string;
   systemMessages?: { type: string; nickname?: string }[];
   onSystemMessageSend?: (subtype: SystemMessageSubtype) => void;
@@ -46,6 +47,7 @@ const ChatWindow = ({
   systemMessages,
   onSystemMessageSend,
   onTableStatusSend,
+  websocket,
   // senderName,
 }: ChatWindowProps) => {
   const chatRef = useRef<HTMLDivElement>(null);
@@ -60,7 +62,7 @@ const ChatWindow = ({
 
   const handleTimeoutSystemMessage = (
     prevVariant: string | null,
-    newVariant: 'apply' | 'waiting' | 'assigned',
+    newVariant: VariantType,
     send: (subtype: SystemMessageSubtype) => void,
     updatePrev?: (v: string) => void,
   ) => {
@@ -75,6 +77,36 @@ const ChatWindow = ({
       chatRef.current.scrollTop = chatRef.current.scrollHeight;
     }
   }, [messages]);
+
+  // useEffect(() => {
+  //   const fetchWaitTime = async () => {
+  //     const time = await getWaitTime(chatRoomId);
+  //     setWaitTime(time);
+
+  //     if (time <= 0) {
+  //       const newVariant: VariantType = 'apply';
+  //       setNotification((prev) => {
+  //         handleTimeoutSystemMessage(
+  //           prevVariantRef.current,
+  //           newVariant,
+  //           (subtype) => onSystemMessageSend?.(subtype),
+  //           (v) => (prevVariantRef.current = v),
+  //         );
+  //         onTableStatusSend?.(newVariant);
+  //         return { ...prev, variant: newVariant };
+  //       });
+  //     } else {
+  //       const newVariant: VariantType = 'waiting';
+  //       setNotification((prev) => {
+  //         prevVariantRef.current = newVariant;
+  //         onTableStatusSend?.(newVariant);
+  //         return { ...prev, variant: newVariant };
+  //       });
+  //       onSystemMessageSend?.('notice');
+  //     }
+  //   };
+  //   fetchWaitTime();
+  // }, [chatRoomId, waitTime]);
 
   useEffect(() => {
     const fetchWaitTime = async () => {
@@ -146,6 +178,7 @@ const ChatWindow = ({
         variant: 'assigned',
         tableNumber: tableNumber || undefined,
       });
+      onTableStatusSend?.('assigned', tableNumber || undefined);
     } else {
       console.warn('👀 tableNumber 없음');
     }
