@@ -69,7 +69,6 @@ const ChatBubble = ({
       )}
       {...props} // ✅ props 적용
     >
-
       {variant === 'receiver' && showProfile && imgSrc && (
         <DefaultProfile size="xs" />
       )}

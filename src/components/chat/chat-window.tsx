@@ -274,7 +274,9 @@ const ChatWindow = ({
               message={message.message} // 메시지 내용
               createTime={message.createTime}
               senderName={message.senderName}
-              variant={currentUser === message.senderName ? 'sender' : 'receiver'}
+              variant={
+                currentUser === message.senderName ? 'sender' : 'receiver'
+              }
             />
           ))}
           {systemMessages?.map((msg, idx) => (
