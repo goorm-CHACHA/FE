@@ -72,8 +72,8 @@ const TableApplicationCard: React.FC<TableApplicationCardProps> = ({
       return () => clearTimeout(timer);
     }
   }, [variant, waitTime]);
-  
-  console.log('qr등록 시간')
+
+  console.log('qr등록 시간');
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
