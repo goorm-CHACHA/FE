@@ -78,6 +78,24 @@ const ChatWindow = ({
     }
   }, [messages]);
 
+  useEffect(() => {
+    if (!websocket) return;
+  
+    websocket.onmessage = (event) => {
+      const incoming = JSON.parse(event.data);
+      if (incoming.type === 'table-status') {
+        setNotification({
+          variant: incoming.variant,
+          tableNumber: incoming.tableNumber,
+        });
+      }
+    };
+  
+    return () => {
+      websocket.onmessage = null;
+    };
+  }, [websocket]);
+
   // useEffect(() => {
   //   const fetchWaitTime = async () => {
   //     const time = await getWaitTime(chatRoomId);
@@ -149,7 +167,7 @@ const ChatWindow = ({
     };
 
     fetchWaitTime();
-  }, [chatRoomId, waitTime, onSystemMessageSend]);
+  }, [chatRoomId, waitTime, onSystemMessageSend, onTableStatusSend]);
 
   // 백엔드에서 알림 데이터 가져오기 (주석 처리)
   /*

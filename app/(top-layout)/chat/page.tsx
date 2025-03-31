@@ -18,6 +18,7 @@ interface SystemMessagePayload {
   senderName: string;
   chatRoomId: number;
 }
+
 export function sendSystemMessage(
   subtype: SystemMessageSubtype,
   senderName: string,
@@ -113,6 +114,7 @@ const ChatPage = () => {
   //   }
   //   return null;
   // };
+  
   useEffect(() => {
     const fetchCurrentUser = async () => {
       const access_token = localStorage.getItem('accessToken');
@@ -195,6 +197,31 @@ const ChatPage = () => {
     };
   }, []);
 
+  const handleSendSystemMessage = async (subtype: SystemMessageSubtype) => {
+    const systemMessagePayload = {
+      type: 'system',
+      subtype,
+      senderName: savedNickName,
+      chatRoomId: roomId,
+    };
+  
+    try {
+      // ✅ 서버에 저장
+      await fetch(`${process.env.NEXT_PUBLIC_HTTP_API_URL}chats/send`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(systemMessagePayload),
+      });
+  
+      // ✅ 웹소켓 전송
+      if (websocket && websocket.readyState === WebSocket.OPEN) {
+        websocket.send(JSON.stringify(systemMessagePayload));
+      }
+    } catch (err) {
+      console.error('시스템 메시지 전송 실패:', err);
+    }
+  };
+
   const handleSendMessage = async (message: string) => {
     // 메시지 객체를 서버에서 기대하는 형태에 맞게 수정
     const messageObject = {
@@ -236,7 +263,7 @@ const ChatPage = () => {
           systemMessages={systemMessages}
           websocket={websocket ?? undefined}
           onSystemMessageSend={(subtype) =>
-            sendSystemMessage(subtype, savedNickName!, roomId!, websocket)
+            handleSendSystemMessage(subtype)
           }
           onTableStatusSend={(variant, tableNumber) =>
             sendTableStatusMessage(
