@@ -43,7 +43,7 @@ const TableApplicationCard: React.FC<TableApplicationCardProps> = ({
     useState(false);
   const [waitTime, setWaitTime] = useState(initialWaitTime);
   const [variant, setVariant] = useState(initialVariant);
-  const [isQRExpired, setIsQRExpired] = useState(false);
+  const [, setIsQRExpired] = useState(false);
   const [countdown, setCountdown] = useState(15);
 
   //필요없
@@ -55,7 +55,6 @@ const TableApplicationCard: React.FC<TableApplicationCardProps> = ({
   useEffect(() => {
     setWaitTime(initialWaitTime);
   }, [initialWaitTime]);
-  console.log(isQRExpired, setWaitTime);
 
   useEffect(() => {
     if (variant === 'assigned') {
