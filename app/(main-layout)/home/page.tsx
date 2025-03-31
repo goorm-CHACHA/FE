@@ -18,11 +18,12 @@ const Page = () => {
   const router = useRouter();
   const [, setWebSocket] = useState<WebSocket | null>(null);
   const { loggedInUser, setLoggedInUser } = useUserStore();
-
+  const chatRequesterIdRef = useRef<number | null>(null);
+  const chatReceiverIdRef = useRef<number | null>(null);
   // ✅ 모달 상태 추가
   const [isChatRequestOpen, setIsChatRequestOpen] = useState(false);
   const [chatRequesterId, setChatRequesterId] = useState<number | null>(null);
-  const [chatReceiverId, setChatReceiverId] = useState<number | null>(null);
+  // const [chatReceiverId, setChatReceiverId] = useState<number | null>(null);
 
   useEffect(() => {
     loggedInUserRef.current = loggedInUser;
@@ -68,10 +69,10 @@ const Page = () => {
   function showChatRequestNotification(
     message: string,
     requesterId: number,
-    receiverId: number,
+    // receiverId: number,
   ) {
     setChatRequesterId(requesterId);
-    setChatReceiverId(receiverId);
+    //setChatReceiverId(receiverId);
     setIsChatRequestOpen(true);
   }
 
@@ -97,10 +98,12 @@ const Page = () => {
 
       // 메시지 타입이 'request'일 때
       if (notificationData.messageType === 'request') {
+        chatRequesterIdRef.current = notificationData.requesterId;
+        chatReceiverIdRef.current = notificationData.receiverId;
         showChatRequestNotification(
           notificationData.message,
           notificationData.requesterId,
-          notificationData.receiverId,
+          //  notificationData.receiverId,
         );
       }
 
@@ -204,8 +207,17 @@ const Page = () => {
             label: '수락',
             actionType: 'action',
             onClick: () => {
-              if (chatRequesterId !== null && chatReceiverId !== null) {
-                acceptChat(chatRequesterId, chatReceiverId);
+              console.log(
+                chatReceiverIdRef.current + ' ' + chatReceiverIdRef.current,
+              );
+              if (
+                chatRequesterIdRef.current !== null &&
+                chatReceiverIdRef.current !== null
+              ) {
+                acceptChat(
+                  chatRequesterIdRef.current,
+                  chatReceiverIdRef.current,
+                );
               }
               setIsChatRequestOpen(false);
             },
