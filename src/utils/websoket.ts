@@ -7,9 +7,10 @@ export const connectWebSocket = (
   onMessage?: (message: string) => void,
   userId?: string,
 ) => {
-  socket = new WebSocket(
-    `ws://${process.env.NEXT_PUBLIC_WS_API_URL}/chats?chatRoomId=${chatRoomId}&userId=${userId}`, // URL에 userId 추가
-  );
+  const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
+  const wsUrl = `${protocol}://${process.env.NEXT_PUBLIC_WS_API_URL}/chats?chatRoomId=${chatRoomId}&userId=${userId}`;
+
+  socket = new WebSocket(wsUrl);
 
   if (onMessage) onMessageCallback = onMessage;
 
@@ -103,4 +104,27 @@ export const disconnectWebSocket = () => {
 
 export const getWebSocket = (): WebSocket | null => {
   return socket;
+};
+
+export const sendTableStatusMessage = (
+  variant: 'apply' | 'waiting' | 'assigned',
+  senderName: string,
+  chatRoomId: number,
+  websocket: WebSocket,
+  tableNumber?: string,
+) => {
+  if (!websocket || websocket.readyState !== WebSocket.OPEN) {
+    console.warn('🛑 WebSocket이 아직 연결되지 않았습니다.');
+    return;
+  }
+
+  const message = {
+    type: 'table-status',
+    variant,
+    senderName,
+    chatRoomId,
+    tableNumber,
+  };
+
+  websocket.send(JSON.stringify(message));
 };

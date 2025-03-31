@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 
 import ToggleSwitch from '~/components/common/switch';
 import Modal, { ModalProps } from '~/components/common/modal';
@@ -10,7 +10,10 @@ import { ButtonVariantProps } from '~/components/common/button';
 
 import Exit from '~/assets/svgs/exit-icon.svg';
 import BackArrow from '~/assets/svgs/back-arrow.svg';
-import QrCard from '~/assets/svgs/qr-code-ver1.svg';
+import QRIcon from '~/assets/svgs/qr-code.svg';
+
+import { exitChatRoom as exitChatRoomApi } from '~/utils/api/chats';
+import { useWebSocketStore } from '~/stores/use-websocket-store';
 
 const TopNavigation = () => {
   const pathname = usePathname();
@@ -18,6 +21,10 @@ const TopNavigation = () => {
   const { isConnect, setIsConnect } = useNetworkStore();
   const { type, title } = getTopNavType(pathname);
   const [showModal, setShowModal] = useState(false);
+  const searchParams = useSearchParams();
+  const roomIdParam = searchParams.get('roomId');
+  const roomId = roomIdParam ? parseInt(roomIdParam, 10) : null;
+  const { closeWebSocket } = useWebSocketStore();
 
   const handleExitChatRoom = () => {
     setShowModal(true);
@@ -27,9 +34,22 @@ const TopNavigation = () => {
     setShowModal(false);
   };
 
-  const handleConfirmExit = () => {
-    setShowModal(false);
-    router.push('/home');
+  const handleConfirmExit = async () => {
+    if (!roomId) return;
+
+    try {
+      const success = await exitChatRoomApi(roomId);
+      if (success) {
+        router.push('/home');
+        closeWebSocket();
+      } else {
+        console.error('❌ 채팅방 나가기 실패');
+      }
+    } catch (err) {
+      console.error('❌ 에러 발생:', err);
+    } finally {
+      setShowModal(false);
+    }
   };
 
   const exitChatRoomModalProps: Omit<ModalProps, 'isOpen' | 'onOpenChange'> = {
@@ -54,7 +74,7 @@ const TopNavigation = () => {
   };
 
   return (
-    <div>
+    <div className="fixed top-0 z-10 w-full">
       <div className="flex justify-between items-center w-full max-w-[768px] h-[55px] px-5 py-3.5 bg-gray-neutral-900">
         {type === 'quick-network' && (
           <>
@@ -64,7 +84,7 @@ const TopNavigation = () => {
             </div>
             <div className="flex items-center gap-2">
               <button onClick={() => router.push('/qr-reader')}>
-                <QrCard width={32} height={32} />
+                <QRIcon width={32} height={32} />
               </button>
             </div>
           </>
@@ -87,7 +107,7 @@ const TopNavigation = () => {
               <p className="text-lg font-semibold text-white">채팅방</p>
               <Exit width={24} height={24} />
             </button>
-            <QrCard width={32} height={32} />
+            <QRIcon width={32} height={32} />
           </>
         )}
 

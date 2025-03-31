@@ -14,10 +14,10 @@ import Modal from '~/components/common/modal';
 const Page = () => {
   const { isConnect } = useNetworkStore();
   const { users, setUsers } = useUserStore();
-  const [loggedInUser, setLoggedInUser] = useState<UserData | null>(null);
   const loggedInUserRef = useRef<UserData | null>(null);
   const router = useRouter();
   const [, setWebSocket] = useState<WebSocket | null>(null);
+  const { loggedInUser, setLoggedInUser } = useUserStore();
 
   // ✅ 모달 상태 추가
   const [isChatRequestOpen, setIsChatRequestOpen] = useState(false);
@@ -54,6 +54,7 @@ const Page = () => {
 
   // ✅ window 객체에 등록 (테스트용)
   useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (window as any).showChatRequestNotification = showChatRequestNotification;
   }, []);
   // showChatRequestNotification("테스트 메시지", 1, 2); -> 콘솔에 입력
@@ -77,8 +78,9 @@ const Page = () => {
   // ✅ WebSocket 연결 설정
   useEffect(() => {
     const access_token = localStorage.getItem('accessToken');
+    const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
     const ws = new WebSocket(
-      `ws://${process.env.NEXT_PUBLIC_WS_API_URL}/notifications?access_token=${access_token}`,
+      `${protocol}://${process.env.NEXT_PUBLIC_WS_API_URL}/notifications?access_token=${access_token}`,
     );
     setWebSocket(ws);
 
@@ -107,11 +109,13 @@ const Page = () => {
       }
 
       if (notificationData.messageType === 'accept') {
-        router.push(`/chat?roomId=${notificationData.chatRoomId}`);
+        const roomId = notificationData.chatRoomId;
+        router.push(`/chat?roomId=${roomId}`);
       }
 
       if (notificationData.messageType === 'notification') {
-        router.push(`/chat?roomId=${notificationData.chatRoomId}`);
+        const roomId = notificationData.chatRoomId;
+        router.push(`/chat?roomId=${roomId}`);
       }
 
       if (notificationData.messageType === 'update') {
@@ -129,6 +133,7 @@ const Page = () => {
     };
 
     fetchLoggedInUser();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
