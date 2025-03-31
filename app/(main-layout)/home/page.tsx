@@ -23,8 +23,9 @@ const Page = () => {
   // ✅ 모달 상태 추가
   const [isChatRequestOpen, setIsChatRequestOpen] = useState(false);
   const [chatRequesterId, setChatRequesterId] = useState<number | null>(null);
-  // const [chatReceiverId, setChatReceiverId] = useState<number | null>(null);
-
+  const [chatReceiverId] = useState<number | null>(null);
+  const chatRequesterIdRef = useRef<number | null>(null);
+  const chatReceiverIdRef = useRef<number | null>(null);
   useEffect(() => {
     loggedInUserRef.current = loggedInUser;
   }, [loggedInUser]);
@@ -53,6 +54,12 @@ const Page = () => {
     }
   }
 
+  useEffect(() => {
+    if (chatRequesterId !== null && chatReceiverId !== null) {
+      console.log('업데이트된 값:', chatRequesterId, chatReceiverId);
+      // 여기서 상태가 변경된 후 실행할 로직 수행
+    }
+  }, [chatRequesterId, chatReceiverId]);
   // ✅ window 객체에 등록 (테스트용)
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -66,13 +73,8 @@ const Page = () => {
   }
 
   // ✅ 채팅 요청 UI 모달을 띄우는 함수
-  function showChatRequestNotification(
-    message: string,
-    requesterId: number,
-    // receiverId: number,
-  ) {
+  function showChatRequestNotification(message: string, requesterId: number) {
     setChatRequesterId(requesterId);
-    //setChatReceiverId(receiverId);
     setIsChatRequestOpen(true);
   }
 
@@ -103,7 +105,6 @@ const Page = () => {
         showChatRequestNotification(
           notificationData.message,
           notificationData.requesterId,
-          //  notificationData.receiverId,
         );
       }
 
@@ -112,13 +113,11 @@ const Page = () => {
       }
 
       if (notificationData.messageType === 'accept') {
-        const roomId = notificationData.chatRoomId;
-        router.push(`/chat?roomId=${roomId}`);
+        router.push(`/chat?roomId=${notificationData.chatRoomId}`);
       }
 
       if (notificationData.messageType === 'notification') {
-        const roomId = notificationData.chatRoomId;
-        router.push(`/chat?roomId=${roomId}`);
+        router.push(`/chat?roomId=${notificationData.chatRoomId}`);
       }
 
       if (notificationData.messageType === 'update') {
@@ -198,7 +197,8 @@ const Page = () => {
             label: '거절',
             actionType: 'action',
             onClick: () => {
-              if (chatRequesterId !== null) rejectChat(chatRequesterId);
+              if (chatRequesterIdRef.current !== null)
+                rejectChat(chatRequesterIdRef.current);
               setIsChatRequestOpen(false);
             },
             variant: 'black-transparent',
@@ -207,9 +207,6 @@ const Page = () => {
             label: '수락',
             actionType: 'action',
             onClick: () => {
-              console.log(
-                chatReceiverIdRef.current + ' ' + chatReceiverIdRef.current,
-              );
               if (
                 chatRequesterIdRef.current !== null &&
                 chatReceiverIdRef.current !== null
