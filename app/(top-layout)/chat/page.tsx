@@ -9,7 +9,6 @@ import api from '~/utils/api/api';
 import { viewAllUser } from '~/utils/api/user';
 import { UserData } from '~/types/user.types';
 import { useWebSocketStore } from '~/stores/use-websocket-store';
-import { sendTableStatusMessage } from '~/utils/websoket';
 export type SystemMessageSubtype = 'notice' | 'agree' | 'complete' | 'timeout';
 
 const ChatContent = () => {
@@ -219,7 +218,8 @@ const ChatContent = () => {
       console.error('메시지 전송 실패:', err);
     }
   };
-
+  // 누르면 채팅방에 잇는 모두에게 알림을전송하게 되어있는데 알림을 받으면 ? 다 다음 으로 넘어가게
+  // 받으면 다음 창으로 넘어가ㄹ
   return (
     <div className="flex flex-col w-full min-h-full">
       <>
@@ -232,17 +232,19 @@ const ChatContent = () => {
           chatRoomId={roomId!}
           receiverJob={receiverUser?.affiliation || '직장 정보 없음'}
           systemMessages={systemMessages}
-          websocket={websocket ?? undefined}
+          websocket={websocket!}
           onSystemMessageSend={(subtype) => handleSendSystemMessage(subtype)}
-          onTableStatusSend={(variant, tableNumber) =>
-            sendTableStatusMessage(
-              variant,
-              savedNickName!,
-              roomId!,
-              websocket!,
-              tableNumber,
-            )
-          }
+          onTableStatusSend={(variant, chatRoomId) => {
+            if (websocket && websocket.readyState === WebSocket.OPEN) {
+              websocket.send(
+                JSON.stringify({
+                  messageType: 'table',
+                  variant,
+                  chatRoomId,
+                }),
+              );
+            }
+          }}
           // senderName={senderName}
         />
         <div className="h-[60px] border-t border-gray-700">

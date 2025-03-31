@@ -10,6 +10,7 @@ import {
 } from '~/utils/api/table';
 import SystemMessage from './system-message';
 import { SystemMessageSubtype } from '../../../app/(top-layout)/chat/page';
+import { useRouter } from 'next/navigation';
 interface Message {
   id?: number;
   senderName: string;
@@ -59,7 +60,7 @@ const ChatWindow = ({
     variant: 'apply',
     tableNumber: undefined,
   });
-
+  const router = useRouter();
   const handleTimeoutSystemMessage = (
     prevVariant: string | null,
     newVariant: VariantType,
@@ -82,19 +83,26 @@ const ChatWindow = ({
     if (!websocket) return;
 
     websocket.onmessage = (event) => {
-      const incoming = JSON.parse(event.data);
-      if (incoming.type === 'table-status') {
-        setNotification({
-          variant: incoming.variant,
-          tableNumber: incoming.tableNumber,
-        });
+      const data = JSON.parse(event.data);
+
+      if (data.messageType === 'table') {
+        if (data.variant === 'apply') {
+          setNotification({ variant: 'apply' });
+        } else if (data.variant === 'waiting') {
+          setNotification({ variant: 'waiting' });
+        } else if (data.variant === 'assigned') {
+          setNotification({
+            variant: 'assigned',
+            tableNumber: data.tableNumber,
+          });
+        }
       }
     };
 
     return () => {
       websocket.onmessage = null;
     };
-  }, [websocket]);
+  }, [websocket, router]);
 
   // useEffect(() => {
   //   const fetchWaitTime = async () => {
@@ -169,6 +177,12 @@ const ChatWindow = ({
     fetchWaitTime();
   }, [chatRoomId, waitTime, onSystemMessageSend, onTableStatusSend]);
 
+  useEffect(() => {
+    if (chatRoomId) {
+      localStorage.setItem('chatRoomId', String(chatRoomId));
+      console.log('✅ chatRoomId 로컬 저장됨:', chatRoomId);
+    }
+  }, [chatRoomId]);
   // 백엔드에서 알림 데이터 가져오기 (주석 처리)
   /*
   useEffect(() => {
