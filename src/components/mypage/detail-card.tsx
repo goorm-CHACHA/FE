@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
 import { Dialog } from 'radix-ui';
 import { QRCodeType } from '~/types/form';
+import { Noto_Sans_KR } from 'next/font/google';
 
 import RepeatIcon from '~/assets/svgs/repeat.svg';
 import ScannerIcon from '~/assets/svgs/scanner.svg';
@@ -11,6 +12,8 @@ import UnderLeftDeco from '~/assets/svgs/graphic-under-left.svg';
 import UpRightDeco from '~/assets/svgs/graphic-up-right.svg';
 
 import { getColorByJob, getIconByJob } from '~/utils/get-profile-style';
+
+const noto_sans = Noto_Sans_KR({ subsets: ['latin'], weight: ['300'] });
 
 interface DetailCardProps {
   user: QRCodeType | null;
@@ -105,7 +108,7 @@ const BackCard = ({ user }: { user: QRCodeType | null }) => (
 );
 
 const InfoRow = ({ label, value }: { label: string; value?: string }) => (
-  <div className="flex text-sm text-neutral-200">
+  <div className={`flex text-sm text-neutral-200 ${noto_sans.className}`}>
     <Dialog.Description className="w-[85px]">{label}</Dialog.Description>
     <Dialog.Description>{value}</Dialog.Description>
   </div>
