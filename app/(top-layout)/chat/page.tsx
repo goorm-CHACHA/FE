@@ -12,36 +12,6 @@ import { useWebSocketStore } from '~/stores/use-websocket-store';
 import { sendTableStatusMessage } from '~/utils/websoket';
 export type SystemMessageSubtype = 'notice' | 'agree' | 'complete' | 'timeout';
 
-interface SystemMessagePayload {
-  type: 'system';
-  subtype: SystemMessageSubtype;
-  senderName: string;
-  chatRoomId: number;
-}
-
-export function sendSystemMessage(
-  subtype: SystemMessageSubtype,
-  senderName: string,
-  chatRoomId: number,
-  websocket: WebSocket | null,
-) {
-  if (!websocket || websocket.readyState !== WebSocket.OPEN) {
-    console.warn(
-      '⚠️ WebSocket 연결이 열려있지 않습니다. 시스템 메시지를 보낼 수 없습니다.',
-    );
-    return;
-  }
-
-  const message: SystemMessagePayload = {
-    type: 'system',
-    subtype,
-    senderName,
-    chatRoomId,
-  };
-
-  websocket.send(JSON.stringify(message));
-}
-
 const ChatPage = () => {
   const [messages, setMessages] = useState<
     { createTime: string; message: string; senderName: string }[]
