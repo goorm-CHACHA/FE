@@ -56,11 +56,7 @@ const ChatPage = () => {
     { type: string; nickname?: string }[]
   >([]);
 
-  console.log(
-    '요청 url:',
-    `${process.env.NEXT_PUBLIC_HTTP_API_URL}/chats/exit`,
-  );
-  console.log(currentUser, 'crt user');
+
   useEffect(() => {
     const fetchCurrentUser = async () => {
       const access_token = localStorage.getItem('accessToken');
@@ -133,6 +129,7 @@ const ChatPage = () => {
 
     fetchCurrentUser();
   }, []);
+
 
   useEffect(() => {
     // const token = fetchToken();
@@ -239,17 +236,12 @@ const ChatPage = () => {
           chatRoomId={roomId!}
           receiverJob={receiverUser?.affiliation || '직장 정보 없음'}
           systemMessages={systemMessages}
+          websocket={websocket ??  undefined}
           onSystemMessageSend={(subtype) =>
             sendSystemMessage(subtype, savedNickName!, roomId!, websocket)
           }
           onTableStatusSend={(variant, tableNumber) =>
-            sendTableStatusMessage(
-              variant,
-              savedNickName!,
-              roomId!,
-              websocket!,
-              tableNumber,
-            )
+            sendTableStatusMessage(variant, savedNickName!, roomId!, websocket!, tableNumber)
           }
           // senderName={senderName}
         />
