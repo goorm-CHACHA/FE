@@ -12,7 +12,7 @@ import { useWebSocketStore } from '~/stores/use-websocket-store';
 import { sendTableStatusMessage } from '~/utils/websoket';
 export type SystemMessageSubtype = 'notice' | 'agree' | 'complete' | 'timeout';
 
-const ChatPage = () => {
+const ChatContent = () => {
   const [messages, setMessages] = useState<
     { createTime: string; message: string; senderName: string }[]
   >([]);
