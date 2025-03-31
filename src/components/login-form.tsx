@@ -65,6 +65,7 @@ const LoginForm = () => {
               로그인
             </Button>
             <Button
+              type="button"
               size={'full'}
               variant={'black/70'}
               className="font-normal"
