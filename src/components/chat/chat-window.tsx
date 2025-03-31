@@ -10,7 +10,7 @@ import {
 } from '~/utils/api/table';
 import SystemMessage from './system-message';
 import { SystemMessageSubtype } from '../../../app/(top-layout)/chat/page';
-import { useRouter } from 'next/navigation';
+// import { useRouter } from 'next/navigation';
 interface Message {
   id?: number;
   senderName: string;
@@ -31,8 +31,6 @@ interface ChatWindowProps {
   receiverName: string;
   receiverStatus: string;
   chatRoomId: number;
-  websocket?: WebSocket;
-  // senderName: string;
   systemMessages?: { type: string; nickname?: string }[];
   onSystemMessageSend?: (subtype: SystemMessageSubtype) => void;
   onTableStatusSend?: (variant: VariantType, tableNumber?: string) => void;
@@ -48,8 +46,6 @@ const ChatWindow = ({
   systemMessages,
   onSystemMessageSend,
   onTableStatusSend,
-  websocket,
-  // senderName,
 }: ChatWindowProps) => {
   const chatRef = useRef<HTMLDivElement>(null);
   const [waitTime, setWaitTime] = useState<number | undefined>();
@@ -60,7 +56,7 @@ const ChatWindow = ({
     variant: 'apply',
     tableNumber: undefined,
   });
-  const router = useRouter();
+  // const router = useRouter();
   const handleTimeoutSystemMessage = (
     prevVariant: string | null,
     newVariant: VariantType,
@@ -79,30 +75,30 @@ const ChatWindow = ({
     }
   }, [messages]);
 
-  useEffect(() => {
-    if (!websocket) return;
+  // useEffect(() => {
+  //   if (!websocket) return;
 
-    websocket.onmessage = (event) => {
-      const data = JSON.parse(event.data);
+  //   websocket.onmessage = (event) => {
+  //     const data = JSON.parse(event.data);
 
-      if (data.messageType === 'table') {
-        if (data.variant === 'apply') {
-          setNotification({ variant: 'apply' });
-        } else if (data.variant === 'waiting') {
-          setNotification({ variant: 'waiting' });
-        } else if (data.variant === 'assigned') {
-          setNotification({
-            variant: 'assigned',
-            tableNumber: data.tableNumber,
-          });
-        }
-      }
-    };
+  //     if (data.messageType === 'table') {
+  //       if (data.variant === 'apply') {
+  //         setNotification({ variant: 'apply' });
+  //       } else if (data.variant === 'waiting') {
+  //         setNotification({ variant: 'waiting' });
+  //       } else if (data.variant === 'assigned') {
+  //         setNotification({
+  //           variant: 'assigned',
+  //           tableNumber: data.tableNumber,
+  //         });
+  //       }
+  //     }
+  //   };
 
-    return () => {
-      websocket.onmessage = null;
-    };
-  }, [websocket, router]);
+  //   return () => {
+  //     websocket.onmessage = null;
+  //   };
+  // }, [websocket, router]);
 
   // useEffect(() => {
   //   const fetchWaitTime = async () => {
@@ -278,6 +274,7 @@ const ChatWindow = ({
               message={message.message} // 메시지 내용
               createTime={message.createTime}
               senderName={message.senderName}
+              variant={currentUser === message.senderName ? 'sender' : 'receiver'}
             />
           ))}
           {systemMessages?.map((msg, idx) => (
