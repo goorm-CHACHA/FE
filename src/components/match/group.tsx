@@ -4,6 +4,9 @@ import DefaultProfile from '~/components/common/default-profile'; // DefaultProf
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import api from '~/utils/api/api';
+import { FormProvider, useForm } from 'react-hook-form';
+import { FormValues } from './one-to-one';
+import FilterWrapper from './filter-wrapper';
 
 interface GroupChatRoomResponseDto {
   id: number;
@@ -17,7 +20,13 @@ interface GroupChatRoomResponseDto {
 const GroupMatching = () => {
   const [groups, setGroups] = useState<GroupChatRoomResponseDto[]>([]); // 그룹 데이터를 위한 상태
   const router = useRouter();
-
+  const methods = useForm<FormValues>({
+    defaultValues: {
+      interests: [],
+      participationPurpose: [],
+      career: [0, 4],
+    },
+  });
   useEffect(() => {
     // 그룹 API 데이터를 가져오는 함수
     const fetchGroups = async () => {
@@ -70,7 +79,11 @@ const GroupMatching = () => {
   return (
     <div className="flex flex-col items-center">
       {/* 필터 컴포넌트 */}
-      <Filter />
+      <FormProvider {...methods}>
+        {/* 필터 컴포넌트 */}
+        <FilterWrapper />
+        {/* 나머지 UI */}
+      </FormProvider>
 
       {/* 그룹 데이터 렌더링 */}
       <div className="w-full max-w-4xl mt-5">
