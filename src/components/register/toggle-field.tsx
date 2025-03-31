@@ -18,6 +18,7 @@ interface ToggleFieldProps<T extends FieldValues> {
   maxSelection?: number;
   toggleVariants?: 'black' | 'primary' | 'primary-small';
   className?: string;
+  onChange?: (interest: string) => void;
 }
 
 const ToggleField = <T extends FieldValues>({
@@ -30,6 +31,7 @@ const ToggleField = <T extends FieldValues>({
   maxSelection = 1,
   toggleVariants = 'primary',
   className,
+  onChange,
 }: ToggleFieldProps<T>) => {
   const { setError, setValue } = useFormContext();
 
