@@ -196,7 +196,8 @@ const Page = () => {
             label: '거절',
             actionType: 'action',
             onClick: () => {
-              if (chatRequesterIdRef.current !== null) rejectChat(chatRequesterIdRef.current);
+              if (chatRequesterIdRef.current !== null)
+                rejectChat(chatRequesterIdRef.current);
               setIsChatRequestOpen(false);
             },
             variant: 'black-transparent',
@@ -205,8 +206,14 @@ const Page = () => {
             label: '수락',
             actionType: 'action',
             onClick: () => {
-              if (chatRequesterIdRef.current !== null && chatReceiverIdRef.current !== null) {
-                acceptChat(chatRequesterIdRef.current , chatReceiverIdRef.current);
+              if (
+                chatRequesterIdRef.current !== null &&
+                chatReceiverIdRef.current !== null
+              ) {
+                acceptChat(
+                  chatRequesterIdRef.current,
+                  chatReceiverIdRef.current,
+                );
               }
               setIsChatRequestOpen(false);
             },
