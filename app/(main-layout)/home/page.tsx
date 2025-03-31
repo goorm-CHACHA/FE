@@ -54,6 +54,7 @@ const Page = () => {
 
   // ✅ window 객체에 등록 (테스트용)
   useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (window as any).showChatRequestNotification = showChatRequestNotification;
   }, []);
   // showChatRequestNotification("테스트 메시지", 1, 2); -> 콘솔에 입력
@@ -131,7 +132,8 @@ const Page = () => {
     };
 
     fetchLoggedInUser();
-  }, [setLoggedInUser, router]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     const fetchUsers = async () => {

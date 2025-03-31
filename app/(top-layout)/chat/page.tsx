@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import ChatWindow from '~/components/chat/chat-window';
 import MessageInput from '~/components/chat/message-input';
 import { useSearchParams } from 'next/navigation';
@@ -165,6 +165,7 @@ const ChatPage = () => {
         ws.close();
       }
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleSendSystemMessage = async (subtype: SystemMessageSubtype) => {
@@ -252,4 +253,13 @@ const ChatPage = () => {
   );
 };
 
+const ChatPage = () => {
+  return (
+    <Suspense fallback={<div>채팅방 로딩 중...</div>}>
+      <ChatContent />
+    </Suspense>
+  );
+};
 export default ChatPage;
+
+export const dynamic = 'force-dynamic';
