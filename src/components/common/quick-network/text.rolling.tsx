@@ -4,6 +4,7 @@ import api from '~/utils/api/api';
 const TextRolling = () => {
   const [interestJobCategory, setInterestJobCategory] =
     useState<string>('정보 없음');
+  const [jobCategory, setJobCategory] = useState<string>('정보 없음');
   const [currentIndex, setCurrentIndex] = useState(0);
   const [countByInterest, setCountByInterest] = useState<number>(0);
 
@@ -21,6 +22,7 @@ const TextRolling = () => {
           setInterestJobCategory(
             response.data.interestJobCategory || '정보 없음',
           );
+          setJobCategory(response.data.jobCategory || '정보 없음');
         }
       } catch (error) {
         console.error('데이터를 불러오는 중 오류 발생:', error);
@@ -76,7 +78,7 @@ const TextRolling = () => {
   const texts = [
     <>
       <span className="text-white">[</span>
-      <span className="text-[#07ca7f]">{interestJobCategory}</span>
+      <span className="text-[#07ca7f]">{jobCategory}</span>
       <span className="text-white">]에 관심있는 참여자가 [</span>
       <span className="text-[#ff6f22]">{countByInterest}</span>
       <span className="text-white">]명 있어요</span>
