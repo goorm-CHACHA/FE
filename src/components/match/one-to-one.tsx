@@ -19,24 +19,52 @@ export interface FormValues {
   career: number[];
 }
 
-// 1. 참여 목적 데이터 정규화 (배열 형식 보장)
 const normalizeProfileData = (profiles: UserData[]): UserData[] => {
-  return profiles.map((profile) => ({
-    ...profile,
-    jobCategory: Array.isArray(profile.jobCategory)
-      ? profile.jobCategory.filter(Boolean).map((job) => String(job).trim())
-      : profile.jobCategory
-        ? [String(profile.jobCategory).trim()] // 문자열을 배열로 변환
-        : [],
-    participationPurpose: Array.isArray(profile.participationPurpose)
-      ? profile.participationPurpose.filter(Boolean).map((p) => p.trim())
-      : [profile.participationPurpose?.trim() ?? ''],
-    interests: Array.isArray(profile.interests)
-      ? profile.interests.filter(Boolean).map((i) => i.trim())
-      : profile.interests != null // ✅ null/undefined 체크
-        ? [String(profile.interests).trim()] // ✅ 문자열 강제 변환 + trim
-        : [],
-  }));
+  return profiles.map((profile, index) => {
+    // 변환 전 데이터 출력
+    // console.log(`🔵 [Before Normalization] Profile ${index}:`, profile);
+
+    const normalizedProfile = {
+      ...profile,
+      jobCategory: (Array.isArray(profile.jobCategory)
+        ? profile.jobCategory
+        : [profile.jobCategory ?? '']
+      ) // 단일 값 → 배열 변환
+        .filter(Boolean)
+        .map(
+          (job) =>
+            String(job)
+              .trim()
+              .replace(/\s/g, '') // 모든 공백 제거
+              .toLowerCase(), // 소문자 통일
+        ), // null/undefined인 경우 빈 배열 할당
+      participationPurpose: Array.isArray(profile.participationPurpose)
+        ? profile.participationPurpose
+            .filter(Boolean)
+            .map((p) => p.trim().replace(/\s/g, '').toLowerCase())
+        : [
+            profile.participationPurpose
+              ?.trim()
+              ?.replace(/\s/g, '')
+              .toLowerCase() ?? '',
+          ],
+      interests: Array.isArray(profile.interests)
+        ? profile.interests
+            .filter(Boolean)
+            .map((i) => i.trim().replace(/\s/g, '').toLowerCase())
+        : profile.interests != null
+          ? [String(profile.interests).trim().replace(/\s/g, '').toLowerCase()]
+          : [],
+    };
+
+    // 변환 후 데이터 출력
+    console.log(
+      // `🟢 [After Normalization] Profile ${index}:`,
+      normalizedProfile,
+    );
+
+    return normalizedProfile;
+  });
 };
 
 const OneToOneMatching = ({ profiles }: OneToOneMatchingProps) => {
@@ -54,15 +82,22 @@ const OneToOneMatching = ({ profiles }: OneToOneMatchingProps) => {
 
   // 필터 값 안전하게 처리
   const cleanFilters = (filters: FormValues): FormValues => ({
-    interests: typeof filters.interests === 'string' ? [filters.interests] : [], // 문자열이면 배열로 처리
-    participationPurpose:
-      typeof filters.participationPurpose === 'string'
-        ? [filters.participationPurpose]
-        : [], // 문자열이면 배열로 처리
+    jobs: Array.isArray(filters.jobs)
+      ? filters.jobs.map((job) => job.trim().replace(/\s/g, '').toLowerCase())
+      : [],
+    interests: Array.isArray(filters.interests)
+      ? filters.interests.map((interest) =>
+          interest.trim().replace(/\s/g, '').toLowerCase(),
+        )
+      : [],
+    participationPurpose: Array.isArray(filters.participationPurpose)
+      ? filters.participationPurpose.map((purpose) =>
+          purpose.trim().replace(/\s/g, '').toLowerCase(),
+        )
+      : [],
     career: Array.isArray(filters.career)
       ? filters.career.filter((c): c is number => typeof c === 'number')
-      : [0, 4], // 배열이 아니면 기본값 [0, 4] 처리
-    jobs: Array.isArray(filters.jobs) ? filters.jobs : [],
+      : [0, 4],
   });
 
   const filterProfiles = (profiles: UserData[], filters: FormValues) => {
@@ -70,54 +105,90 @@ const OneToOneMatching = ({ profiles }: OneToOneMatchingProps) => {
       // 직무 필터링 (정확한 문자열 일치)
       const jobMatch = filters.jobs?.length
         ? filters.jobs.some((job) => {
-            const jobCategories = Array.isArray(profile.jobCategory)
-              ? profile.jobCategory
-              : profile.jobCategory
-                ? [profile.jobCategory] // 문자열을 배열로 변환
-                : []; // undefined/null이면 빈 배열 처리
-            return jobCategories.some(
-              (profileJob) => profileJob.trim() === job.trim(),
-            );
+            if (typeof job !== 'string' || typeof profile.jobValue !== 'string')
+              return false;
+
+            const normalizedJob = job.trim().replace(/\s/g, '').toLowerCase();
+            const normalizedJobValue = profile.jobValue
+              .trim()
+              .replace(/\s/g, '')
+              .toLowerCase();
+
+            return normalizedJob === normalizedJobValue;
           })
         : true;
 
-      // interestMatch: 관심사 필터 (trim 적용)
+      // 관심사 필터링
       const interestMatch =
         (filters.interests ?? []).length > 0
-          ? (filters.interests ?? []).some((interest) =>
-              profile.interests?.some((profileInterest: string) =>
-                profileInterest.trim().includes(interest.trim()),
-              ),
-            )
+          ? filters.interests.includes('상관없음') // "상관없음"이면 모든 데이터 허용
+            ? true
+            : (filters.interests ?? []).some((interest) =>
+                profile.interests?.some((profileInterest: string) =>
+                  profileInterest
+                    .trim()
+                    .replace(/\s+/g, '')
+                    .includes(interest.trim().replace(/\s+/g, '')),
+                ),
+              )
           : true;
 
-      // purposeMatch: 참여 목적 필터 (trim 적용)
+      // 참여 목적 필터링
       const purposeMatch =
         (filters.participationPurpose ?? []).length > 0
-          ? (filters.participationPurpose ?? []).some((purpose) =>
-              Array.isArray(profile.participationPurpose)
-                ? profile.participationPurpose.some((profilePurpose: string) =>
-                    profilePurpose.trim().includes(purpose.trim()),
-                  )
-                : typeof profile.participationPurpose === 'string' &&
-                  profile.participationPurpose.trim().includes(purpose.trim()),
-            )
+          ? filters.participationPurpose.includes('상관없음') // "상관없음"이면 모든 데이터 허용
+            ? true
+            : (filters.participationPurpose ?? []).some((purpose) =>
+                Array.isArray(profile.participationPurpose)
+                  ? profile.participationPurpose.some(
+                      (profilePurpose: string) =>
+                        profilePurpose.trim() === purpose.trim(),
+                    )
+                  : typeof profile.participationPurpose === 'string' &&
+                    profile.participationPurpose.trim() === purpose.trim(),
+              )
           : true;
 
-      // careerMatch: 경력 필터
+      // 슬라이더 인덱스와 실제 경력 범위 매핑
+      const CAREER_MAPPINGS = [
+        { min: 0, max: 0 }, // 학생 (0)
+        { min: 0, max: 1 }, // 신입 (0-1년)
+        { min: 1, max: 3 }, // 주니어 (1-3년)
+        { min: 4, max: 9 }, // 미드레벨 (4-9년)
+        { min: 10, max: 100 }, // 시니어 (10년 이상)
+      ];
+
+      // 경력 필터링
       const careerMatch = (() => {
-        const [minCareer, maxCareer] = filters.career ?? [0, 4]; // 기본값 설정
+        const [minIdx, maxIdx] = filters.career ?? [0, 4];
+
+        // 슬라이더 인덱스를 실제 연차 범위로 변환
+        const filterMin = CAREER_MAPPINGS[minIdx].min;
+        const filterMax = CAREER_MAPPINGS[maxIdx].max;
 
         if (typeof profile.career === 'string') {
+          // 신입 프로필 처리 (명시적 차단)
           if (profile.career.includes('신입')) {
-            return minCareer <= 0; // 신입이 포함되어 있으면 career 필터가 0에 포함되어야 함
-          } else if (profile.career.includes('경력')) {
-            const careerYears = parseInt(profile.career.replace(/[^0-9]/g, '')); // 숫자만 추출
-            return careerYears >= minCareer && careerYears <= maxCareer; // 경력 연차를 필터와 비교
+            return filterMin <= 0 && filterMax >= 1;
+          }
+
+          // 경력 프로필 처리
+          const careerRange = profile.career.match(/\d+/g);
+          if (careerRange) {
+            const profileMin = parseInt(careerRange[0]);
+            const profileMax = parseInt(careerRange[1] ?? careerRange[0]);
+            return profileMin >= filterMin && profileMax <= filterMax;
           }
         }
         return false;
       })();
+
+      // console.log(`Filters Applied:`, filters);
+      // console.log(`Profile Being Checked:`, profile);
+      // console.log(`Job Match:`, jobMatch);
+      // console.log(`Interest Match:`, interestMatch);
+      // console.log(`Purpose Match:`, purposeMatch);
+      // console.log(`Career Match:`, careerMatch);
 
       return interestMatch && purposeMatch && careerMatch && jobMatch;
     });
@@ -150,21 +221,27 @@ const OneToOneMatching = ({ profiles }: OneToOneMatchingProps) => {
         <FilterWrapper />
       </FormProvider>
 
-      {sortedProfiles.map(
-        (profile) =>
-          profile.id && (
-            <div
-              className="w-full"
-              key={profile.id}
-              onClick={() => setSelectedUser(profile)}
-            >
-              <MatchCard
-                userData={profile}
-                inMyPage={false}
-                alignedOne={true}
-              />
-            </div>
-          ),
+      {sortedProfiles.length === 0 ? (
+        <div className="w-full py-4 text-center text-gray-500">
+          검색결과가 없습니다
+        </div>
+      ) : (
+        sortedProfiles.map(
+          (profile) =>
+            profile.id && (
+              <div
+                className="w-full"
+                key={profile.id}
+                onClick={() => setSelectedUser(profile)}
+              >
+                <MatchCard
+                  userData={profile}
+                  inMyPage={false}
+                  alignedOne={true}
+                />
+              </div>
+            ),
+        )
       )}
 
       <NetworkingModalFlow />
