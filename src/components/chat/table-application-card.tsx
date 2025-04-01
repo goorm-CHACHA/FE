@@ -340,47 +340,47 @@ const TableApplicationCard: React.FC<TableApplicationCardProps> = ({
   };
 
   return (
-      <div className="flex flex-col justify-center items-center flex-grow-0 flex-shrink-0 max-w-[768px] m-auto gap-4 px-5 pt-5 pb-4 bg-[#3a3a3a]/60 backdrop-blur-[5px]">
-        <div className="flex flex-col justify-start items-center self-stretch flex-grow-0 flex-shrink-0 gap-2.5">
-          <div className="flex justify-center items-center self-stretch flex-grow-0 flex-shrink-0 gap-1.5 px-1">
-            <div className="flex justify-start items-center flex-grow-0 flex-shrink-0 relative gap-2">
-              <div className="flex-grow-0 flex-shrink-0 w-6 h-6 relative bg-[#02e473]/25">
-                <div className="w-5 h-5 absolute left-px top-px rounded-sm border border-[#02e473]/70 border-dashed"></div>
-              </div>
-            </div>
-            <div className="flex justify-start items-center flex-grow-0 flex-shrink-0 gap-0.5">
-              <div className="flex justify-start items-center flex-grow-0 flex-shrink-0 relative">
-                {variant === 'waiting' ? (
-                  <>
-                    <p className="flex-grow-0 flex-shrink-0 text-lg font-semibold text-center text-[#fefefe]">
-                      예상 대기 시간:
-                    </p>
-                    <p className="flex-grow-0 flex-shrink-0 text-lg font-semibold text-center text-white">
-                      {waitTime}
-                    </p>
-                    <p className="flex-grow-0 flex-shrink-0 text-lg font-semibold text-center text-white">
-                      분
-                    </p>
-                  </>
-                ) : (
-                  <p className="flex-grow-0 flex-shrink-0 text-lg font-semibold text-center text-[#fefefe]">
-                    {getTitle()}
-                  </p>
-                )}
-              </div>
+    <div className="flex flex-col justify-center items-center flex-grow-0 flex-shrink-0 max-w-[768px] m-auto gap-4 px-5 pt-5 pb-4 bg-[#3a3a3a]/60 backdrop-blur-[5px]">
+      <div className="flex flex-col justify-start items-center self-stretch flex-grow-0 flex-shrink-0 gap-2.5">
+        <div className="flex justify-center items-center self-stretch flex-grow-0 flex-shrink-0 gap-1.5 px-1">
+          <div className="flex justify-start items-center flex-grow-0 flex-shrink-0 relative gap-2">
+            <div className="flex-grow-0 flex-shrink-0 w-6 h-6 relative bg-[#02e473]/25">
+              <div className="w-5 h-5 absolute left-px top-px rounded-sm border border-[#02e473]/70 border-dashed"></div>
             </div>
           </div>
-          <div className="flex flex-col justify-center items-start self-stretch flex-grow-0 flex-shrink-0 relative gap-1 pl-1.5">
-            <p className="self-stretch flex-grow-0 flex-shrink-0 w-[329px] text-sm text-center text-[#a6a6a6] whitespace-pre-line">
-              {getDescription()}
-            </p>
+          <div className="flex justify-start items-center flex-grow-0 flex-shrink-0 gap-0.5">
+            <div className="flex justify-start items-center flex-grow-0 flex-shrink-0 relative">
+              {variant === 'waiting' ? (
+                <>
+                  <p className="flex-grow-0 flex-shrink-0 text-lg font-semibold text-center text-[#fefefe]">
+                    예상 대기 시간:
+                  </p>
+                  <p className="flex-grow-0 flex-shrink-0 text-lg font-semibold text-center text-white">
+                    {waitTime}
+                  </p>
+                  <p className="flex-grow-0 flex-shrink-0 text-lg font-semibold text-center text-white">
+                    분
+                  </p>
+                </>
+              ) : (
+                <p className="flex-grow-0 flex-shrink-0 text-lg font-semibold text-center text-[#fefefe]">
+                  {getTitle()}
+                </p>
+              )}
+            </div>
           </div>
         </div>
-        {renderButtons()}
-        <Modal {...cancelNetworkingModalProps} />
-        <Modal {...secondCancelModalProps} />
-        <Modal {...showReasonWhyPartnerQuitsProps} />
+        <div className="flex flex-col justify-center items-start self-stretch flex-grow-0 flex-shrink-0 relative gap-1 pl-1.5">
+          <p className="self-stretch flex-grow-0 flex-shrink-0 w-[329px] text-sm text-center text-[#a6a6a6] whitespace-pre-line">
+            {getDescription()}
+          </p>
+        </div>
       </div>
+      {renderButtons()}
+      <Modal {...cancelNetworkingModalProps} />
+      <Modal {...secondCancelModalProps} />
+      <Modal {...showReasonWhyPartnerQuitsProps} />
+    </div>
   );
 };
 
