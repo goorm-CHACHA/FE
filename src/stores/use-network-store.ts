@@ -7,7 +7,7 @@ import api from '~/utils/api/api';
 interface UseNetworkStoreType {
   isConnect: boolean; //네트워킹 상태 변경
   isSubscribed: boolean; //알림 수신 여부 변경
-  participatedGroupId: number | null; 
+  participatedGroupId: number | null;
   setIsConnect: () => void;
   toggleSubscription: (checked: boolean) => void;
   setParticipatedGroupId: (id: number | null) => void;
@@ -95,7 +95,7 @@ export const useNetworkStore = create<UseNetworkStoreType>()(
           set({ isSubscribed: !checked }); // 롤백
         }
       },
-      
+
       setParticipatedGroupId: (id) => {
         set({ participatedGroupId: id });
       },

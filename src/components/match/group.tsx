@@ -10,7 +10,7 @@ interface GroupChatRoomResponseDto {
   id: number;
   job: string[];
   members: {
-    username: string; 
+    username: string;
     id: number;
     nickname: string;
     job: string;
@@ -24,9 +24,8 @@ const GroupMatching = () => {
   const [groups, setGroups] = useState<GroupChatRoomResponseDto[]>([]); // 그룹 데이터를 위한 상태
   const router = useRouter();
   const { participatedGroupId, setParticipatedGroupId } = useNetworkStore();
-  const {loggedInUser } = useUserStore()
+  const { loggedInUser } = useUserStore();
 
- 
   useEffect(() => {
     // 그룹 API 데이터를 가져오는 함수
     const fetchGroups = async () => {
@@ -35,11 +34,11 @@ const GroupMatching = () => {
         const groupsData: GroupChatRoomResponseDto[] = response.data;
         console.log(response);
         // 그룹 데이터를 상태에 저장
-       
+
         setGroups(groupsData);
         // const myGroup = groupsData.find((group) =>
         //   Array.isArray(group.members) && group.members.some((member) => member.username === loggedInUser?.username),);
-  
+
         // if (myGroup) {
         //   setParticipatedGroupId(myGroup.id);
         // }
@@ -50,7 +49,7 @@ const GroupMatching = () => {
 
     fetchGroups(); // 컴포넌트 마운트 시 데이터 가져오기
   }, [loggedInUser, setParticipatedGroupId]);
-  console.log(loggedInUser?.username); 
+  console.log(loggedInUser?.username);
   const handleJoinGroup = async (chatRoomId: number) => {
     try {
       const response = await api.post('/api/chats/group-chatroom/join', {
@@ -91,8 +90,7 @@ const GroupMatching = () => {
 
       {/* 그룹 데이터 렌더링 */}
       <div className="w-full max-w-4xl mt-5">
-        {groups.length > 0 ? 
-        (
+        {groups.length > 0 ? (
           groups.map((group) => (
             <div
               key={group.id}
@@ -116,13 +114,18 @@ const GroupMatching = () => {
                       r="4"
                       fill={
                         // participatedGroupId === group.id ? '#FF9257' : '#07ca7f'
-                        group.members[0]?.username === loggedInUser?.username  || participatedGroupId === group.id ?  '#FF9257' : '#07ca7f'
-
+                        group.members[0]?.username === loggedInUser?.username ||
+                        participatedGroupId === group.id
+                          ? '#FF9257'
+                          : '#07ca7f'
                       }
                     ></circle>
                   </svg>
                   <p className="text-xs font-semibold text-[#fefefe]">
-                    {group.members[0]?.username === loggedInUser?.username  || participatedGroupId === group.id? '참여중' : '참여 가능'}
+                    {group.members[0]?.username === loggedInUser?.username ||
+                    participatedGroupId === group.id
+                      ? '참여중'
+                      : '참여 가능'}
                   </p>
                 </div>
                 <div className="flex justify-start items-center flex-grow-0 flex-shrink-0 relative space-x-[-6px]">
