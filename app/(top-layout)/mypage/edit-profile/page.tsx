@@ -17,7 +17,6 @@ import { UserType } from '~/types/form';
 import { editProfile, fetchProfile } from '~/utils/api/user';
 import { phoneFormatter } from '~/utils/phone-formatter';
 import { useFormStore } from '~/stores/use-form-store';
-import { editCard } from '~/utils/api/card';
 
 const Page = () => {
   const router = useRouter();
