@@ -10,6 +10,8 @@ import { useNetworkStore } from '~/stores/use-network-store';
 import { useUserStore } from '~/stores/use-user-store';
 import { UserData } from '~/types/user.types';
 import Modal from '~/components/common/modal';
+import { useFormStore } from '~/stores/use-form-store';
+import { formatFromQR } from '~/utils/format-form-data';
 
 const Page = () => {
   const { isConnect } = useNetworkStore();
@@ -18,6 +20,7 @@ const Page = () => {
   const router = useRouter();
   const [, setWebSocket] = useState<WebSocket | null>(null);
   const { loggedInUser, setLoggedInUser } = useUserStore();
+  const { setQRData } = useFormStore();
   const chatRequesterIdRef = useRef<number | null>(null);
   const chatReceiverIdRef = useRef<number | null>(null);
   // ✅ 모달 상태 추가
@@ -130,6 +133,8 @@ const Page = () => {
       try {
         const res = await api.get('/api/users/mypage');
         setLoggedInUser(res.data);
+        const formatted = formatFromQR(res.data);
+        setQRData(formatted);
       } catch (error) {
         console.error('로그인된 유저 정보 불러오기 실패:', error);
       }
