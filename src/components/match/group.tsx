@@ -1,9 +1,12 @@
-import Filter from '~/components/match/filter';
 import Button from '../common/button';
 import DefaultProfile from '~/components/common/default-profile'; // DefaultProfile 컴포넌트 추가
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import api from '~/utils/api/api';
+import { FormProvider, useForm } from 'react-hook-form';
+import FilterWrapper from './filter-wrapper';
+import { FormValues } from './one-to-one';
+
 import { useNetworkStore } from '~/stores/use-network-store';
 import { useUserStore } from '~/stores/use-user-store';
 interface GroupChatRoomResponseDto {
@@ -23,6 +26,13 @@ interface GroupChatRoomResponseDto {
 const GroupMatching = () => {
   const [groups, setGroups] = useState<GroupChatRoomResponseDto[]>([]); // 그룹 데이터를 위한 상태
   const router = useRouter();
+  const methods = useForm<FormValues>({
+    defaultValues: {
+      interests: [],
+      participationPurpose: [],
+      career: [0, 4],
+    },
+  });
   const { participatedGroupId, setParticipatedGroupId } = useNetworkStore();
   const { loggedInUser } = useUserStore();
 
@@ -58,6 +68,7 @@ const GroupMatching = () => {
 
       console.log('참여 성공:', response.data);
       alert('그룹에 참여하였습니다!');
+
       setParticipatedGroupId(chatRoomId);
       // ✅ API 응답 구조에 맞게 id 필드 사용
       const roomId = response.data.id;
@@ -85,8 +96,11 @@ const GroupMatching = () => {
 
   return (
     <div className="flex flex-col items-center">
-      {/* 필터 컴포넌트 */}
-      <Filter />
+      <FormProvider {...methods}>
+        {/* 필터 컴포넌트 */}
+        <FilterWrapper />
+        {/* 나머지 UI */}
+      </FormProvider>
 
       {/* 그룹 데이터 렌더링 */}
       <div className="w-full max-w-4xl mt-5">
