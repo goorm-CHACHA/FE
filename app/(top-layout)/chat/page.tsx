@@ -49,37 +49,37 @@ const ChatContent = () => {
 
   console.log('receiver', receiverUser);
   // useEffect(() => {
-    // const fetchReceiverId = async () => {
-    //   if (!roomId || !currentUser) return;
+  // const fetchReceiverId = async () => {
+  //   if (!roomId || !currentUser) return;
 
-    //   try {
-    //     const allUsers = await viewAllUser();
-    //     const receiver = await getReceiverIdFromChatRoom(
-    //       roomId,
-    //       currentUser.nickName!,
-    //       allUsers,
-    //     );
-    //     setReceiverUser(receiver);
-    //   } catch (err) {
-    //     console.error('상대방 ID 가져오기 실패:', err);
-    //   }
-    // };
+  //   try {
+  //     const allUsers = await viewAllUser();
+  //     const receiver = await getReceiverIdFromChatRoom(
+  //       roomId,
+  //       currentUser.nickName!,
+  //       allUsers,
+  //     );
+  //     setReceiverUser(receiver);
+  //   } catch (err) {
+  //     console.error('상대방 ID 가져오기 실패:', err);
+  //   }
+  // };
 
-    // fetchReceiverId();
+  // fetchReceiverId();
   // }, [roomId, currentUser]);
   useEffect(() => {
     const fetchReceiverInfo = async () => {
       if (!roomId || !savedNickName) return;
-  
+
       try {
         const res = await api.get(`/api/chats/${roomId}`);
         const chatRoom = res.data;
         console.log(chatRoom);
-  
+
         const otherUser = chatRoom.members.find(
-          (member: Member) => member.username !== savedNickName
+          (member: Member) => member.username !== savedNickName,
         );
-  
+
         if (otherUser) {
           // 필요한 경우, 다른 API 호출을 통해 추가 정보를 가져올 수 있습니다.
           // const userInfo = await api.get(`/api/users/${otherUser.id}`);
@@ -90,7 +90,7 @@ const ChatContent = () => {
         console.error('상대방 정보 가져오기 실패:', error);
       }
     };
-  
+
     fetchReceiverInfo();
   }, [roomId, savedNickName]);
 
