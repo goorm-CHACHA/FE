@@ -1,4 +1,3 @@
-import Filter from '~/components/match/filter';
 import Button from '../common/button';
 import DefaultProfile from '~/components/common/default-profile'; // DefaultProfile 컴포넌트 추가
 import { useRouter } from 'next/navigation';

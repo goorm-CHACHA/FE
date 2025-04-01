@@ -8,7 +8,7 @@ import * as Accordion from '@radix-ui/react-accordion';
 import { ChevronDownIcon } from '@radix-ui/react-icons';
 import { interestOptions, purposeOptions } from '~/constants/create-group';
 import { useFilterStore } from '~/stores/use-filter-store';
-import { memo, useState } from 'react';
+import { memo } from 'react';
 import CheckBoxChecked from '~/assets/svgs/checkbox-checked.svg';
 import CheckBoxUnchecked from '~/assets/svgs/checkbox-unchecked.svg';
 import { jobCategories } from '~/constants/create-group';

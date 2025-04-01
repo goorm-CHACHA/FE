@@ -12,14 +12,6 @@ const allPurposeOptions = purposeOptions.map((opt) => opt.value);
 // 타입 정의
 type FilterCategory = 'jobs' | 'interests' | 'career' | 'participationPurpose';
 
-type ToggleAllParams<T extends keyof FilterState> = T extends 'jobs'
-  ? string[]
-  : T extends 'career'
-    ? number[]
-    : T extends 'interests' | 'participationPurpose' | 'purposes'
-      ? string[]
-      : never;
-
 interface FilterState {
   jobs: string[];
   interests: string[];

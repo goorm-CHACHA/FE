@@ -20,7 +20,7 @@ export interface FormValues {
 }
 
 const normalizeProfileData = (profiles: UserData[]): UserData[] => {
-  return profiles.map((profile, index) => {
+  return profiles.map((profile) => {
     // 변환 전 데이터 출력
     // console.log(`🔵 [Before Normalization] Profile ${index}:`, profile);
 
@@ -68,6 +68,7 @@ const normalizeProfileData = (profiles: UserData[]): UserData[] => {
 };
 
 const OneToOneMatching = ({ profiles }: OneToOneMatchingProps) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const methods = useForm<any>({
     defaultValues: {
       interests: [], // 빈 배열로 초기화

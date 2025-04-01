@@ -31,7 +31,6 @@ const ToggleField = <T extends FieldValues>({
   maxSelection = 1,
   toggleVariants = 'primary',
   className,
-  onChange,
 }: ToggleFieldProps<T>) => {
   const { setError, setValue } = useFormContext();
 
