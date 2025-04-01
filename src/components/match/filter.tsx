@@ -189,4 +189,6 @@ const Filter = ({ applyFilters }: FilterProps) => {
   );
 };
 
+AccordionHeader.displayName = 'AccordionHeader';
+
 export default Filter;
